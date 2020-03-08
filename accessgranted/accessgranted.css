@@ -1,0 +1,62 @@
+body {
+  background-color: White;
+}
+
+#keypadContainer {
+  width: 132px;
+  height: 151px;
+  background-color: lightgrey;
+  border-radius: 5px;
+  margin: auto;
+}
+
+#keypad {
+  width: 101px;
+  margin: 3px auto;
+}
+
+#lcd {
+  width: 132px;
+  height: 26px;
+  background-color: darkgrey;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 26px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+.button {
+  display: inline;
+  background-color: darkgrey;
+  border-radius: 5px;
+  margin-bottom: 3px;
+  font-size: 18px;
+}
+
+.row {
+  text-align: center;
+}
+
+#links {
+  width: 132px;
+  margin: 3px auto;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.link {
+  background-color: lightsteelblue;
+  border-radius: 5px;
+  padding: 3px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+.github-fork-ribbon.right-top:before {
+  background-color: #333;
+}
