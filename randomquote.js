@@ -55,6 +55,7 @@ quotes.push(
 let quoteElement = document.getElementById("quote");
 let qElement = document.createElement("q");
 let footerElement = document.createElement("footer");
+let maxQuoteWidth = window.innerWidth * 0.90;
 
 quoteElement.appendChild(qElement);
 quoteElement.appendChild(footerElement);
@@ -76,7 +77,11 @@ function setQuote(index) {
   qElement.textContent = quote.quote;
   footerElement.textContent = "— " + quote.author;
   
-  quoteElement.style.width = qElement.offsetWidth + 1 + "px";
+  if (maxQuoteWidth < qElement.offsetWidth) {
+    quoteElement.style.width = maxQuoteWidth + "px";
+  } else {
+    quoteElement.style.width = qElement.offsetWidth + 1 + "px";
+  }
   
   index = ++index % quotes.length;
   
