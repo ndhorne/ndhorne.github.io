@@ -55,13 +55,16 @@ quotes.push(
 let quoteElement = document.getElementById("quote");
 let qElement = document.createElement("q");
 let footerElement = document.createElement("footer");
-let maxQuoteWidth = window.innerWidth * 0.90;
 
 quoteElement.appendChild(qElement);
 quoteElement.appendChild(footerElement);
 
 quoteElement.style.marginLeft = "auto";
 quoteElement.style.marginRight = "auto";
+quoteElement.style.padding = 15 + "px";
+quoteElement.style.borderRadius = 10 + "px";
+quoteElement.style.backgroundColor = "whitesmoke";
+quoteElement.style.maxWidth = window.innerWidth * 0.90 + "px";
 
 function setQuote(index) {
   if (typeof index != "number"
@@ -71,17 +74,12 @@ function setQuote(index) {
   }
   
   let quote = quotes[index];
-  
-  quoteElement.style.width = "";
-  
+    
   qElement.textContent = quote.quote;
   footerElement.textContent = "— " + quote.author;
   
-  if (maxQuoteWidth < qElement.offsetWidth) {
-    quoteElement.style.width = maxQuoteWidth + "px";
-  } else {
-    quoteElement.style.width = qElement.offsetWidth + 1 + "px";
-  }
+  quoteElement.style.width =
+    qElement.getBoundingClientRect().width + "px";
   
   index = ++index % quotes.length;
   
