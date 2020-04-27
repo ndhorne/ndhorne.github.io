@@ -23,6 +23,7 @@ let footerElement = document.createElement("footer");
 quoteElement.appendChild(qElement);
 quoteElement.appendChild(footerElement);
 
+quoteElement.style.visibility = "hidden";
 quoteElement.style.marginLeft = "auto";
 quoteElement.style.marginRight = "auto";
 quoteElement.style.padding = 15 + "px";
@@ -49,6 +50,7 @@ async function setQuote(index) {
     quoteElement.style.width = "";
     quoteElement.style.width =
       qElement.getBoundingClientRect().width + "px";
+    quoteElement.style.visibility = "visible";
     
     index = ++index % quotes.length;
     
