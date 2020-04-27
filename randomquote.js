@@ -16,42 +16,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 "use strict";
 
-let quotes = [];
-
-quotes.push(
-  {
-    quote: "If you don't know anything about computers, just remember "+
-      "that they are machines that do exactly what you tell them but " +
-      "often surprise you in the result.",
-    author: "Richard Dawkins"
-  },
-  {
-    quote: "Some people, when confronted with a problem, think \‘I " +
-      "know, I\’ll use regular expressions.\’ Now they have two " +
-      "problems.",
-    author: "Jamie Zawinski"
-  },
-  {
-    quote: "A user interface is like a joke. If you have to explain " +
-    "it, it's not that good.",
-    author: "Martin LeBlanc"
-  },
-  {
-    quote: "A computer will do what you tell it to do, but that may " +
-    "be much different from what you had in mind.",
-    author: "Joseph Weizenbaum"
-  },
-  {
-    quote: "Computers are like old testament gods; lots of rules and " +
-    "no mercy.",
-    author: "Joseph Campbell"
-  },
-  {
-    quote: "Computers are useless. They can only give you answers.",
-    author: "Pablo Picasso"
-  }
-);
-
 let quoteElement = document.getElementById("quote");
 let qElement = document.createElement("q");
 let footerElement = document.createElement("footer");
@@ -66,24 +30,33 @@ quoteElement.style.borderRadius = 10 + "px";
 quoteElement.style.backgroundColor = "whitesmoke";
 quoteElement.style.maxWidth = window.innerWidth * 0.90 + "px";
 
-function setQuote(index) {
-  if (typeof index != "number"
-      || index < 0
-      || index >= quotes.length) {
-    index = Math.floor(Math.random() * quotes.length);
-  }
-  
-  let quote = quotes[index];
+async function setQuote(index) {
+  try {
+    let response = await fetch("quotes.json");
+    let quotes = JSON.parse(await response.text());
     
-  qElement.textContent = quote.quote;
-  footerElement.textContent = "— " + quote.author;
-  
-  quoteElement.style.width =
-    qElement.getBoundingClientRect().width + "px";
-  
-  index = ++index % quotes.length;
-  
-  //setTimeout(() => setQuote(index), 15000);
+    if (typeof index != "number"
+        || index < 0
+        || index >= quotes.length) {
+      index = Math.floor(Math.random() * quotes.length);
+    }
+    
+    let quote = quotes[index];
+      
+    qElement.textContent = quote.quote;
+    footerElement.textContent = "— " + quote.author;
+    
+    quoteElement.style.width = "";
+    quoteElement.style.width =
+      qElement.getBoundingClientRect().width + "px";
+    
+    index = ++index % quotes.length;
+    
+    //setTimeout(() => setQuote(index), 15000);
+  } catch (e) {
+    console.log(e);
+    quoteElement.remove();
+  }
 }
 
 setQuote();
