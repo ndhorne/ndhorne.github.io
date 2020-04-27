@@ -53,7 +53,7 @@ a:hover {
 }
 
 #portfolio dl dd ul {
-  list-style: none inside url("icons8-source-code-16.png");
+  list-style: none inside none;
   padding-left: 0;
 }
 
