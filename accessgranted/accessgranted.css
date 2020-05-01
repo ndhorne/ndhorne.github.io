@@ -1,5 +1,5 @@
 body {
-  background-color: White;
+  background-color: white;
 }
 
 #keypadContainer {
@@ -55,8 +55,4 @@ body {
 
 a:link {
   text-decoration: none;
-}
-
-.github-fork-ribbon.right-top:before {
-  background-color: #333;
 }
