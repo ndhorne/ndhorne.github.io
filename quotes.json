@@ -12,15 +12,31 @@
     "author": "Martin LeBlanc"
   },
   {
-    "quote": "A computer will do what you tell it to do, but that may be much different from what you had in mind.",
-    "author": "Joseph Weizenbaum"
-  },
-  {
     "quote": "Computers are like old testament gods; lots of rules and no mercy.",
     "author": "Joseph Campbell"
   },
   {
     "quote": "Computers are useless. They can only give you answers.",
     "author": "Pablo Picasso"
+  },
+  {
+    "quote": "A computer will do what you tell it to do, but that may be much different from what you had in mind.",
+    "author": "Joseph Weizenbaum"
+  },
+  {
+    "quote": "Computer Science is no more about computers than astronomy is about telescopes.",
+    "author": "Edsger W. Dijkstra"
+  },
+  {
+    "quote": "Man is still the most extraordinary computer of all.",
+    "author": "John F. Kennedy"
+  },
+  {
+    "quote": "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
+    "author": "Martin Fowler"
+  },
+  {
+    "quote": "Imagination is more important than knowledge.",
+    "author": "Albert Einstein"
   }
 ]
