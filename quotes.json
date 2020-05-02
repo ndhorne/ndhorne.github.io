@@ -16,6 +16,10 @@
     "author": "Joseph Campbell"
   },
   {
+    "quote": "Premature optimization is the root of all evil.",
+    "author": "Donald Knuth"
+  },
+  {
     "quote": "Computers are useless. They can only give you answers.",
     "author": "Pablo Picasso"
   },
@@ -24,7 +28,7 @@
     "author": "Joseph Weizenbaum"
   },
   {
-    "quote": "Computer Science is no more about computers than astronomy is about telescopes.",
+    "quote": "Computer science is no more about computers than astronomy is about telescopes.",
     "author": "Edsger W. Dijkstra"
   },
   {
@@ -38,5 +42,9 @@
   {
     "quote": "Imagination is more important than knowledge.",
     "author": "Albert Einstein"
+  },
+  {
+    "quote": "Remember, when you connect with another computer, you're connecting to every computer that computer has connected to.",
+    "author": "Dennis Miller"
   }
 ]
