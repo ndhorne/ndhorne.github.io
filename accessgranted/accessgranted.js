@@ -197,10 +197,29 @@ function inferAbsentDigits() {
     inferences.push(uniqueDigits.join("") + uniqueDigits[0] +
       uniqueDigits[0] + uniqueDigits[0]);
   } else {
-    console.log("uniqueDigits has bad length");
+    console.error("uniqueDigits has bad length");
   }
   
   return inferences;
+}
+
+//shifts digits of base combination to exhaust permutations
+function shiftBase(base, pass) {
+  let current;
+  
+  if (pass == 0) {
+    current = base;
+  } else if (pass == 1) {
+    current = base[1] + base[0] + base[2] + base[3];
+  } else if (pass == 2) {
+    current = base[2] + base[0] + base[1] + base[3];
+  } else if (pass == 3) {
+    current = base[3] + base[0] + base[1] + base[2];
+  } else {
+	console.error("Erroneous pass value");
+  }
+  
+  return current;
 }
 
 //sequentially attempts all possible permutations of each combination
@@ -212,18 +231,9 @@ function autoSolveSequential(event) {
   for (let inference of inferences) {
     
     for (let i = 0; i < 4; i++) {
-      let base = inference;
       let current;
       
-      if (i == 0) {
-        current = base;
-      } else if (i == 1) {
-        current = base[1] + base[0] + base[2] + base[3];
-      } else if (i == 2) {
-        current = base[2] + base[0] + base[1] + base[3];
-      } else if (i == 3) {
-        current = base[3] + base[0] + base[1] + base[2];
-      }
+      current = shiftBase(inference, i);
       
       solved = verifyEntry(current);
       for (let j = 0; j < 3; j++) {
@@ -268,18 +278,9 @@ function autoSolveSequential2(event) {
   for (let inference of inferences) {
     
     for (let i = 0; i < 4; i++) {
-      let base = inference;
       let current;
       
-      if (i == 0) {
-        current = base;
-      } else if (i == 1) {
-        current = base[1] + base[0] + base[2] + base[3];
-      } else if (i == 2) {
-        current = base[2] + base[0] + base[1] + base[3];
-      } else if (i == 3) {
-        current = base[3] + base[0] + base[1] + base[2];
-      }
+      current = shiftBase(inference, i);
       
       permutations.push(current);
       for (let j = 0; j < 3; j++) {
