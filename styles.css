@@ -1,5 +1,5 @@
 body {
-  background-color: white;
+  background-color: dimgray;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
 }
@@ -31,6 +31,16 @@ div dl {
 a:hover {
   background: lightsteelblue;
   border-radius: 3px;
+}
+
+#container {
+  background-color: white;
+  padding: 10px;
+  position: relative;
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
 }
 
 #bio dl #education ul {
