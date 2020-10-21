@@ -31,7 +31,7 @@ quoteElement.style.padding = 15 + "px";
 quoteElement.style.borderRadius = 10 + "px";
 quoteElement.style.backgroundColor = "whitesmoke";
 quoteElement.style.maxWidth =
-  containerElement.getBoundingClientRect().width * 0.90 + "px";
+  containerElement.getBoundingClientRect().width * 0.95 + "px";
 
 async function setQuote(index) {
   try {
