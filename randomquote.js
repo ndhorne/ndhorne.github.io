@@ -16,7 +16,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 "use strict";
 
-let container = document.getElementById("container");
+let containerElement = document.getElementById("container");
 let quoteElement = document.getElementById("quote");
 let qElement = document.createElement("q");
 let footerElement = document.createElement("footer");
@@ -30,8 +30,8 @@ quoteElement.style.marginRight = "auto";
 quoteElement.style.padding = 15 + "px";
 quoteElement.style.borderRadius = 10 + "px";
 quoteElement.style.backgroundColor = "whitesmoke";
-quoteElement.style.maxWidth = container.getBoundingClientRect().width *
-  0.90 + "px";
+quoteElement.style.maxWidth =
+  containerElement.getBoundingClientRect().width * 0.90 + "px";
 
 async function setQuote(index) {
   try {
