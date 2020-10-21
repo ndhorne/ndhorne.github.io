@@ -16,6 +16,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 "use strict";
 
+let container = document.getElementById("container");
 let quoteElement = document.getElementById("quote");
 let qElement = document.createElement("q");
 let footerElement = document.createElement("footer");
@@ -29,7 +30,7 @@ quoteElement.style.marginRight = "auto";
 quoteElement.style.padding = 15 + "px";
 quoteElement.style.borderRadius = 10 + "px";
 quoteElement.style.backgroundColor = "whitesmoke";
-quoteElement.style.maxWidth = window.innerWidth * 0.90 + "px";
+quoteElement.style.maxWidth = container.width * 0.90 + "px";
 
 async function setQuote(index) {
   try {
@@ -43,7 +44,7 @@ async function setQuote(index) {
     }
     
     let quote = quotes[index];
-      
+    
     qElement.textContent = quote.quote;
     footerElement.textContent = "— " + quote.author;
     
@@ -56,7 +57,7 @@ async function setQuote(index) {
     
     //setTimeout(() => setQuote(index), 15000);
   } catch (e) {
-    console.log(e);
+    console.error(e);
     quoteElement.remove();
   }
 }
