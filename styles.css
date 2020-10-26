@@ -32,7 +32,7 @@ div dl {
   color: silver;
   font-size: 12px;
   text-align: center;
-  width: 1140px;
+  max-width: 1140px;
   margin-top: .5em;
   margin-left: auto;
   margin-right: auto;
@@ -50,7 +50,7 @@ div dl {
   background-color: white;
   padding: 10px;
   position: relative;
-  width: 1140px;
+  max-width: 1140px;
   margin-left: auto;
   margin-right: auto;
   border-radius: 10px;
