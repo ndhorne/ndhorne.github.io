@@ -28,19 +28,42 @@ div dl {
   margin-bottom: 0;
 }
 
-a:hover {
-  background: lightsteelblue;
-  border-radius: 3px;
+#foot {
+  color: silver;
+  font-size: 12px;
+  text-align: center;
+  width: 1140px;
+  margin-top: .5em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#foot a {
+  color: lightgray;
+}
+
+#foot a:visited {
+  color: darkgray;
 }
 
 #container {
   background-color: white;
   padding: 10px;
   position: relative;
-  max-width: 1140px;
+  width: 1140px;
   margin-left: auto;
   margin-right: auto;
   border-radius: 10px;
+}
+
+#bio a:hover {
+  background-color: lightsteelblue;
+  border-radius: 3px;
+}
+
+#portfolio a:hover {
+  background-color: lightsteelblue;
+  border-radius: 3px;
 }
 
 #bio dl #education ul {
@@ -62,8 +85,18 @@ a:hover {
   padding-left: 0;
 }
 
+#bio dl #github ul {
+  list-style: disc inside none;
+  padding-left: 0;
+}
+
+#portfolio dl dt a:hover {
+  background-color: unset;
+  border-radius: unset;
+}
+
 #portfolio dl dd ul {
-  list-style: none inside none;
+  list-style: none inside url("icons8-source-code-16.png");
   padding-left: 0;
 }
 
@@ -74,7 +107,7 @@ a:hover {
 }
 
 #portfolio dl dd ul li ul li a:hover {
-  background: unset;
+  background-color: unset;
   border-radius: unset;
 }
 
@@ -91,7 +124,7 @@ a:hover {
   margin-left: auto;
   margin-right: auto;  
   padding: .5em;
-  background: gainsboro;
+  background-color: gainsboro;
   border-radius: 10px;
 }
 
