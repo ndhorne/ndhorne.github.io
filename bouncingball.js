@@ -175,7 +175,7 @@ canvas.addEventListener("pointerdown", clickHandler, true);
 canvas.width = canvasWidth;
 canvas.height = canvasHeight;
 canvas.title = "Interactive HTML5 Canvas JavaScript Animation " +
-  "Demonstration";
+  "Demonstration (click on circle)";
 
 canvas.style.width = canvasWidth + "px";
 canvas.style.height = canvasHeight + "px";
