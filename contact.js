@@ -26,3 +26,8 @@ let labelWidth = labels.reduce(function(maxWidth, label) {
 labels.forEach(function(label) {
   label.style.width = labelWidth + "px";
 });
+
+window.addEventListener("unload", function(event) {
+  let resetButton = document.getElementById("reset");
+  resetButton.click();
+});
