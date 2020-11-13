@@ -2,6 +2,7 @@ body {
   background-color: dimgray;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
+  overflow-y: scroll;
 }
 
 h1 {
@@ -86,6 +87,11 @@ div dl {
 }
 
 #bio dl #github ul {
+  list-style: disc inside none;
+  padding-left: 0;
+}
+
+#bio dl #contact ul {
   list-style: disc inside none;
   padding-left: 0;
 }
