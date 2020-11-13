@@ -20,6 +20,7 @@ let containerElement = document.getElementById("container");
 let quoteElement = document.getElementById("quote");
 let qElement = document.createElement("q");
 let footerElement = document.createElement("footer");
+let citeElement = document.createElement("cite");
 
 quoteElement.appendChild(qElement);
 quoteElement.appendChild(footerElement);
@@ -32,6 +33,7 @@ quoteElement.style.borderRadius = 10 + "px";
 quoteElement.style.backgroundColor = "whitesmoke";
 quoteElement.style.maxWidth =
   containerElement.getBoundingClientRect().width * 0.95 + "px";
+footerElement.style.display = "inline-block";
 
 async function setQuote(index) {
   try {
@@ -46,12 +48,24 @@ async function setQuote(index) {
     
     let quote = quotes[index];
     
-    qElement.textContent = quote.quote;
-    footerElement.textContent = "— " + quote.author;
+    qElement.innerHTML = quote.quote;
+    footerElement.innerHTML = "— " + quote.author;
+    
+    
+    if (quote.source) {
+      citeElement.innerHTML = quote.source;
+      footerElement.innerHTML += ", ";
+      footerElement.appendChild(citeElement);
+    }
+    
+    if (quote.date) {
+      footerElement.innerHTML += ", " + quote.date;
+    }
     
     quoteElement.style.width = "";
-    quoteElement.style.width =
-      qElement.getBoundingClientRect().width + "px";
+    quoteElement.style.width = Math.max(
+      qElement.getBoundingClientRect().width,
+      footerElement.getBoundingClientRect().width) + "px";
     quoteElement.style.visibility = "visible";
     
     index = ++index % quotes.length;
