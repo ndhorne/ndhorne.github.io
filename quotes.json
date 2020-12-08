@@ -33,7 +33,7 @@
     "quote": "Computers are useless. They can only give you answers.",
     "author": "Pablo Picasso",
     "source": "Orange Coast Magazine",
-    "date": "1986 May"
+    "date": "May 1986"
   },
   {
     "quote": "A computer will do what you tell it to do, but that may be much different from what you had in mind.",
@@ -57,7 +57,7 @@
     "quote": "Imagination is more important than knowledge.",
     "author": "Albert Einstein",
     "source": "The Saturday Evening Post",
-    "date": "1929 October 26"
+    "date": "26 October 1929"
   },
   {
     "quote": "Remember, when you connect with another computer, you're connecting to every computer that computer has connected to.",
@@ -106,5 +106,29 @@
     "author": "Brian Kernighan",
     "source": "Software Tools",
     "date": "1976"
+  },
+  {
+    "quote": "The art of programming is the art of organizing complexity.",
+    "author": "Edsger Dijkstra",
+    "source": "Notes On Structured Programming",
+    "date": "April 1970"
+  },
+  {
+    "quote": "Computer science is no more about computers than astronomy is about telescopes.",
+    "author": "Edsger Dijkstra",
+    "source": null,
+    "date": null
+  },
+  {
+    "quote": "Good programmers know what to write. Great ones know what to rewrite (and reuse).",
+    "author": "Eric S. Raymond",
+    "source": "The Cathedral & the Bazaar",
+    "date": "2001"
+  },
+  {
+    "quote": "Most of you are familiar with the virtues of a programmer. There are three, of course: laziness, impatience, and hubris.",
+    "author": "Larry Wall",
+    "source": null,
+    "date": null
   }
 ]
