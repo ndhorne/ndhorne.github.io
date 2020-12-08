@@ -23,6 +23,7 @@ let footerElement = document.createElement("footer");
 let citeElement = document.createElement("cite");
 
 quoteElement.appendChild(qElement);
+quoteElement.appendChild(document.createElement("br"));
 quoteElement.appendChild(footerElement);
 
 quoteElement.style.visibility = "hidden";
@@ -33,7 +34,8 @@ quoteElement.style.borderRadius = 10 + "px";
 quoteElement.style.backgroundColor = "whitesmoke";
 quoteElement.style.maxWidth =
   containerElement.getBoundingClientRect().width * 0.95 + "px";
-footerElement.style.display = "inline-block";
+
+footerElement.style.display = "inline";
 
 async function setQuote(index) {
   try {
