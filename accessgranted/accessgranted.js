@@ -216,7 +216,7 @@ function shiftBase(base, pass) {
   } else if (pass == 3) {
     current = base[3] + base[0] + base[1] + base[2];
   } else {
-	console.error("Erroneous pass value");
+    console.error("Erroneous pass value");
   }
   
   return current;
@@ -433,4 +433,4 @@ function start() {
 start();
 
 //display instructions dialog box upon page load
-window.addEventListener("load", event => about(event));
+//window.addEventListener("load", event => about(event));
