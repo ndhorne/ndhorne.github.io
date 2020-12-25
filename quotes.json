@@ -1,134 +1,458 @@
 [
   {
-    "quote": "If you don't know anything about computers, just remember that they are machines that do exactly what you tell them but often surprise you in the result.",
-    "author": "Richard Dawkins",
-    "source": "The Blind Watchmaker",
-    "date": "1986"
-  },
-  {
-    "quote": "Some people, when confronted with a problem, think ‘I know, I’ll use regular expressions.’ Now they have two problems.",
-    "author": "Jamie Zawinski",
-    "source": null,
-    "date": null
-  },
-  {
-    "quote": "A user interface is like a joke. If you have to explain it, it's not that good.",
-    "author": "Martin LeBlanc",
-    "source": null,
-    "date": null
-  },
-  {
     "quote": "Computers are like old testament gods; lots of rules and no mercy.",
-    "author": "Joseph Campbell",
-    "source": "The Power of Myth",
-    "date": "1988"
-  },
-  {
-    "quote": "Premature optimization is the root of all evil.",
-    "author": "Donald Knuth",
-    "source": "Computer Programming as an Art",
-    "date": "1974"
-  },
-  {
-    "quote": "Computers are useless. They can only give you answers.",
-    "author": "Pablo Picasso",
-    "source": "Orange Coast Magazine",
-    "date": "May 1986"
-  },
-  {
-    "quote": "A computer will do what you tell it to do, but that may be much different from what you had in mind.",
-    "author": "Joseph Weizenbaum",
-    "source": null,
-    "date": null
-  },
-  {
-    "quote": "Man is still the most extraordinary computer of all.",
-    "author": "John F. Kennedy",
-    "source": null,
-    "date": null
-  },
-  {
-    "quote": "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
-    "author": "Martin Fowler",
-    "source": "Refactoring: Improving the Design of Existing Code",
-    "date": "1999"
-  },
-  {
-    "quote": "Imagination is more important than knowledge.",
-    "author": "Albert Einstein",
-    "source": "The Saturday Evening Post",
-    "date": "26 October 1929"
-  },
-  {
-    "quote": "Remember, when you connect with another computer, you're connecting to every computer that computer has connected to.",
-    "author": "Dennis Miller",
-    "source": null,
-    "date": null
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Joseph",
+        "middle": null,
+        "last": "Campbell",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "The Power of Myth",
+      "date": {
+        "year": "1988",
+        "month": null,
+        "day": null
+      }
+    }
   },
   {
     "quote": "Any sufficiently advanced technology is indistinguishable from magic.",
-    "author": "Arthur C. Clarke",
-    "source": "Profiles of the Future",
-    "date": "1973"
+    "author": {
+      "name": {
+        "prefix": "Sir",
+        "first": "Arthur",
+        "middle": "C",
+        "last": "Clarke",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "Profiles of the Future",
+      "date": {
+        "year": "1973",
+        "month": null,
+        "day": null
+      }
+    }
   },
   {
-    "quote": "A good programmer is someone who always looks both ways before crossing a one-way street.",
-    "author": "Doug Linder",
-    "source": null,
-    "date": null
+    "quote": "If you don't know anything about computers, just remember that they are machines that do exactly what you tell them but often surprise you in the result.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Richard",
+        "middle": null,
+        "last": "Dawkins",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "The Blind Watchmaker",
+      "date": {
+        "year": "1986",
+        "month": null,
+        "day": null
+      }
+    }
   },
   {
-    "quote": "The good news about computers is that they do what you tell them to do. The bad news is that they do what you tell them to do.",
-    "author": "Ted Nelson",
-    "source": null,
-    "date": null
-  },
-  {
-    "quote": "The computer saves man a lot of guesswork, but so does the bikini.",
-    "author": "Evan Esar",
-    "source": "20,000 Quips and Quotes",
-    "date": "1968"
-  },
-  {
-    "quote": "You cannot teach beginners top-down programming, because they don't know which end is up.",
-    "author": "C. A. R. Hoare",
-    "source": null,
-    "date": null
-  },
-  {
-    "quote": "Science is what we understand well enough to explain to a computer. Art is everything else we do.",
-    "author": "Donald Knuth",
-    "source": "A=B",
-    "date": "1996"
-  },
-  {
-    "quote": "Controlling complexity is the essence of computer programming.",
-    "author": "Brian Kernighan",
-    "source": "Software Tools",
-    "date": "1976"
-  },
-  {
-    "quote": "The art of programming is the art of organizing complexity.",
-    "author": "Edsger Dijkstra",
-    "source": "Notes On Structured Programming",
-    "date": "April 1970"
+    "quote": "Divide each difficulty into as many parts as is feasible and necessary to resolve it.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Rene",
+        "middle": null,
+        "last": "Descartes",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "Discourse on the Method",
+      "date": {
+        "year": "1637",
+        "month": null,
+        "day": null
+      }
+    }
   },
   {
     "quote": "Computer science is no more about computers than astronomy is about telescopes.",
-    "author": "Edsger Dijkstra",
-    "source": null,
-    "date": null
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Edsger",
+        "middle": null,
+        "last": "Dijkstra",
+        "suffix": null
+      }
+    },
+    "source": null
+  },
+  {
+    "quote": "Object-oriented programming is an exceptionally bad idea which could only have originated in California.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Edsger",
+        "middle": null,
+        "last": "Dijkstra",
+        "suffix": null
+      }
+    },
+    "source": null
+  },
+  {
+    "quote": "Simplicity is prerequisite for reliability.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Edsger",
+        "middle": null,
+        "last": "Dijkstra",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "How do we tell truths that might hurt?",
+      "date": {
+        "year": "1975",
+        "month": "June",
+        "day": "18"
+      }
+    }
+  },
+  {
+    "quote": "The art of programming is the art of organizing complexity.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Edsger",
+        "middle": null,
+        "last": "Dijkstra",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "Notes On Structured Programming",
+      "date": {
+        "year": "1970",
+        "month": "April",
+        "day": null
+      }
+    }
+  },
+  {
+    "quote": "Imagination is more important than knowledge.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Albert",
+        "middle": null,
+        "last": "Einstein",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "The Saturday Evening Post",
+      "date": {
+        "year": "1929",
+        "month": "October",
+        "day": "26"
+      }
+    }
+  },
+  {
+    "quote": "The computer saves man a lot of guesswork, but so does the bikini.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Evan",
+        "middle": null,
+        "last": "Esar",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "20,000 Quips and Quotes",
+      "date": {
+        "year": "1968",
+        "month": null,
+        "day": null
+      }
+    }
+  },
+  {
+    "quote": "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Martin",
+        "middle": null,
+        "last": "Fowler",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "Refactoring: Improving the Design of Existing Code",
+      "date": {
+        "year": "1999",
+        "month": null,
+        "day": null
+      }
+    }
+  },
+  {
+    "quote": "You cannot teach beginners top-down programming, because they don't know which end is up.",
+    "author": {
+      "name": {
+        "prefix": "Sir",
+        "first": "Charles",
+        "middle": ["Antony", "Richard"],
+        "last": "Hoare",
+        "suffix": null
+      }
+    },
+    "source": null
+  },
+  {
+    "quote": "There are only two hard things in computer science: cache invalidation and naming things.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Phil",
+        "middle": null,
+        "last": "Karlton",
+        "suffix": null
+      }
+    },
+    "source": null
+  },
+  {
+    "quote": "Man is still the most extraordinary computer of all.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "John",
+        "middle": "F",
+        "last": "Kennedy",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": null,
+      "date": {
+        "year": "1963",
+        "month": "May",
+        "day": "21"
+      }
+    }
+  },
+  {
+    "quote": "Controlling complexity is the essence of computer programming.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Brian",
+        "middle": null,
+        "last": "Kernighan",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "Software Tools",
+      "date": {
+        "year": "1976",
+        "month": null,
+        "day": null
+      }
+    }
+  },
+  {
+    "quote": "Premature optimization is the root of all evil.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Donald",
+        "middle": null,
+        "last": "Knuth",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "Computer Programming as an Art",
+      "date": {
+        "year": "1974",
+        "month": null,
+        "day": null
+      }
+    }
+  },
+  {
+    "quote": "Science is what we understand well enough to explain to a computer. Art is everything else we do.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Donald",
+        "middle": null,
+        "last": "Knuth",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "A=B",
+      "date": {
+        "year": "1996",
+        "month": null,
+        "day": null
+      }
+    }
+  },
+  {
+    "quote": "A user interface is like a joke. If you have to explain it, it's not that good.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Martin",
+        "middle": null,
+        "last": "LeBlanc",
+        "suffix": null
+      }
+    },
+    "source": null
+  },
+  {
+    "quote": "A good programmer is someone who always looks both ways before crossing a one-way street.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Doug",
+        "middle": null,
+        "last": "Linder",
+        "suffix": null
+      }
+    },
+    "source": null
+  },
+  {
+    "quote": "Remember, when you connect with another computer, you're connecting to every computer that computer has connected to.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Dennis",
+        "middle": null,
+        "last": "Miller",
+        "suffix": null
+      }
+    },
+    "source": null
+  },
+  {
+    "quote": "The good news about computers is that they do what you tell them to do. The bad news is that they do what you tell them to do.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Ted",
+        "middle": null,
+        "last": "Nelson",
+        "suffix": null
+      }
+    },
+    "source": null
+  },
+  {
+    "quote": "Computers are useless. They can only give you answers.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Pablo",
+        "middle": null,
+        "last": "Picasso",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "Orange Coast Magazine",
+      "date": {
+        "year": "1986",
+        "month": "May",
+        "day": null
+      }
+    }
   },
   {
     "quote": "Good programmers know what to write. Great ones know what to rewrite (and reuse).",
-    "author": "Eric S. Raymond",
-    "source": "The Cathedral & the Bazaar",
-    "date": "2001"
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Eric",
+        "middle": "S",
+        "last": "Raymond",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "The Cathedral & the Bazaar",
+      "date": {
+        "year": "2001",
+        "month": null,
+        "day": null
+      }
+    }
+  },
+  {
+    "quote": "There are only two kinds of languages: the ones people complain about and the ones nobody uses.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Bjarne",
+        "middle": null,
+        "last": "Stroustrup",
+        "suffix": null
+      }
+    },
+    "source": null
   },
   {
     "quote": "Most of you are familiar with the virtues of a programmer. There are three, of course: laziness, impatience, and hubris.",
-    "author": "Larry Wall",
-    "source": null,
-    "date": null
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Larry",
+        "middle": null,
+        "last": "Wall",
+        "suffix": null
+      }
+    },
+    "source": null
+  },
+  {
+    "quote": "A computer will do what you tell it to do, but that may be much different from what you had in mind.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Joseph",
+        "middle": null,
+        "last": "Weizenbaum",
+        "suffix": null
+      }
+    },
+    "source": null
+  },
+  {
+    "quote": "Some people, when confronted with a problem, think ‘I know, I’ll use regular expressions.’ Now they have two problems.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Jamie",
+        "middle": null,
+        "last": "Zawinski",
+        "suffix": null
+      }
+    },
+    "source": null
   }
 ]
