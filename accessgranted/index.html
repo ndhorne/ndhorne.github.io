@@ -41,12 +41,27 @@
       </div>
       
       <p id="links">
-        <a href="" onclick="newGame(event)" class="link">New Game</a>
-        <a href="" onclick="about(event)" class="link">About</a>
+        <a href="" onclick="autoSolveSequential(event)"
+          id="autoSolveAnchor" class="link">Auto-Solve</a>
       </p>
-      <p id="links">
-        <a href="" onclick="autoSolveSequential(event)" class="link">Auto-Solve</a>
-      </p>
+      
+      <div id="options">
+        <label for="mode">Game Mode:</label>
+        <select id="mode" name="mode">
+          <option>Crack the Code</option>
+          <option>Lockout</option>
+        </select>
+        <p id="newGamePara">
+          <a href="" onclick="newGame(event)" id="newGameAnchor"
+            class="link">New Game</a>
+        </p>
+      </div>
+      
+      <div id="logContainer">
+        <p id="logLabel">log_</p>
+        <div id="log"></div>
+        <a href="" onclick="about(event)" id="aboutAnchor">About</a>
+      </div>
     
     </div>
     <script src="accessgranted.js"></script>

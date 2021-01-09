@@ -101,6 +101,11 @@ div dl {
   padding-left: 0;
 }
 
+#portfolio dl dt a {
+  font-size: 13px;
+  vertical-align: top;
+}
+
 #portfolio dl dt a:hover {
   background-color: unset;
   border-radius: unset;

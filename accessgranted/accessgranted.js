@@ -1,5 +1,5 @@
 /*
-Copyright 2018-2020 Nicholas D. Horne
+Copyright 2018-2021 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,10 +16,57 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 "use strict";
 
-let pin, entry, entries, status, silent;
+//element bindings
+let lcdElement = document.getElementById("lcd");
+let optionsElement = document.getElementById("options");
+let modeElement = document.getElementById("mode");
+let logLabelElement = document.getElementById("logLabel");
+let logElement = document.getElementById("log");
+let newGamePElement = document.getElementById("newGamePara");
+let newGameElement = document.getElementById("newGameAnchor");
+let autoSolveElement = document.getElementById("autoSolveAnchor");
+let modeOptionsElement, modeOptionsLabel;
+
+let pin, entry, entries, silent, solved, locked, autoSolve, gameMode;
+let maxAttempts, mode1CustomValue, resetDisplayTimeout;
 let buttons = [];
-let lcd = document.getElementById("lcd");
-let resetDisplayTimeout;
+let aboutText = [
+  "Access Granted JS",
+  "A pointless diversion by Nicholas D. Horne",
+  "Crack a PIN knowing the digits that the PIN comprises",
+  "Can you actually crack a four-digit PIN on your " +
+  "first attempt as seen in the movies on a telltale " +
+  "worn keypad? The \"worn\" keys contained in the " +
+  "PIN have been highlighted on the keypad. PINs " +
+  "are four digits in length. Digits may be repeated " +
+  "resulting in PINs with less than four keys being " +
+  "highlighted. PINs may begin with zero. Input is " +
+  "accepted by way of both mouse primary button " +
+  "and keyboard number keys.",
+  "GNU GPLv3 licensed source code available at " +
+  "https://github.com/ndhorne/access-granted-js"
+];
+
+//lockout game mode option elements
+let mode1OptionsElement = document.createElement("select");
+mode1OptionsElement.id = "mode1Options";
+
+let mode1OptionsLabel = document.createElement("label");
+mode1OptionsLabel.innerHTML = "Attempts:";
+mode1OptionsLabel.htmlFor = "mode1Options";
+
+(function(...options) {
+  for (let i = 0; i < options.length; i++) {
+    let option = document.createElement("option");
+    option.text = options[i];
+    option.value = options[i];
+    mode1OptionsElement.add(option);
+  }
+})("15", "10", "5", "4", "3", "Custom");
+
+//fine sizing/positioning
+optionsElement.style.width =
+  modeElement.getBoundingClientRect().width + "px";
 
 //initializes buttons array with references to button elements
 for (let i = 0; i < 10; i++) {
@@ -30,27 +77,88 @@ for (let i = 0; i < 10; i++) {
 //through forEach higher order function
 buttons.forEach(button => {
   button.addEventListener("click", event => {
-    if (entry.length < 4) {
-      entry += event.target.textContent;
-      keyIn();
+    if (!locked) {
+      if (entry.length < 4) {
+        entry += event.target.textContent;
+        keyIn();
+      }
     }
   });
 });
 
 //wires up keyboard number keys with callback function to update entry
 window.addEventListener("keydown", event => {
-  if (/^\d$/.test(event.key)) {
-    if (entry.length < 4) {
-      entry += event.key;
-      keyIn();
+  if (!locked) {
+    if (/^\d$/.test(event.key)) {
+      if (entry.length < 4) {
+        entry += event.key;
+        keyIn();
+      }
     }
+  }
+});
+
+//updates interface when switching game modes
+modeElement.addEventListener("change", event => {
+  switch (event.target.selectedIndex) {
+    case 0:
+      if (!solved && !locked) {
+        autoSolveElement.style.visibility = "visible";
+      }
+      
+      if (modeOptionsElement) {
+        modeOptionsElement.remove();
+      }
+      if (modeOptionsLabel) {
+        modeOptionsLabel.remove();
+      }
+      break;
+    case 1:
+      autoSolveElement.style.visibility = "hidden";
+      
+      if (modeOptionsElement) {
+        modeOptionsElement.remove();
+      }
+      if (modeOptionsLabel) {
+        modeOptionsLabel.remove();
+      }
+      
+      modeOptionsLabel = optionsElement.insertBefore(
+        mode1OptionsLabel, newGamePElement
+      );
+      modeOptionsElement = optionsElement.insertBefore(
+        mode1OptionsElement, newGamePElement
+      );
+      break;
+    case 2:
+      autoSolveElement.style.visibility = "hidden";
+      
+      if (modeOptionsElement) {
+        modeOptionsElement.remove();
+      }
+      if (modeOptionsLabel) {
+        modeOptionsLabel.remove();
+      }
+      
+      /*
+      modeOptionsLabel = optionsElement.insertBefore(
+        mode2OptionsLabel, newGamePElement
+      );
+      modeOptionsElement = optionsElement.insertBefore(
+        mode2OptionsElement, newGamePElement
+      );
+      */
+      
+      break;
+    default:
+      console.error("No case defined for chosen option");
   }
 });
 
 //updates #lcd div element with current entry
 function updateDisplay() {
-  lcd.style.backgroundColor = "darkgrey";
-  lcd.textContent = entry;
+  lcdElement.style.backgroundColor = "darkgrey";
+  lcdElement.textContent = entry;
 }
 
 //upon key input clears timeout to reset display(if any), updates
@@ -75,9 +183,28 @@ function highlightKeys() {
   }
 }
 
+function highlightElement(element, timeout) {  
+  setTimeout(() => {
+    element.style.border = "2px solid darkorange";
+  }, timeout);
+}
+
 //updates array of entered entries
 function updateEntries() {
   entries.push(entry);
+}
+
+//updates game log
+function updateLog(line, spacing = 1) {
+  if (!silent) {
+    console.log(line);
+  }
+  
+  logElement.innerHTML += line;
+  for (let i = 0; i < spacing; i++) {
+    logElement.appendChild(document.createElement("br"));
+  }
+  logElement.scrollTop = logElement.scrollHeight;
 }
 
 //returns randomly generated PIN
@@ -93,72 +220,121 @@ function pinGen() {
 }
 
 //initializes new game
-function initGame() {
-  pin = pinGen();
+function initGame(pinArg) {
+  switch (modeElement.selectedIndex) {
+    case 0:
+      gameMode = 0;
+      autoSolveElement.style.visibility = "visible";
+      break;
+    case 1:
+      gameMode = 1;
+      
+      if (modeOptionsElement.value == "Custom") {
+        mode1CustomValue = prompt("Desired number of attempts:");
+        if (!Number.isInteger(Number(mode1CustomValue))
+            || mode1CustomValue <= 0) {
+          mode1CustomValue = null;
+          alert("Please enter a whole number greater than zero.");
+          return;
+        } else {
+          maxAttempts = mode1CustomValue;
+          updateLog("Number of entry attempts set to custom value " +
+            mode1CustomValue);
+        }
+      } else {
+        maxAttempts = modeOptionsElement.value;
+      }
+      
+      break;
+    case 2:
+      gameMode = 2;
+      break;
+    default:
+      console.error("No case defined for chosen option");
+  }
+  
+  if (pinArg) {
+    pin = pinArg;
+  } else {
+    pin = pinGen();
+  }
+  
   entry = "";
   entries = [];
+  solved = false;
+  locked = false;
+  updateDisplay();
   highlightKeys();
+  
+  newGameElement.style.border = "";
 }
 
 //verifies whether entry matches PIN, updates and sets timeout to clear
 //display accordingly, updates array of entered entries, displays win
-//dialog and reinitializes game upon success, clears entry upon failure,
-//returns analogous boolean value for use with auto-solve
-function verifyEntry(fiatEntry) {
-  if (fiatEntry) {
-    entry = fiatEntry;
+//dialog upon success/clears entry upon failure
+function verifyEntry(entryArg) {
+  if (entryArg) {
+    entry = entryArg;
   }
+  
   if (entry == pin) {
-    lcd.textContent = "Access Granted";
-    lcd.style.backgroundColor = "green";
-    resetDisplayTimeout = setTimeout(() => updateDisplay(), 3000);
+    solved = true;
+    
+    lcdElement.textContent = "Access Granted";
+    lcdElement.style.backgroundColor = "green";
     updateEntries();
-    status = "PIN " + pin + " cracked in " + entries.length +
+    let status = "PIN " + pin + " cracked in " + entries.length +
       " attempt" + (entries.length > 1 ? "s" : "");
+    if (autoSolve) {
+      status = status.replace(/cracked/, "autosolved");
+    }
+    updateLog(status);
     if (!silent) {
       alert(status);
     }
-    initGame();
-    return true;
+    autoSolveElement.style.visibility = "hidden";
+    highlightElement(newGameElement, 100);
+    
+    /*
+    //reinitializes game upon success
+    resetDisplayTimeout = setTimeout(() => {
+      initGame();
+    }, 3000);
+    */
   } else {
-    lcd.textContent = "Access Denied";
-    lcd.style.backgroundColor = "red";
-    resetDisplayTimeout = setTimeout(() => updateDisplay(), 1500);
+    lcdElement.textContent = "Access Denied";
+    lcdElement.style.backgroundColor = "red";
+    if (!autoSolve) {
+      resetDisplayTimeout = setTimeout(() => updateDisplay(), 1500);
+    }
     updateEntries();
     entry = "";
-    return false;
+    
+    if (gameMode == 1 && entries.length == maxAttempts) {
+      clearTimeout(resetDisplayTimeout);
+      locked = true;
+      setTimeout(() => {
+        lcdElement.style.backgroundColor = "darkgrey";
+        lcdElement.textContent = "- LOCKED -";
+        updateLog("LOCKED! Allotted number of entry attempts exhausted");
+        highlightElement(newGameElement, 100);
+      }, 1500);
+    }
   }
 }
 
-//initializes new game and clears display
+//initializes user invoked new game
 function newGame(event) {
+  clearTimeout(resetDisplayTimeout);
   initGame();
-  updateDisplay();
   event.preventDefault();
 }
 
 //displays about dialog
 function about(event) {
-  let aboutText =
-    "Access Granted JS\n" +
-    "\n" +
-    "A pointless diversion by Nicholas D. Horne\n" +
-    "\n" +
-    "Crack a PIN knowing the digits that the PIN comprises\n" +
-    "\n" +
-    "Can you actually crack a four-digit PIN on your " +
-    "first attempt as seen in the movies on a telltale " +
-    "worn keypad? The \"worn\" keys contained in the " +
-    "PIN have been highlighted on the keypad. PINs " +
-    "are four digits in length. Digits may be repeated " +
-    "resulting in PINs with less than four keys being " +
-    "highlighted. PINs may begin with zero. Input is " +
-    "accepted by way of both mouse primary button " +
-    "and keyboard number keys.\n" +
-    "\n" +
-    "GNU GPLv3 licensed source code available at " +
-    "https://github.com/ndhorne/access-granted-js";
-  alert(aboutText);
+  alert(
+    aboutText.join("\n\n")
+  );
   event.preventDefault();
 }
 
@@ -226,7 +402,8 @@ function shiftBase(base, pass) {
 //until solved
 function autoSolveSequential(event) {
   let inferences = inferAbsentDigits();
-  let solved = false;
+  
+  autoSolve = true;
   
   for (let inference of inferences) {
     
@@ -235,23 +412,23 @@ function autoSolveSequential(event) {
       
       current = shiftBase(inference, i);
       
-      solved = verifyEntry(current);
+      verifyEntry(current);
       for (let j = 0; j < 3; j++) {
         if (!solved) {
           current = current[0] + current[1] + current[3] + current[2];
           if (!entries.includes(current)) {
-            solved = verifyEntry(current);
+            verifyEntry(current);
           }
         } else {
           break;
         }
         if (j == 2) {
-            break;
+          break;
         }
         if (!solved) {
           current = current[0] + current[2] + current[1] + current[3];
           if (!entries.includes(current)) {
-            solved = verifyEntry(current);
+            verifyEntry(current);
           }
         } else {
           break;
@@ -265,15 +442,18 @@ function autoSolveSequential(event) {
       break;
     }
   }
+  
+  autoSolve = false;
   event.preventDefault();
 }
 
 //sequentially creates array of all possible permutations of each
-//combination and attempts each permutation until solved
+//combination and then attempts each permutation until solved
 function autoSolveSequential2(event) {
   let inferences = inferAbsentDigits();
   let permutations = [];
-  let solved = false;
+  
+  autoSolve = true;
   
   for (let inference of inferences) {
     
@@ -300,21 +480,23 @@ function autoSolveSequential2(event) {
   }
   
   for (let permutation of permutations) {
-    solved = verifyEntry(permutation);
+    verifyEntry(permutation);
     if (solved) {
       break;
     }
   }
   
+  autoSolve = false;
   event.preventDefault();
 }
 
 //randomly generates all possible permutations of each combination
-//while attempting unentered permutations until solved
+//while immediately attempting unentered permutations until solved
 function autoSolveRandom(event) {
   let uniqueDigits = getUniqueDigits();
   let inferences = inferAbsentDigits();
-  let solved = false;
+  
+  autoSolve = true;
   
   for (let i = 0; i < inferences.length; i++) {
     let inference = inferences[i];
@@ -346,7 +528,7 @@ function autoSolveRandom(event) {
         }
       } while (entries.includes(entry));
       
-      solved = verifyEntry();
+      verifyEntry();
       if (solved) {
         break;
       }
@@ -355,14 +537,17 @@ function autoSolveRandom(event) {
       break;
     }
   }
+  
+  autoSolve = false;
   event.preventDefault();
 }
 
-//randomly generates entries from unique PIN digits and attempts
-//unentered entries until solved
+//randomly generates entries from unique PIN digits and immediately
+//attempts unentered entries until solved
 function autoSolveRandom2(event) {
   let uniqueDigits = getUniqueDigits();
-  let solved = false;
+  
+  autoSolve = true;
   
   do {
     entry = "";
@@ -371,16 +556,18 @@ function autoSolveRandom2(event) {
       entry += uniqueDigits[randomIndex];
     }
     if (!entries.includes(entry)) {
-      solved = verifyEntry();
+      verifyEntry();
     }
   } while (!solved);
+  
+  autoSolve = false;
   event.preventDefault();
 }
 
-//randomly generates entries from all digits and attempts unentered
-//entries until solved
+//randomly generates entries from all digits and immediately attempts
+//unentered entries until solved
 function autoSolveRandom3(event) {
-  let solved = false;
+  autoSolve = true;
   
   do {
     entry = "";
@@ -389,9 +576,11 @@ function autoSolveRandom3(event) {
       entry += randomNumber;
     }
     if (!entries.includes(entry)) {
-      solved = verifyEntry();
+      verifyEntry();
     }
   } while (!solved);
+  
+  autoSolve = false;
   event.preventDefault();
 }
 
@@ -411,7 +600,7 @@ function autoSolveBenchmarks() {
   silent = true;
   
   for (let i = 0; i < autoSolveFunctions.length; i++) {
-    pin = benchpin;
+    initGame(benchpin);
     startTime = Date.now();
     autoSolveFunctions[i](new CustomEvent("CustomEvent"));
     endTime = Date.now();
@@ -426,7 +615,12 @@ function autoSolveBenchmarks() {
 
 //initializes first game
 function start() {
+  modeElement.selectedIndex = 0;
   initGame();
+  
+  aboutText.forEach(line => {
+    updateLog(line, 2);
+  });
 }
 
 //initiate first game
