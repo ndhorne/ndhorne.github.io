@@ -42,10 +42,6 @@ html {
   margin-bottom: 5px;
 }
 
-#options p {
-  text-align: center;
-}
-
 #logContainer {
   position: relative;
   max-width: 1100px;
@@ -95,7 +91,7 @@ html {
   margin-bottom: 5px;
 }
 
-.link {
+.modeButton {
   background-color: lightsteelblue;
   border-radius: 5px;
   padding: 5px;

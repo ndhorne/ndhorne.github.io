@@ -22,13 +22,13 @@ let optionsElement = document.getElementById("options");
 let modeElement = document.getElementById("mode");
 let logLabelElement = document.getElementById("logLabel");
 let logElement = document.getElementById("log");
-let newGamePElement = document.getElementById("newGamePara");
-let newGameElement = document.getElementById("newGameAnchor");
-let autoSolveElement = document.getElementById("autoSolveAnchor");
+let newGameElement = document.getElementById("newGameButton");
+let autoSolveElement = document.getElementById("autoSolveButton");
+let autoNewGameElement = document.getElementById("autoNew");
 let modeOptionsElement, modeOptionsLabel;
 
 let pin, entry, entries, silent, solved, locked, autoSolve, gameMode;
-let maxAttempts, mode1CustomValue, resetDisplayTimeout;
+let autoNew, maxAttempts, mode1CustomValue, resetDisplayTimeout;
 let buttons = [];
 let aboutText = [
   "Access Granted JS",
@@ -98,14 +98,19 @@ window.addEventListener("keydown", event => {
   }
 });
 
+//wires up auto new game checkbox with callback to set analogous flag
+autoNewGameElement.addEventListener("change", (event) => {
+  if (autoNewGameElement.checked) {
+    autoNew = true;
+  } else {
+    autoNew = false;
+  }
+});
+
 //updates interface when switching game modes
 modeElement.addEventListener("change", event => {
   switch (event.target.selectedIndex) {
     case 0:
-      if (!solved && !locked) {
-        autoSolveElement.style.visibility = "visible";
-      }
-      
       if (modeOptionsElement) {
         modeOptionsElement.remove();
       }
@@ -114,8 +119,6 @@ modeElement.addEventListener("change", event => {
       }
       break;
     case 1:
-      autoSolveElement.style.visibility = "hidden";
-      
       if (modeOptionsElement) {
         modeOptionsElement.remove();
       }
@@ -124,15 +127,13 @@ modeElement.addEventListener("change", event => {
       }
       
       modeOptionsLabel = optionsElement.insertBefore(
-        mode1OptionsLabel, newGamePElement
+        mode1OptionsLabel, newGameElement
       );
       modeOptionsElement = optionsElement.insertBefore(
-        mode1OptionsElement, newGamePElement
+        mode1OptionsElement, newGameElement
       );
       break;
     case 2:
-      autoSolveElement.style.visibility = "hidden";
-      
       if (modeOptionsElement) {
         modeOptionsElement.remove();
       }
@@ -142,13 +143,12 @@ modeElement.addEventListener("change", event => {
       
       /*
       modeOptionsLabel = optionsElement.insertBefore(
-        mode2OptionsLabel, newGamePElement
+        mode2OptionsLabel, newGameElement
       );
       modeOptionsElement = optionsElement.insertBefore(
-        mode2OptionsElement, newGamePElement
+        mode2OptionsElement, newGameElement
       );
       */
-      
       break;
     default:
       console.error("No case defined for chosen option");
@@ -185,7 +185,7 @@ function highlightKeys() {
 
 function highlightElement(element, timeout) {  
   setTimeout(() => {
-    element.style.border = "2px solid darkorange";
+    element.style.border = "2px solid indigo";
   }, timeout);
 }
 
@@ -224,16 +224,19 @@ function initGame(pinArg) {
   switch (modeElement.selectedIndex) {
     case 0:
       gameMode = 0;
-      autoSolveElement.style.visibility = "visible";
+      autoSolveElement.disabled = false;
       break;
     case 1:
       gameMode = 1;
+      autoSolveElement.disabled = true;
       
       if (modeOptionsElement.value == "Custom") {
         mode1CustomValue = prompt("Desired number of attempts:");
+        if (mode1CustomValue == null) {
+          return;
+        }
         if (!Number.isInteger(Number(mode1CustomValue))
             || mode1CustomValue <= 0) {
-          mode1CustomValue = null;
           alert("Please enter a whole number greater than zero.");
           return;
         } else {
@@ -248,6 +251,7 @@ function initGame(pinArg) {
       break;
     case 2:
       gameMode = 2;
+      autoSolveElement.disabled = true;
       break;
     default:
       console.error("No case defined for chosen option");
@@ -292,15 +296,15 @@ function verifyEntry(entryArg) {
     if (!silent) {
       alert(status);
     }
-    autoSolveElement.style.visibility = "hidden";
+    autoSolveElement.disabled = true;
     highlightElement(newGameElement, 100);
     
-    /*
-    //reinitializes game upon success
-    resetDisplayTimeout = setTimeout(() => {
-      initGame();
-    }, 3000);
-    */
+    if (autoNew) {
+      //reinitializes game upon success
+      resetDisplayTimeout = setTimeout(() => {
+        initGame();
+      }, 3000);
+    }
   } else {
     lcdElement.textContent = "Access Denied";
     lcdElement.style.backgroundColor = "red";
@@ -313,11 +317,23 @@ function verifyEntry(entryArg) {
     if (gameMode == 1 && entries.length == maxAttempts) {
       clearTimeout(resetDisplayTimeout);
       locked = true;
-      setTimeout(() => {
+      if (gameMode == 1 && modeOptionsElement.value == "Custom") {
+        newGameElement.disabled = true;
+      }
+      resetDisplayTimeout = setTimeout(() => {
         lcdElement.style.backgroundColor = "darkgrey";
         lcdElement.textContent = "- LOCKED -";
-        updateLog("LOCKED! Allotted number of entry attempts exhausted");
+        updateLog(
+          "LOCKED! Allotted number of entry attempts exhausted"
+        );
         highlightElement(newGameElement, 100);
+        newGameElement.disabled = false;
+        
+        if (autoNew) {
+          resetDisplayTimeout = setTimeout(() => {
+            initGame();
+          }, 5000);
+        }
       }, 1500);
     }
   }
@@ -616,6 +632,7 @@ function autoSolveBenchmarks() {
 //initializes first game
 function start() {
   modeElement.selectedIndex = 0;
+  autoNewGameElement.checked = false;
   initGame();
   
   aboutText.forEach(line => {

@@ -40,10 +40,12 @@
         </div>
       </div>
       
-      <p id="links">
-        <a href="" onclick="autoSolveSequential(event)"
-          id="autoSolveAnchor" class="link">Auto-Solve</a>
-      </p>
+      <div id="links">
+        <button type="button" id="autoSolveButton" class="modeButton"
+          onclick="autoSolveSequential(event)">
+          Auto-Solve
+        </button>
+      </div>
       
       <div id="options">
         <label for="mode">Game Mode:</label>
@@ -51,10 +53,18 @@
           <option>Crack the Code</option>
           <option>Lockout</option>
         </select>
-        <p id="newGamePara">
-          <a href="" onclick="newGame(event)" id="newGameAnchor"
-            class="link">New Game</a>
-        </p>
+        <button type="button" id="newGameButton" class="modeButton"
+          onclick="newGame(event)"
+          style="display: block; margin: 7px auto auto;">
+          New Game
+        </button>
+      </div>
+      
+      <div style="text-align: center; font-size: 14px;">
+        <input type="checkbox" id="autoNew" name="autoNew" />
+        <label for="autoNew" style="vertical-align: 25%;">
+          Autostart new game
+        </label>
       </div>
       
       <div id="logContainer">
