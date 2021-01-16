@@ -27,8 +27,10 @@ let autoSolveElement = document.getElementById("autoSolveButton");
 let autoNewGameElement = document.getElementById("autoNew");
 let modeOptionsElement, modeOptionsLabel;
 
-let pin, entry, entries, silent, solved, locked, autoSolve, gameMode;
-let autoNew, maxAttempts, mode1CustomValue, resetDisplayTimeout;
+let pin, entry, entries, state, gameMode, timeLeft, maxAttempts;
+let silent, solved, locked, autoSolve, autoNew;
+let mode1CustomValue, mode2CustomValue;
+let verifyTimeout, timeLeftTimeout, resetDisplayTimeout;
 let buttons = [];
 let aboutText = [
   "Access Granted JS",
@@ -47,6 +49,16 @@ let aboutText = [
   "https://github.com/ndhorne/access-granted-js"
 ];
 
+//append option elements to select element
+function appendSelectOptions(select, ...options) {
+  for (let i = 0; i < options.length; i++) {
+    let option = document.createElement("option");
+    option.text = options[i];
+    option.value = options[i];
+    select.add(option);
+  }
+}
+
 //lockout game mode option elements
 let mode1OptionsElement = document.createElement("select");
 mode1OptionsElement.id = "mode1Options";
@@ -55,18 +67,122 @@ let mode1OptionsLabel = document.createElement("label");
 mode1OptionsLabel.innerHTML = "Attempts:";
 mode1OptionsLabel.htmlFor = "mode1Options";
 
-(function(...options) {
-  for (let i = 0; i < options.length; i++) {
-    let option = document.createElement("option");
-    option.text = options[i];
-    option.value = options[i];
-    mode1OptionsElement.add(option);
-  }
-})("15", "10", "5", "4", "3", "Custom");
+//lockout options
+appendSelectOptions(
+  mode1OptionsElement,
+  "15", "10", "5", "4", "3", "Custom"
+);
+
+//beat the clock game mode option elements
+let mode2OptionsElement = document.createElement("select");
+mode2OptionsElement.id = "mode2Options";
+
+let mode2OptionsLabel = document.createElement("label");
+mode2OptionsLabel.innerHTML = "Time (in seconds):";
+mode2OptionsLabel.htmlFor = "mode2Options";
+
+//beat the clock options
+appendSelectOptions(
+  mode2OptionsElement,
+  "60", "30", "15", "10", "5", "Custom"
+);
 
 //fine sizing/positioning
 optionsElement.style.width =
   modeElement.getBoundingClientRect().width + "px";
+
+//wires up auto new game checkbox with callback to set analogous flag
+autoNewGameElement.addEventListener("change", (event) => {
+  if (autoNewGameElement.checked) {
+    autoNew = true;
+  } else {
+    autoNew = false;
+  }
+});
+
+//updates game log
+function updateLog(line, spacing = 1) {
+  if (!silent) {
+    console.log(line);
+  }
+  
+  logElement.innerHTML += line;
+  for (let i = 0; i < spacing; i++) {
+    logElement.appendChild(document.createElement("br"));
+  }
+  logElement.scrollTop = logElement.scrollHeight;
+}
+
+//updates interface when switching game modes
+modeElement.addEventListener("change", event => {
+  if (logElement.innerHTML.slice(-8) != "<br><br>") {
+    logElement.appendChild(document.createElement("br"));
+  }
+  
+  switch (event.target.selectedIndex) {
+    case 0:
+      updateLog(
+        "Crack the Code mode: No restrictions, no limits (time, " +
+        "attempts, or otherwise), attempt every possible permutation " +
+        "(and then some) at your own leisure and convenience."
+      );
+      
+      if (modeOptionsElement) {
+        modeOptionsElement.remove();
+      }
+      if (modeOptionsLabel) {
+        modeOptionsLabel.remove();
+      }
+      
+      break;
+    case 1:
+      updateLog(
+        "Lockout mode: Crack the PIN within the designated number of " +
+        "entry attempts, otherwise, should the maximum number of " +
+        "entry attempts be exhausted, the panel will lock."
+      );
+      
+      if (modeOptionsElement) {
+        modeOptionsElement.remove();
+      }
+      if (modeOptionsLabel) {
+        modeOptionsLabel.remove();
+      }
+      
+      modeOptionsLabel = optionsElement.insertBefore(
+        mode1OptionsLabel, newGameElement
+      );
+      modeOptionsElement = optionsElement.insertBefore(
+        mode1OptionsElement, newGameElement
+      );
+      
+      break;
+    case 2:
+      updateLog(
+        "Beat the Clock mode: First rejected entry triggers a timer " +
+        "whithin which the correct PIN must be entered, otherwise, " +
+        "should the remaining time expire, the panel will lock."
+      );
+      
+      if (modeOptionsElement) {
+        modeOptionsElement.remove();
+      }
+      if (modeOptionsLabel) {
+        modeOptionsLabel.remove();
+      }
+      
+      modeOptionsLabel = optionsElement.insertBefore(
+        mode2OptionsLabel, newGameElement
+      );
+      modeOptionsElement = optionsElement.insertBefore(
+        mode2OptionsElement, newGameElement
+      );
+      
+      break;
+    default:
+      console.error("No case defined for chosen option");
+  }
+});
 
 //initializes buttons array with references to button elements
 for (let i = 0; i < 10; i++) {
@@ -98,67 +214,14 @@ window.addEventListener("keydown", event => {
   }
 });
 
-//wires up auto new game checkbox with callback to set analogous flag
-autoNewGameElement.addEventListener("change", (event) => {
-  if (autoNewGameElement.checked) {
-    autoNew = true;
-  } else {
-    autoNew = false;
-  }
-});
-
-//updates interface when switching game modes
-modeElement.addEventListener("change", event => {
-  switch (event.target.selectedIndex) {
-    case 0:
-      if (modeOptionsElement) {
-        modeOptionsElement.remove();
-      }
-      if (modeOptionsLabel) {
-        modeOptionsLabel.remove();
-      }
-      break;
-    case 1:
-      if (modeOptionsElement) {
-        modeOptionsElement.remove();
-      }
-      if (modeOptionsLabel) {
-        modeOptionsLabel.remove();
-      }
-      
-      modeOptionsLabel = optionsElement.insertBefore(
-        mode1OptionsLabel, newGameElement
-      );
-      modeOptionsElement = optionsElement.insertBefore(
-        mode1OptionsElement, newGameElement
-      );
-      break;
-    case 2:
-      if (modeOptionsElement) {
-        modeOptionsElement.remove();
-      }
-      if (modeOptionsLabel) {
-        modeOptionsLabel.remove();
-      }
-      
-      /*
-      modeOptionsLabel = optionsElement.insertBefore(
-        mode2OptionsLabel, newGameElement
-      );
-      modeOptionsElement = optionsElement.insertBefore(
-        mode2OptionsElement, newGameElement
-      );
-      */
-      break;
-    default:
-      console.error("No case defined for chosen option");
-  }
-});
-
 //updates #lcd div element with current entry
 function updateDisplay() {
   lcdElement.style.backgroundColor = "darkgrey";
-  lcdElement.textContent = entry;
+  if (!locked) {
+    lcdElement.textContent = entry;
+  } else {
+    lcdElement.textContent = "- LOCKED -";
+  }
 }
 
 //upon key input clears timeout to reset display(if any), updates
@@ -166,9 +229,11 @@ function updateDisplay() {
 //entry after half-second timeout
 function keyIn() {
   clearTimeout(resetDisplayTimeout);
+  state = 0;
+  
   updateDisplay();
   if (entry.length == 4) {
-    setTimeout(() => verifyEntry(), 500);
+    verifyTimeout = setTimeout(() => verifyEntry(), 500);
   }
 }
 
@@ -185,26 +250,13 @@ function highlightKeys() {
 
 function highlightElement(element, timeout) {  
   setTimeout(() => {
-    element.style.border = "2px solid indigo";
+    element.style.border = "2px solid darkorange";
   }, timeout);
 }
 
 //updates array of entered entries
 function updateEntries() {
   entries.push(entry);
-}
-
-//updates game log
-function updateLog(line, spacing = 1) {
-  if (!silent) {
-    console.log(line);
-  }
-  
-  logElement.innerHTML += line;
-  for (let i = 0; i < spacing; i++) {
-    logElement.appendChild(document.createElement("br"));
-  }
-  logElement.scrollTop = logElement.scrollHeight;
 }
 
 //returns randomly generated PIN
@@ -217,6 +269,37 @@ function pinGen() {
   //print PIN to console for debugging (or cheating)
   //console.log(pin);
   return pin;
+}
+
+function timeLeftString() {
+  let hours, minutes, seconds;
+  
+  hours = Math.floor(timeLeft / 3600);
+  minutes = Math.floor(timeLeft % 3600 / 60);
+  seconds = Math.floor(timeLeft % 3600 % 60);
+  
+  hours =
+    hours > 0 
+    ? hours >= 10
+      ? hours
+      : "0" + hours
+    : "00";
+  
+  minutes =
+    minutes > 0 
+    ? minutes >= 10
+      ? minutes
+      : "0" + minutes
+    : "00";
+  
+  seconds =
+    seconds > 0 
+    ? seconds >= 10
+      ? seconds
+      : "0" + seconds
+    : "00";
+  
+  return hours + ":" + minutes + ":" + seconds;
 }
 
 //initializes new game
@@ -252,10 +335,44 @@ function initGame(pinArg) {
     case 2:
       gameMode = 2;
       autoSolveElement.disabled = true;
+      
+      if (modeOptionsElement.value == "Custom") {
+        mode2CustomValue = prompt(
+          "Desired length of time (in seconds):"
+        );
+        if (mode2CustomValue == null) {
+          return;
+        }
+        if (!Number.isInteger(Number(mode2CustomValue))
+            || mode2CustomValue <= 0) {
+          alert("Please enter a whole number greater than zero.");
+          return;
+        } else {
+          if (mode2CustomValue <= 360000) {
+            timeLeft = mode2CustomValue;
+            updateLog(
+              "Time length allotted to solve within set to custom" +
+              " value " + timeLeft + " seconds"
+            );
+          } else {
+            timeLeft = 360000;
+            updateLog(
+              "Time length allotted to solve within set to truncated" +
+              " value " + timeLeft + " seconds"
+            );
+          }
+          
+        }
+      } else {
+        timeLeft = modeOptionsElement.value;
+      }
+      
       break;
     default:
       console.error("No case defined for chosen option");
   }
+  
+  clearTimeout(timeLeftTimeout);
   
   if (pinArg) {
     pin = pinArg;
@@ -263,10 +380,12 @@ function initGame(pinArg) {
     pin = pinGen();
   }
   
+  state = 0;
   entry = "";
   entries = [];
   solved = false;
   locked = false;
+  autoSolve = false;
   updateDisplay();
   highlightKeys();
   
@@ -282,16 +401,21 @@ function verifyEntry(entryArg) {
   }
   
   if (entry == pin) {
+    clearTimeout(timeLeftTimeout);
     solved = true;
+    state = 1;
     
     lcdElement.textContent = "Access Granted";
     lcdElement.style.backgroundColor = "green";
+    
     updateEntries();
+    
     let status = "PIN " + pin + " cracked in " + entries.length +
       " attempt" + (entries.length > 1 ? "s" : "");
     if (autoSolve) {
       status = status.replace(/cracked/, "autosolved");
     }
+    
     updateLog(status);
     if (!silent) {
       alert(status);
@@ -306,28 +430,40 @@ function verifyEntry(entryArg) {
       }, 3000);
     }
   } else {
+    state = 2;
+    
     lcdElement.textContent = "Access Denied";
     lcdElement.style.backgroundColor = "red";
+    
     if (!autoSolve) {
-      resetDisplayTimeout = setTimeout(() => updateDisplay(), 1500);
+      resetDisplayTimeout = setTimeout(() => {
+        state = 0;
+        updateDisplay();
+        
+        if (gameMode == 2 && entry == "") {
+          lcdElement.textContent = timeLeftString();
+        }
+      }, 1500);
     }
+    
     updateEntries();
     entry = "";
     
     if (gameMode == 1 && entries.length == maxAttempts) {
       clearTimeout(resetDisplayTimeout);
       locked = true;
+      state = 3;
+      
       if (gameMode == 1 && modeOptionsElement.value == "Custom") {
         newGameElement.disabled = true;
       }
       resetDisplayTimeout = setTimeout(() => {
-        lcdElement.style.backgroundColor = "darkgrey";
-        lcdElement.textContent = "- LOCKED -";
+        updateDisplay();
+        highlightElement(newGameElement, 100);
+        newGameElement.disabled = false;
         updateLog(
           "LOCKED! Allotted number of entry attempts exhausted"
         );
-        highlightElement(newGameElement, 100);
-        newGameElement.disabled = false;
         
         if (autoNew) {
           resetDisplayTimeout = setTimeout(() => {
@@ -335,6 +471,42 @@ function verifyEntry(entryArg) {
           }, 5000);
         }
       }, 1500);
+    }
+    
+    if (gameMode == 2 && entries.length == 1) {
+      updateLog(
+        "PIN rejected, enter correct PIN within "
+        + timeLeft + " seconds"
+      );
+      (function setTimeLeftTimeout() {
+        timeLeftTimeout = setTimeout(() => {
+          timeLeft -= 1;
+          if (timeLeft > 0) {
+            if (state == 0 && entry == "") {
+              lcdElement.textContent = timeLeftString();
+            }
+            
+            setTimeLeftTimeout();
+          } else {
+            clearTimeout(verifyTimeout);
+            locked = true;
+            state = 3;
+            
+            updateDisplay();
+            highlightElement(newGameElement, 100);
+            updateLog(
+              "LOCKED! Time length allotted to enter correct PIN within"
+              + " expired"
+            );
+            
+            if (autoNew) {
+              resetDisplayTimeout = setTimeout(() => {
+                initGame();
+              }, 5000);
+            }
+          }
+        }, 1000);
+      })();
     }
   }
 }
@@ -459,7 +631,6 @@ function autoSolveSequential(event) {
     }
   }
   
-  autoSolve = false;
   event.preventDefault();
 }
 
@@ -502,7 +673,6 @@ function autoSolveSequential2(event) {
     }
   }
   
-  autoSolve = false;
   event.preventDefault();
 }
 
@@ -554,7 +724,6 @@ function autoSolveRandom(event) {
     }
   }
   
-  autoSolve = false;
   event.preventDefault();
 }
 
@@ -576,7 +745,6 @@ function autoSolveRandom2(event) {
     }
   } while (!solved);
   
-  autoSolve = false;
   event.preventDefault();
 }
 
@@ -596,7 +764,6 @@ function autoSolveRandom3(event) {
     }
   } while (!solved);
   
-  autoSolve = false;
   event.preventDefault();
 }
 
