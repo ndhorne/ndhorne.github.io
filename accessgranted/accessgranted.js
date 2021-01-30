@@ -271,35 +271,37 @@ function pinGen() {
   return pin;
 }
 
+//formats and returns amount of time remaining as a string
 function timeLeftString() {
-  let hours, minutes, seconds;
+  let hours, minutes, seconds, centiseconds;
   
+  function zeroPad(number) {
+    return number > 0 
+      ? number >= 10
+        ? number
+        : "0" + number
+      : "00";
+  }
+  
+  /*
+  //math for timeLeft in seconds
   hours = Math.floor(timeLeft / 3600);
   minutes = Math.floor(timeLeft % 3600 / 60);
   seconds = Math.floor(timeLeft % 3600 % 60);
+  */
   
-  hours =
-    hours > 0 
-    ? hours >= 10
-      ? hours
-      : "0" + hours
-    : "00";
+  //math for timeLeft in milliseconds
+  hours = Math.floor(timeLeft / 3600000);
+  minutes = Math.floor(timeLeft % 3600000 / 60000);
+  seconds = Math.floor(timeLeft % 3600000 % 60000 / 1000);
+  centiseconds = Math.floor(timeLeft % 3600000 % 60000 % 1000 / 10);
   
-  minutes =
-    minutes > 0 
-    ? minutes >= 10
-      ? minutes
-      : "0" + minutes
-    : "00";
+  hours = zeroPad(hours);
+  minutes = zeroPad(minutes);
+  seconds = zeroPad(seconds);
+  centiseconds = zeroPad(centiseconds);
   
-  seconds =
-    seconds > 0 
-    ? seconds >= 10
-      ? seconds
-      : "0" + seconds
-    : "00";
-  
-  return hours + ":" + minutes + ":" + seconds;
+  return hours + ":" + minutes + ":" + seconds + "." + centiseconds;
 }
 
 //initializes new game
@@ -349,22 +351,22 @@ function initGame(pinArg) {
           return;
         } else {
           if (mode2CustomValue <= 360000) {
-            timeLeft = mode2CustomValue;
+            timeLeft = mode2CustomValue * 1000;
             updateLog(
               "Time length allotted to solve within set to custom" +
-              " value " + timeLeft + " seconds"
+              " value " + mode2CustomValue + " seconds"
             );
           } else {
-            timeLeft = 360000;
+            timeLeft = 360000 * 1000;
             updateLog(
               "Time length allotted to solve within set to truncated" +
-              " value " + timeLeft + " seconds"
+              " value 360000 seconds"
             );
           }
           
         }
       } else {
-        timeLeft = modeOptionsElement.value;
+        timeLeft = modeOptionsElement.value * 1000;
       }
       
       break;
@@ -389,7 +391,7 @@ function initGame(pinArg) {
   updateDisplay();
   highlightKeys();
   
-  newGameElement.style.border = "";
+  newGameElement.style.removeProperty("border");
 }
 
 //verifies whether entry matches PIN, updates and sets timeout to clear
@@ -457,6 +459,7 @@ function verifyEntry(entryArg) {
       if (gameMode == 1 && modeOptionsElement.value == "Custom") {
         newGameElement.disabled = true;
       }
+      
       resetDisplayTimeout = setTimeout(() => {
         updateDisplay();
         highlightElement(newGameElement, 100);
@@ -475,12 +478,13 @@ function verifyEntry(entryArg) {
     
     if (gameMode == 2 && entries.length == 1) {
       updateLog(
-        "PIN rejected, enter correct PIN within "
-        + timeLeft + " seconds"
+        "Entry rejected, enter correct PIN within "
+        + (timeLeft / 1000) + " seconds"
       );
+      
       (function setTimeLeftTimeout() {
         timeLeftTimeout = setTimeout(() => {
-          timeLeft -= 1;
+          timeLeft -= 10;
           if (timeLeft > 0) {
             if (state == 0 && entry == "") {
               lcdElement.textContent = timeLeftString();
@@ -505,7 +509,7 @@ function verifyEntry(entryArg) {
               }, 5000);
             }
           }
-        }, 1000);
+        }, 10);
       })();
     }
   }
@@ -768,6 +772,9 @@ function autoSolveRandom3(event) {
 }
 
 //logs to console duration of auto-solve functions in milliseconds
+//note: does not take into account accuracy/precision of the platform's
+//timer, which may only update as often as every 15ms on older versions
+//of Windows
 function autoSolveBenchmarks() {
   let startTime, endTime;
   let benchpin = pinGen();
