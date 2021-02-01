@@ -25,12 +25,13 @@ let logElement = document.getElementById("log");
 let newGameElement = document.getElementById("newGameButton");
 let autoSolveElement = document.getElementById("autoSolveButton");
 let autoNewGameElement = document.getElementById("autoNew");
+let hintElement = document.getElementById("hintButton");
 let modeOptionsElement, modeOptionsLabel;
 
 let pin, entry, entries, state, gameMode, timeLeft, maxAttempts;
-let silent, solved, locked, autoSolve, autoNew;
+let silent, solved, locked, autoSolve, autoNew, hintsGiven;
 let mode1CustomValue, mode2CustomValue;
-let verifyTimeout, timeLeftTimeout, resetDisplayTimeout;
+let verifyTimeout, timeLeftTimeout, resetDisplayTimeout, hintTimeout;
 let buttons = [];
 let aboutText = [
   "Access Granted JS",
@@ -231,6 +232,10 @@ function keyIn() {
   clearTimeout(resetDisplayTimeout);
   state = 0;
   
+  clearTimeout(hintTimeout);
+  //rehighlight keys dehighlighted by hintTimeout
+  highlightKeys();
+  
   updateDisplay();
   if (entry.length == 4) {
     verifyTimeout = setTimeout(() => verifyEntry(), 500);
@@ -396,6 +401,7 @@ function initGame(pinArg) {
   }
   
   clearTimeout(timeLeftTimeout);
+  clearTimeout(hintTimeout);
   
   if (pinArg) {
     pin = pinArg;
@@ -406,12 +412,14 @@ function initGame(pinArg) {
   state = 0;
   entry = "";
   entries = [];
+  hintsGiven = 0;
   solved = false;
   locked = false;
   autoSolve = false;
   updateDisplay();
   highlightKeys();
   
+  hintElement.disabled = false;
   newGameElement.style.removeProperty("border");
 }
 
@@ -428,6 +436,12 @@ function verifyEntry(entryArg) {
     solved = true;
     state = 1;
     
+    if (autoSolve) {
+      clearTimeout(hintTimeout);
+      //rehighlight keys dehighlighted by hintTimeout
+      highlightKeys();
+    }
+    
     lcdElement.textContent = "Access Granted";
     lcdElement.style.backgroundColor = "green";
     
@@ -438,11 +452,15 @@ function verifyEntry(entryArg) {
     if (autoSolve) {
       status = status.replace(/cracked/, "autosolved");
     }
+    if (!autoSolve && hintsGiven > 0) {
+      status = status.replace(/cracked/, "cracked with some help");
+    }
     
     updateLog(status);
     if (!silent) {
       alert(status);
     }
+    hintElement.disabled = true;
     autoSolveElement.disabled = true;
     highlightElement(newGameElement, 100);
     
@@ -559,6 +577,37 @@ function about(event) {
     aboutText.join("\n\n")
   );
   event.preventDefault();
+}
+
+//flash incremental number of keys in pin upon hint request
+function hint(event) {
+  let keysToFlash = hintsGiven < 4 ? hintsGiven + 1 : 4;
+  let keyToFlash = 0;
+  let button = document.getElementById("button" + pin[keyToFlash]);
+  
+  function flashKey(times) {
+    hintTimeout = setTimeout(() => {
+      hintTimeout = setTimeout(() => {
+        button.style.backgroundColor = "";
+        hintTimeout = setTimeout(() => {
+          button.style.backgroundColor = "orange";
+          if (--times > 0) {
+            flashKey(times);
+          } else {
+            if (--keysToFlash > 0) {
+              keyToFlash++;
+              button =
+                document.getElementById("button" + pin[keyToFlash]);
+              flashKey(3);
+            }
+          }
+        }, 500);
+      }, 500);
+    }, 0);
+  }
+  
+  flashKey(3);
+  hintsGiven++;
 }
 
 //returns array of unique PIN digits
