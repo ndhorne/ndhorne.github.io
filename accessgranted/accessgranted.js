@@ -595,10 +595,12 @@ function hint(event) {
             flashKey(times);
           } else {
             if (--keysToFlash > 0) {
-              keyToFlash++;
-              button =
-                document.getElementById("button" + pin[keyToFlash]);
-              flashKey(3);
+              hintTimeout = setTimeout(() => {
+                keyToFlash++;
+                button =
+                  document.getElementById("button" + pin[keyToFlash]);
+                flashKey(3);
+              }, 500);
             }
           }
         }, 500);
