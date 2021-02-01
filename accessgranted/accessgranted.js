@@ -283,14 +283,6 @@ function timeLeftString() {
       : "00";
   }
   
-  /*
-  //math for timeLeft in seconds
-  hours = Math.floor(timeLeft / 3600);
-  minutes = Math.floor(timeLeft % 3600 / 60);
-  seconds = Math.floor(timeLeft % 3600 % 60);
-  */
-  
-  //math for timeLeft in milliseconds
   hours = Math.floor(timeLeft / 3600000);
   minutes = Math.floor(timeLeft % 3600000 / 60000);
   seconds = Math.floor(timeLeft % 3600000 % 60000 / 1000);
@@ -304,8 +296,37 @@ function timeLeftString() {
   return hours + ":" + minutes + ":" + seconds + "." + centiseconds;
 }
 
+//formats and returns custom time value as string
+function customTimeString(time) {
+  let hours, minutes, seconds, result = "";
+  
+  hours = Math.floor(time / 3600);
+  minutes = Math.floor(time % 3600 / 60);
+  seconds = Math.floor(time % 3600 % 60);
+  
+  if (hours > 0) {
+    result += hours + " hour";
+    if (hours > 1) result += "s";
+  }
+  if (minutes > 0) {
+    result += result ? ", " : "";
+    if (seconds == 0) result += "and ";
+    result += minutes + " minute";
+    if (minutes > 1) result += "s";
+  }
+  if (seconds > 0) {
+    result += result ? ", " : "";
+    if (hours > 0 || minutes > 0) result += "and ";
+    result += seconds + " second";
+    if (seconds > 1) result += "s";
+  }
+  
+  return result;
+}
+
 //initializes new game
 function initGame(pinArg) {
+  
   switch (modeElement.selectedIndex) {
     case 0:
       gameMode = 0;
@@ -354,13 +375,13 @@ function initGame(pinArg) {
             timeLeft = mode2CustomValue * 1000;
             updateLog(
               "Time length allotted to solve within set to custom" +
-              " value " + mode2CustomValue + " seconds"
+              " value " + customTimeString(mode2CustomValue)
             );
           } else {
             timeLeft = 360000 * 1000;
             updateLog(
               "Time length allotted to solve within set to truncated" +
-              " value 360000 seconds"
+              " value 100 hours"
             );
           }
           
@@ -479,7 +500,7 @@ function verifyEntry(entryArg) {
     if (gameMode == 2 && entries.length == 1) {
       updateLog(
         "Entry rejected, enter correct PIN within "
-        + (timeLeft / 1000) + " seconds"
+        + customTimeString(timeLeft / 1000)
       );
       
       (function setTimeLeftTimeout() {
