@@ -310,7 +310,7 @@ function customTimeString(time) {
   }
   if (minutes > 0) {
     result += result ? ", " : "";
-    if (seconds == 0) result += "and ";
+    if (seconds == 0 && hours > 0) result += "and ";
     result += minutes + " minute";
     if (minutes > 1) result += "s";
   }
@@ -471,6 +471,16 @@ function verifyEntry(entryArg) {
     
     updateEntries();
     entry = "";
+    
+    if (gameMode == 1 && entries.length < maxAttempts) {
+      updateLog(
+        "Entry rejected, "
+        + (maxAttempts - entries.length)
+        + " attempt"
+        + ((maxAttempts - entries.length > 1) ? "s" : "")
+        + " remaining"
+      );
+    }
     
     if (gameMode == 1 && entries.length == maxAttempts) {
       clearTimeout(resetDisplayTimeout);
