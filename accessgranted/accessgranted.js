@@ -225,16 +225,20 @@ function updateDisplay() {
   }
 }
 
+//clears hint timeout and does related clean up
+function clearHintTimeout() {
+  clearTimeout(hintTimeout);
+  //rehighlight keys possibly dehighlighted by hintTimeout
+  highlightKeys();
+}
+
 //upon key input clears timeout to reset display(if any), updates
 //display with current entry, and when four digits in length verifies
 //entry after half-second timeout
 function keyIn() {
   clearTimeout(resetDisplayTimeout);
+  clearHintTimeout();
   state = 0;
-  
-  clearTimeout(hintTimeout);
-  //rehighlight keys dehighlighted by hintTimeout
-  highlightKeys();
   
   updateDisplay();
   if (entry.length == 4) {
@@ -253,6 +257,7 @@ function highlightKeys() {
   }
 }
 
+//highlights an element after a given timeout
 function highlightElement(element, timeout) {  
   setTimeout(() => {
     element.style.border = "2px solid darkorange";
@@ -276,7 +281,7 @@ function pinGen() {
   return pin;
 }
 
-//formats and returns amount of time remaining as a string
+//formats and returns amount of time remaining as colon delimited string
 function timeLeftString() {
   let hours, minutes, seconds, centiseconds;
   
@@ -301,8 +306,8 @@ function timeLeftString() {
   return hours + ":" + minutes + ":" + seconds + "." + centiseconds;
 }
 
-//formats and returns custom time value as string
-function customTimeString(time) {
+//formats and returns time value in seconds as human readable string
+function humanReadableTimeString(time) {
   let hours, minutes, seconds, result = "";
   
   hours = Math.floor(time / 3600);
@@ -380,7 +385,7 @@ function initGame(pinArg) {
             timeLeft = mode2CustomValue * 1000;
             updateLog(
               "Time length allotted to solve within set to custom" +
-              " value " + customTimeString(mode2CustomValue)
+              " value " + humanReadableTimeString(mode2CustomValue)
             );
           } else {
             timeLeft = 360000 * 1000;
@@ -437,9 +442,7 @@ function verifyEntry(entryArg) {
     state = 1;
     
     if (autoSolve) {
-      clearTimeout(hintTimeout);
-      //rehighlight keys dehighlighted by hintTimeout
-      highlightKeys();
+      clearHintTimeout();
     }
     
     lcdElement.textContent = "Access Granted";
@@ -453,7 +456,19 @@ function verifyEntry(entryArg) {
       status = status.replace(/cracked/, "autosolved");
     }
     if (!autoSolve && hintsGiven > 0) {
-      status = status.replace(/cracked/, "cracked with some help");
+      status = status.replace(/cracked/, "cracked with "
+        + (hintsGiven < 4 ? hintsGiven : 4) + " position"
+        + (hintsGiven > 1 ? "s" : "")
+        + " revealed");
+    }
+    if (gameMode == 2) {
+      status += " with "
+        + humanReadableTimeString(timeLeft / 1000)
+        + " remaining";
+    }
+    if (pin == "0451") {
+      status =
+        status.replace(/0451/, "0451 (long live Looking Glass!)");
     }
     
     updateLog(status);
@@ -528,7 +543,7 @@ function verifyEntry(entryArg) {
     if (gameMode == 2 && entries.length == 1) {
       updateLog(
         "Entry rejected, enter correct PIN within "
-        + customTimeString(timeLeft / 1000)
+        + humanReadableTimeString(timeLeft / 1000)
       );
       
       (function setTimeLeftTimeout() {
@@ -581,6 +596,7 @@ function about(event) {
 
 //flash incremental number of keys in pin upon hint request
 function hint(event) {
+  clearHintTimeout();
   let keysToFlash = hintsGiven < 4 ? hintsGiven + 1 : 4;
   let keyToFlash = 0;
   let button = document.getElementById("button" + pin[keyToFlash]);
@@ -601,6 +617,16 @@ function hint(event) {
                   document.getElementById("button" + pin[keyToFlash]);
                 flashKey(3);
               }, 500);
+            } else {
+              if (hintsGiven < 5) {
+                updateLog(
+                  (hintsGiven < 4 ? hintsGiven : 4)
+                  + " of 4 positions revealed, "
+                  + (hintsGiven < 4
+                    ? "hint again for more positions"
+                    : "no positions remaining")
+                );
+              }
             }
           }
         }, 500);
