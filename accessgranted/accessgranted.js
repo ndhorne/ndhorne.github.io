@@ -29,8 +29,8 @@ let hintElement = document.getElementById("hintButton");
 let modeOptionsElement, modeOptionsLabel;
 
 let pin, entry, entries, state, gameMode, timeLeft, maxAttempts;
-let silent, solved, locked, autoSolve, autoNew, hintsGiven;
-let mode1CustomValue, mode2CustomValue;
+let silent, solved, locked, autoSolve, autoNew;
+let hintsGiven, keysRevealed, mode1CustomValue, mode2CustomValue;
 let verifyTimeout, timeLeftTimeout, resetDisplayTimeout, hintTimeout;
 let buttons = [];
 let aboutText = [
@@ -418,6 +418,7 @@ function initGame(pinArg) {
   entry = "";
   entries = [];
   hintsGiven = 0;
+  keysRevealed = 0;
   solved = false;
   locked = false;
   autoSolve = false;
@@ -455,10 +456,10 @@ function verifyEntry(entryArg) {
     if (autoSolve) {
       status = status.replace(/cracked/, "autosolved");
     }
-    if (!autoSolve && hintsGiven > 0) {
+    if (!autoSolve && keysRevealed > 0) {
       status = status.replace(/cracked/, "cracked with "
-        + (hintsGiven < 4 ? hintsGiven : 4) + " position"
-        + (hintsGiven > 1 ? "s" : "")
+        + keysRevealed + " position"
+        + (keysRevealed > 1 ? "s" : "")
         + " revealed");
     }
     if (gameMode == 2) {
@@ -496,7 +497,7 @@ function verifyEntry(entryArg) {
         state = 0;
         updateDisplay();
         
-        if (gameMode == 2 && entry == "") {
+        if (gameMode == 2 && entry == "" && !locked) {
           lcdElement.textContent = timeLeftString();
         }
       }, 1500);
@@ -597,14 +598,27 @@ function about(event) {
 //flash incremental number of keys in pin upon hint request
 function hint(event) {
   clearHintTimeout();
-  let keysToFlash = hintsGiven < 4 ? hintsGiven + 1 : 4;
-  let keyToFlash = 0;
-  let button = document.getElementById("button" + pin[keyToFlash]);
+  let keysToFlash = keysRevealed < 4 ? keysRevealed + 1 : keysRevealed;
+  let current = 0, logUpdated = false;
+  let button = document.getElementById("button" + pin[current]);
   
   function flashKey(times) {
     hintTimeout = setTimeout(() => {
       hintTimeout = setTimeout(() => {
         button.style.backgroundColor = "";
+        if (keysToFlash == 1 && keysRevealed < 4 && !logUpdated) {
+          keysRevealed++;
+          updateLog(
+            keysRevealed
+            + " of 4 positions revealed, "
+            + (keysRevealed < 4
+              ? "hint again for "
+                + (keysRevealed + 1)
+                + " of 4 positions"
+              : "no positions remaining")
+          );
+          logUpdated = true;
+        }
         hintTimeout = setTimeout(() => {
           button.style.backgroundColor = "orange";
           if (--times > 0) {
@@ -612,25 +626,15 @@ function hint(event) {
           } else {
             if (--keysToFlash > 0) {
               hintTimeout = setTimeout(() => {
-                keyToFlash++;
+                current++;
                 button =
-                  document.getElementById("button" + pin[keyToFlash]);
+                  document.getElementById("button" + pin[current]);
                 flashKey(3);
               }, 500);
-            } else {
-              if (hintsGiven < 5) {
-                updateLog(
-                  (hintsGiven < 4 ? hintsGiven : 4)
-                  + " of 4 positions revealed, "
-                  + (hintsGiven < 4
-                    ? "hint again for more positions"
-                    : "no positions remaining")
-                );
-              }
             }
           }
-        }, 500);
-      }, 500);
+        }, 250);
+      }, 250);
     }, 0);
   }
   
