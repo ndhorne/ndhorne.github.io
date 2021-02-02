@@ -230,6 +230,7 @@ function clearHintTimeout() {
   clearTimeout(hintTimeout);
   //rehighlight keys possibly dehighlighted by hintTimeout
   highlightKeys();
+  hintElement.disabled = false;
 }
 
 //upon key input clears timeout to reset display(if any), updates
@@ -597,7 +598,8 @@ function about(event) {
 
 //flash incremental number of keys in pin upon hint request
 function hint(event) {
-  clearHintTimeout();
+  hintElement.disabled = true;
+  
   let keysToFlash = keysRevealed < 4 ? keysRevealed + 1 : keysRevealed;
   let current = 0, logUpdated = false;
   let button = document.getElementById("button" + pin[current]);
@@ -631,6 +633,8 @@ function hint(event) {
                   document.getElementById("button" + pin[current]);
                 flashKey(3);
               }, 500);
+            } else {
+              hintElement.disabled = false;
             }
           }
         }, 250);
