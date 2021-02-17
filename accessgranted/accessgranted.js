@@ -50,6 +50,14 @@ let aboutText = [
   "https://github.com/ndhorne/access-granted-js"
 ];
 
+//append individual option element to select element
+function appendSelectOption(selectElement, optionText, optionValue) {
+  let option = document.createElement("option");
+  option.text = optionText;
+  option.value = optionValue;
+  selectElement.add(option);
+}
+
 //append option elements to select element
 function appendSelectOptions(select, ...options) {
   for (let i = 0; i < options.length; i++) {
@@ -71,7 +79,7 @@ mode1OptionsLabel.htmlFor = "mode1Options";
 //lockout options
 appendSelectOptions(
   mode1OptionsElement,
-  "15", "10", "5", "4", "3", "Custom"
+  "25", "20", "15", "10", "5", "Custom"
 );
 
 //beat the clock game mode option elements
@@ -79,14 +87,19 @@ let mode2OptionsElement = document.createElement("select");
 mode2OptionsElement.id = "mode2Options";
 
 let mode2OptionsLabel = document.createElement("label");
-mode2OptionsLabel.innerHTML = "Time (in seconds):";
+mode2OptionsLabel.innerHTML = "Time:";
 mode2OptionsLabel.htmlFor = "mode2Options";
 
 //beat the clock options
-appendSelectOptions(
-  mode2OptionsElement,
-  "60", "30", "15", "10", "5", "Custom"
-);
+[
+  { text: "2'", value: 120 }, { text: "1'", value: 60 },
+  { text: "45\"", value: 45 }, { text: "30\"", value: 30 },
+  { text: "15\"", value: 15 }, { text: "Custom", value: "Custom" }
+].forEach(function(optionObj) {
+  appendSelectOption(
+    mode2OptionsElement, optionObj.text, optionObj.value
+  );
+});
 
 //fine sizing/positioning
 optionsElement.style.width =
@@ -225,7 +238,7 @@ function updateDisplay() {
   }
 }
 
-//clears hint timeout and does related clean up
+//clears hint timeout and does associated clean up
 function clearHintTimeout() {
   clearTimeout(hintTimeout);
   //rehighlight keys possibly dehighlighted by hintTimeout
@@ -238,7 +251,9 @@ function clearHintTimeout() {
 //entry after half-second timeout
 function keyIn() {
   clearTimeout(resetDisplayTimeout);
-  clearHintTimeout();
+  if (gameMode == 0) {
+    clearHintTimeout();
+  }
   state = 0;
   
   updateDisplay();
@@ -341,10 +356,12 @@ function initGame(pinArg) {
   switch (modeElement.selectedIndex) {
     case 0:
       gameMode = 0;
+      hintElement.disabled = false;
       autoSolveElement.disabled = false;
       break;
     case 1:
       gameMode = 1;
+      hintElement.disabled = true;
       autoSolveElement.disabled = true;
       
       if (modeOptionsElement.value == "Custom") {
@@ -368,6 +385,7 @@ function initGame(pinArg) {
       break;
     case 2:
       gameMode = 2;
+      hintElement.disabled = true;
       autoSolveElement.disabled = true;
       
       if (modeOptionsElement.value == "Custom") {
@@ -426,7 +444,6 @@ function initGame(pinArg) {
   updateDisplay();
   highlightKeys();
   
-  hintElement.disabled = false;
   newGameElement.style.removeProperty("border");
 }
 
@@ -477,6 +494,7 @@ function verifyEntry(entryArg) {
     if (!silent) {
       alert(status);
     }
+    
     hintElement.disabled = true;
     autoSolveElement.disabled = true;
     highlightElement(newGameElement, 100);
