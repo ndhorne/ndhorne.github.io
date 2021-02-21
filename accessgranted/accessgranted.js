@@ -29,9 +29,10 @@ let hintElement = document.getElementById("hintButton");
 let modeOptionsElement, modeOptionsLabel;
 
 let pin, entry, entries, state, gameMode, timeLeft, maxAttempts;
-let silent, solved, locked, autoSolve, autoNew;
+let silent, solved, locked, autoSolve, autoNew, optionIndex;
 let hintsGiven, keysRevealed, mode1CustomValue, mode2CustomValue;
 let verifyTimeout, timeLeftTimeout, resetDisplayTimeout, hintTimeout;
+let newModeSelectedTimeout, newModeOptionSelectedTimeout;
 let buttons = [];
 let aboutText = [
   "Access Granted JS",
@@ -127,8 +128,36 @@ function updateLog(line, spacing = 1) {
   logElement.scrollTop = logElement.scrollHeight;
 }
 
-//updates interface when switching game modes
+//wires up mode select element with callback function to update
+//interface when switching game modes
 modeElement.addEventListener("change", event => {
+  function newModeSelectedAdministrivia() {
+    clearTimeout(newModeSelectedTimeout);
+    
+    if (!solved && !locked) {
+      newGameElement.style.removeProperty("border");
+      
+      (function foo(timeout) {
+        newModeSelectedTimeout = setTimeout(function() {
+          highlightElement(newGameElement, 0);
+          
+          newModeSelectedTimeout = setTimeout(function() {
+            newGameElement.style.removeProperty("border");
+            foo(timeout);
+          }, timeout);
+        }, timeout);
+      })(500);
+    }
+  }
+  
+  function currentModeSelectedAdministrivia() {
+    clearTimeout(newModeSelectedTimeout);
+    
+    if (!solved && !locked) {
+      newGameElement.style.removeProperty("border");
+    }
+  }
+  
   if (logElement.innerHTML.slice(-8) != "<br><br>") {
     logElement.appendChild(document.createElement("br"));
   }
@@ -146,6 +175,12 @@ modeElement.addEventListener("change", event => {
       }
       if (modeOptionsLabel) {
         modeOptionsLabel.remove();
+      }
+      
+      if (gameMode != event.target.selectedIndex) {
+        newModeSelectedAdministrivia();
+      } else {
+        currentModeSelectedAdministrivia();
       }
       
       break;
@@ -170,6 +205,14 @@ modeElement.addEventListener("change", event => {
         mode1OptionsElement, newGameElement
       );
       
+      setModeOptionEvents();
+      
+      if (gameMode != event.target.selectedIndex) {
+        newModeSelectedAdministrivia();
+      } else {
+        currentModeSelectedAdministrivia();
+      }
+      
       break;
     case 2:
       updateLog(
@@ -192,11 +235,58 @@ modeElement.addEventListener("change", event => {
         mode2OptionsElement, newGameElement
       );
       
+      setModeOptionEvents();
+      
+      if (gameMode != event.target.selectedIndex) {
+        newModeSelectedAdministrivia();
+      } else {
+        currentModeSelectedAdministrivia();
+      }
+      
       break;
     default:
       console.error("No case defined for chosen option");
   }
 });
+
+//wires up mode options select element with callback function to update
+//interface when switching options
+function setModeOptionEvents() {
+  modeOptionsElement.addEventListener("change", event => {
+    function newModeOptionSelectedAdministrivia() {
+      clearTimeout(newModeOptionSelectedTimeout);
+      
+      if (gameMode == modeElement.selectedIndex && !solved && !locked) {
+        newGameElement.style.removeProperty("border");
+        
+        (function foo(timeout) {
+          newModeOptionSelectedTimeout = setTimeout(function() {
+            highlightElement(newGameElement, 0);
+            
+            newModeOptionSelectedTimeout = setTimeout(function() {
+              newGameElement.style.removeProperty("border");
+              foo(timeout);
+            }, timeout);
+          }, timeout);
+        })(500);
+      }
+    }
+    
+    function currentModeOptionSelectedAdministrivia() { 
+      clearTimeout(newModeOptionSelectedTimeout);
+      
+      if (gameMode == modeElement.selectedIndex && !solved && !locked) {
+        newGameElement.style.removeProperty("border");
+      }
+    }
+    
+    if (optionIndex != event.target.selectedIndex) {
+      newModeOptionSelectedAdministrivia();
+    } else {
+      currentModeOptionSelectedAdministrivia();
+    }
+  });
+}
 
 //initializes buttons array with references to button elements
 for (let i = 0; i < 10; i++) {
@@ -352,7 +442,6 @@ function humanReadableTimeString(time) {
 
 //initializes new game
 function initGame(pinArg) {
-  
   switch (modeElement.selectedIndex) {
     case 0:
       gameMode = 0;
@@ -426,6 +515,8 @@ function initGame(pinArg) {
   
   clearTimeout(timeLeftTimeout);
   clearTimeout(hintTimeout);
+  clearTimeout(newModeSelectedTimeout);
+  clearTimeout(newModeOptionSelectedTimeout);
   
   if (pinArg) {
     pin = pinArg;
@@ -438,9 +529,15 @@ function initGame(pinArg) {
   entries = [];
   hintsGiven = 0;
   keysRevealed = 0;
+  
+  if (gameMode != 0) {
+    optionIndex = modeOptionsElement.selectedIndex;
+  }
+  
   solved = false;
   locked = false;
   autoSolve = false;
+  
   updateDisplay();
   highlightKeys();
   
@@ -540,7 +637,7 @@ function verifyEntry(entryArg) {
       locked = true;
       state = 3;
       
-      if (gameMode == 1 && modeOptionsElement.value == "Custom") {
+      if (modeOptionsElement.value == "Custom") {
         newGameElement.disabled = true;
       }
       
