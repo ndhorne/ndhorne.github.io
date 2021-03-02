@@ -384,6 +384,26 @@
     }
   },
   {
+    "quote": "Programming isn't about what you know; it's about what you can figure out.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Chris",
+        "middle": null,
+        "last": "Pine",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "Learn to Program",
+      "date": {
+        "year": "2006",
+        "month": null,
+        "day": null
+      }
+    }
+  },
+  {
     "quote": "Good programmers know what to write. Great ones know what to rewrite (and reuse).",
     "author": {
       "name": {
@@ -404,6 +424,26 @@
     }
   },
   {
+    "quote": "There is nothing more permanent than a temporary hack.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Kyle",
+        "middle": null,
+        "last": "Simpson",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "You Don't Know JS: Async & Performance",
+      "date": {
+        "year": "2014",
+        "month": null,
+        "day": null
+      }
+    }
+  },
+  {
     "quote": "There are only two kinds of languages: the ones people complain about and the ones nobody uses.",
     "author": {
       "name": {
@@ -411,6 +451,19 @@
         "first": "Bjarne",
         "middle": null,
         "last": "Stroustrup",
+        "suffix": null
+      }
+    },
+    "source": null
+  },
+  {
+    "quote": "Continuous improvement is better than delayed perfection.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Mark",
+        "middle": null,
+        "last": "Twain",
         "suffix": null
       }
     },
