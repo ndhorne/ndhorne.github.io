@@ -44,13 +44,15 @@
         </div>
       </div>
       
-      <div id="links">
-        <button type="button" id="hintButton" class="modeButton"
-          onclick="hint(event)">
+      <div id="cheats">
+        <button type="button" id="hintButton" class="gameButton"
+          onclick="hint(event)"
+        >
           Hint
         </button>
-        <button type="button" id="autoSolveButton" class="modeButton"
-          onclick="autoSolveSequential(event)">
+        <button type="button" id="autoSolveButton" class="gameButton"
+          onclick="autoSolveSequential(event)"
+        >
           Auto-Solve
         </button>
       </div>
@@ -62,7 +64,7 @@
           <option>Lockout</option>
           <option>Beat the Clock</option>
         </select>
-        <button type="button" id="newGameButton" class="modeButton"
+        <button type="button" id="newGameButton" class="gameButton"
           onclick="newGame(event)"
           style="display: block; margin: 7px auto auto;">
           New Game
