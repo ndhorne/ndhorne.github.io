@@ -32,7 +32,7 @@ let pin, entry, entries, state, gameMode, timeLeft, maxAttempts;
 let silent, solved, locked, autoSolve, autoNew, optionIndex;
 let hintsGiven, keysRevealed, mode1CustomValue, mode2CustomValue;
 let verifyTimeout, timeLeftTimeout, resetDisplayTimeout, hintTimeout;
-let newModeSelectedTimeout, newModeOptionSelectedTimeout;
+let newGameButtonBorderBlinkTimeout;
 let buttons = [];
 let aboutText = [
   "Access Granted JS",
@@ -128,32 +128,35 @@ function updateLog(line, spacing = 1) {
   logElement.scrollTop = logElement.scrollHeight;
 }
 
+//blink border around new game button until timeout is cleared
+function newGameButtonBorderBlinkHighlight(timeout) {
+  (function foo(timeout) {
+    newGameButtonBorderBlinkTimeout = setTimeout(function() {
+      highlightElement(newGameElement, 0);
+      
+      newGameButtonBorderBlinkTimeout = setTimeout(function() {
+        newGameElement.style.removeProperty("border");
+        foo(timeout);
+      }, timeout);
+    }, timeout);
+  })(timeout);
+}
+
 //wires up mode select element with callback function to update
 //interface when switching game modes
 modeElement.addEventListener("change", event => {
   function newModeSelectedAdministrivia() {
-    clearTimeout(newModeSelectedTimeout);
-    
     if (!solved && !locked) {
+      clearTimeout(newGameButtonBorderBlinkTimeout);
       newGameElement.style.removeProperty("border");
       
-      (function foo(timeout) {
-        newModeSelectedTimeout = setTimeout(function() {
-          highlightElement(newGameElement, 0);
-          
-          newModeSelectedTimeout = setTimeout(function() {
-            newGameElement.style.removeProperty("border");
-            foo(timeout);
-          }, timeout);
-        }, timeout);
-      })(500);
+      newGameButtonBorderBlinkHighlight(500);
     }
   }
   
   function currentModeSelectedAdministrivia() {
-    clearTimeout(newModeSelectedTimeout);
-    
     if (!solved && !locked) {
+      clearTimeout(newGameButtonBorderBlinkTimeout);
       newGameElement.style.removeProperty("border");
     }
   }
@@ -254,28 +257,17 @@ modeElement.addEventListener("change", event => {
 function setModeOptionEvents() {
   modeOptionsElement.addEventListener("change", event => {
     function newModeOptionSelectedAdministrivia() {
-      clearTimeout(newModeOptionSelectedTimeout);
-      
       if (gameMode == modeElement.selectedIndex && !solved && !locked) {
+        clearTimeout(newGameButtonBorderBlinkTimeout);
         newGameElement.style.removeProperty("border");
         
-        (function foo(timeout) {
-          newModeOptionSelectedTimeout = setTimeout(function() {
-            highlightElement(newGameElement, 0);
-            
-            newModeOptionSelectedTimeout = setTimeout(function() {
-              newGameElement.style.removeProperty("border");
-              foo(timeout);
-            }, timeout);
-          }, timeout);
-        })(500);
+        newGameButtonBorderBlinkHighlight(500);
       }
     }
     
     function currentModeOptionSelectedAdministrivia() { 
-      clearTimeout(newModeOptionSelectedTimeout);
-      
       if (gameMode == modeElement.selectedIndex && !solved && !locked) {
+        clearTimeout(newGameButtonBorderBlinkTimeout);
         newGameElement.style.removeProperty("border");
       }
     }
@@ -498,7 +490,7 @@ function initGame(pinArg) {
           } else {
             timeLeft = 360000 * 1000;
             updateLog(
-              "Time length allotted to solve within set to truncated" +
+              "Time length allotted to solve within set to maximum" +
               " value 100 hours"
             );
           }
@@ -515,8 +507,8 @@ function initGame(pinArg) {
   
   clearTimeout(timeLeftTimeout);
   clearTimeout(hintTimeout);
-  clearTimeout(newModeSelectedTimeout);
-  clearTimeout(newModeOptionSelectedTimeout);
+  clearTimeout(newGameButtonBorderBlinkTimeout);
+  newGameElement.style.removeProperty("border");
   
   if (pinArg) {
     pin = pinArg;
@@ -540,8 +532,6 @@ function initGame(pinArg) {
   
   updateDisplay();
   highlightKeys();
-  
-  newGameElement.style.removeProperty("border");
 }
 
 //verifies whether entry matches PIN, updates and sets timeout to clear
@@ -594,7 +584,7 @@ function verifyEntry(entryArg) {
     
     hintElement.disabled = true;
     autoSolveElement.disabled = true;
-    highlightElement(newGameElement, 100);
+    newGameButtonBorderBlinkHighlight(500);
     
     if (autoNew) {
       //reinitializes game upon success
@@ -643,7 +633,7 @@ function verifyEntry(entryArg) {
       
       resetDisplayTimeout = setTimeout(() => {
         updateDisplay();
-        highlightElement(newGameElement, 100);
+        newGameButtonBorderBlinkHighlight(500);
         newGameElement.disabled = false;
         updateLog(
           "LOCKED! Allotted number of entry attempts exhausted"
@@ -678,7 +668,7 @@ function verifyEntry(entryArg) {
             state = 3;
             
             updateDisplay();
-            highlightElement(newGameElement, 100);
+            newGameButtonBorderBlinkHighlight(500);
             updateLog(
               "LOCKED! Time length allotted to enter correct PIN within"
               + " expired"
