@@ -28,7 +28,7 @@ let autoNewGameElement = document.getElementById("autoNew");
 let hintElement = document.getElementById("hintButton");
 let modeOptionsElement, modeOptionsLabel;
 
-let pin, entry, entries, state, gameMode, timeLeft, maxAttempts;
+let pin, entry, entries, state, gameMode, timeLeft, maxAttempts, startTime;
 let silent, solved, locked, autoSolve, autoNew, optionIndex;
 let hintsGiven, keysRevealed, mode1CustomValue, mode2CustomValue;
 let verifyTimeout, timeLeftTimeout, resetDisplayTimeout, hintTimeout;
@@ -532,6 +532,8 @@ function initGame(pinArg) {
   
   updateDisplay();
   highlightKeys();
+  
+  startTime = Date.now();
 }
 
 //verifies whether entry matches PIN, updates and sets timeout to clear
@@ -556,8 +558,12 @@ function verifyEntry(entryArg) {
     
     updateEntries();
     
-    let status = "PIN " + pin + " cracked in " + entries.length +
-      " attempt" + (entries.length > 1 ? "s" : "");
+    let status = "PIN " + pin + " cracked in " + entries.length
+      + " attempt" + (entries.length > 1 ? "s" : "")
+      + (gameMode != 2 && !autoSolve
+        ? " over " + humanReadableTimeString((Date.now() - startTime) / 1000)
+        : "")
+    ;
     if (autoSolve) {
       status = status.replace(/cracked/, "autosolved");
     }
@@ -585,6 +591,27 @@ function verifyEntry(entryArg) {
     hintElement.disabled = true;
     autoSolveElement.disabled = true;
     newGameButtonBorderBlinkHighlight(500);
+    
+    if (pin == "0451") {
+      newGameElement.disabled = true;
+      setTimeout(function() {
+        lcdElement.style.backgroundColor = "darkcyan";
+        lcdElement.style.fontWeight = "bold";
+        lcdElement.innerHTML = "SHODAN";
+        setTimeout(function() {
+          lcdElement.innerHTML = "IS";
+          setTimeout(function() {
+            lcdElement.innerHTML = "WATCHING";
+            setTimeout(function() {
+              lcdElement.style.backgroundColor = "green";
+              lcdElement.style.removeProperty("font-weight");
+              lcdElement.innerHTML = "Access Granted";
+              newGameElement.disabled = false;
+            }, 500);
+          }, 500);
+        }, 500);
+      }, 0);
+    }
     
     if (autoNew) {
       //reinitializes game upon success
