@@ -1,0 +1,97 @@
+html {
+  height: 100%;
+}
+
+body {
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+table {
+  border: 1px outset black;
+  border-collapse: separate;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+button {
+  background-color: silver;
+  /*background-image: linear-gradient(lightgrey, grey);*/
+  border-radius: 6px;
+  padding: 4px 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+.rotate90 {
+  transform: rotate(90deg);
+}
+
+.rotate270 {
+  transform: rotate(270deg);
+}
+
+#board td {
+  width: 59px;
+  height: 59px;
+  border: 1px inset black;
+  font-size: 40px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: default;
+  padding: 0;
+  user-select: none;
+}
+
+#happyFacesOption {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+#selectOptions {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+#player1Options {
+  display: inline-block;
+  text-align: left;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#player2Options {
+  display: inline-block;
+  text-align: left;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#gridOptions {
+  display: inline-block;
+  text-align: left;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#newGameButton {
+  display: block;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#aboutButton {
+  display: block;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
