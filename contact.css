@@ -1,4 +1,9 @@
 label {
   display: inline-block;
   vertical-align: top;
+  font-family: 'Noto Sans SC', Arial, Helvetica, sans-serif;
+}
+
+button {
+  font-family: 'Noto Sans SC', Arial, Helvetica, sans-serif;
 }

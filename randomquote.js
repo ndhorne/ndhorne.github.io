@@ -32,6 +32,7 @@ quoteElement.style.marginRight = "auto";
 quoteElement.style.padding = 15 + "px";
 quoteElement.style.borderRadius = 10 + "px";
 quoteElement.style.backgroundColor = "whitesmoke";
+quoteElement.style.fontFamily = "Arial, Helvetica, sans-serif";
 quoteElement.style.maxWidth =
   containerElement.getBoundingClientRect().width * 0.95 + "px";
 
