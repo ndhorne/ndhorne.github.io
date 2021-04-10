@@ -397,11 +397,13 @@ function init() {
   
   Array.from(boardElem.rows).forEach(row => row.remove());
   
+  /*
   if (boardObj.optionOrigin == "Pit of Death") {
     boardElem.style.borderCollapse = "collapse";
   } else {
     boardElem.style.borderCollapse = "separate";
   }
+  */
   
   for (let y = 0; y < boardObj.height; y++) {
     let row = document.createElement("tr");
