@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Open+Sans&family=Montserrat&family=Noto+Sans+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Open+Sans&family=Montserrat&family=Noto+Sans+SC&family=Share+Tech+Mono&family=Syne+Mono&family=Work+Sans&display=swap');
 
 html {
   height: 100%;
@@ -131,12 +131,18 @@ div dl {
 #portfolio dl dd ul {
   list-style: none inside url("icons8-source-code-16.png");
   padding-left: 0;
+  font-family: 'Share Tech Mono', Arial, Helvetica, sans-serif;
+}
+
+#portfolio dl dd ul a {
+  font-family: 'Syne Mono', Arial, Helvetica, sans-serif;
 }
 
 #portfolio dl dd ul li ul {
   list-style: disc outside none;
   padding-left: 40px;
   font-size: 14px;
+  font-family: 'Work Sans', Arial, Helvetica, sans-serif;
 }
 
 #portfolio dl dd ul li ul li a:hover {
