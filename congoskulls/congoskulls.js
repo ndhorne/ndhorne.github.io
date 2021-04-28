@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 "use strict";
 
 class Board {
-  constructor(width, height, optionOrigin) {
+  constructor(width, height, gridOption) {
     if (typeof(width) != "number" || typeof(height) != "number") {
       throw new Error("Numbers expected for width and height parameters.");
     }
@@ -25,7 +25,7 @@ class Board {
     this.width = width;
     this.height = height;
     this.grid = new Array(width * height);
-    this.optionOrigin = optionOrigin;
+    this.gridOption = gridOption;
     this.moves = [];
     this.last;
   }
@@ -76,12 +76,12 @@ let pieces = {
     },
     {
       face: String.fromCodePoint(0x1F612),
-      classed: null
+      classes: null
     }
   ]
 }
 
-let boardObj, turns, state;
+let boardObj, pitCells, turns, state;
 let totalGames = 0, player1Score = 0, player2Score = 0;
 let markers = pieces["skull"];
 let marker = markers[0].face;
@@ -96,7 +96,7 @@ function newOptionSelectedAdministrivia() {
   clearNewGameElemHighlightTimeout();
   
   if (
-    boardObj.optionOrigin != gridSelectElem[gridSelectElem.selectedIndex].text
+    boardObj.gridOption != gridSelectElem.selectedIndex
     || players[0].type != player1SelectElem.value
     || players[1].type != player2SelectElem.value
     || state != 0
@@ -138,6 +138,50 @@ function highlightElement(element, timeout, color) {
   }, timeout);
 }
 
+function getBorderingIndicies(index) {
+  let above =
+    index - boardObj.width < 0
+    || boardObj.grid[index - boardObj.width] == false
+    ? null
+    : index - boardObj.width
+  ;
+  
+  let below =
+    index + boardObj.width >= boardObj.grid.length
+    || boardObj.grid[index + boardObj.width] == false
+    ? null
+    : index + boardObj.width
+  ;
+  
+  let left =
+    index % boardObj.width == 0
+    || boardObj.grid[index - 1] == false
+    ? null
+    : index - 1
+  ;
+  
+  let right =
+    index % boardObj.width == boardObj.width - 1
+    || boardObj.grid[index + 1] == false
+    ? null
+    : index + 1
+  ;
+  
+  return [above, below, left, right].filter(element => element != null);
+}
+
+function getBorderingPieces(index) {
+  return getBorderingIndicies(index).filter(
+    index => boardObj.grid[index] == true
+  );
+}
+
+function getAvailableMoves(index) {
+  return getBorderingIndicies(index).filter(
+    index => boardObj.grid[index] == undefined
+  );
+}
+
 function move(event) {
   let x = Number(event.target.dataset.x);
   let y = Number(event.target.dataset.y);
@@ -145,59 +189,20 @@ function move(event) {
   let index = x + y * width;
   let timeout;
   
-  function getBorderingIndicies(index) {
-    let above =
-      index - width < 0
-      || boardObj.grid[index - width] == false
-      ? null
-      : index - width
-    ;
-    
-    let below =
-      index + width >= boardObj.grid.length
-      || boardObj.grid[index + width] == false
-      ? null
-      : index + width
-    ;
-    
-    let left =
-      index % width == 0
-      || boardObj.grid[index - 1] == false
-      ? null
-      : index - 1
-    ;
-    
-    let right =
-      index % width == width - 1
-      || boardObj.grid[index + 1] == false
-      ? null
-      : index + 1
-    ;
-    
-    return [above, below, left, right].filter(element => element != null);
+  if (boardObj.grid[index] == false) {
+    pitDialog();
+    return;
   }
-  
-  function getBorderingPieces(index) {
-    return getBorderingIndicies(index).filter(
-      index => boardObj.grid[index] == true
-    );
-  }
-  
-  function getAvailableMoves(index) {
-    return getBorderingIndicies(index).filter(
-      index => boardObj.grid[index] == undefined
-    );
-  }
-  
-  let borderingPieces = getBorderingPieces(index);
   
   function setMark() {
     boardObj.grid[index] = true;
-    event.target.firstChild.innerHTML = marker;
+    event.target.innerHTML = marker;
     boardObj.moves.push(index);
     boardObj.last = index;
     turns++;
   }
+  
+  let borderingPieces = getBorderingPieces(index);
   
   if (boardObj.last == undefined) {
     setMark();
@@ -314,11 +319,11 @@ function updateMarkers() {
     let index = x + y * width;
     
     if (boardObj.grid[index] == true) {
-      cell.firstChild.classList.remove(...cell.firstChild.classList);
-      cell.firstChild.innerHTML = marker;
+      cell.classList.remove(...cell.classList);
+      cell.innerHTML = marker;
       
       if (markers[state].classes) {
-        cell.firstChild.classList.add(
+        cell.classList.add(
           markers[state].classes[
             Math.floor(Math.random() * markers[state].classes.length)
           ]
@@ -328,6 +333,66 @@ function updateMarkers() {
   });
 }
 
+function updatePit() {
+  function removeBorders() {
+    pitCells[0].style.borderRight = "none";
+    pitCells[0].style.borderBottom = "none";
+    
+    pitCells[1].style.borderLeft = "none";
+    pitCells[1].style.borderRight = "none";
+    pitCells[1].style.borderBottom = "none";
+    
+    pitCells[2].style.borderLeft = "none";
+    pitCells[2].style.borderBottom = "none";
+    
+    pitCells[3].style.borderRight = "none";
+    pitCells[3].style.borderTop = "none";
+    pitCells[3].style.borderBottom = "none";
+    
+    pitCells[4].style.border = "none";
+    
+    pitCells[5].style.borderLeft = "none";
+    pitCells[5].style.borderTop = "none";
+    pitCells[5].style.borderBottom = "none";
+    
+    pitCells[6].style.borderRight = "none";
+    pitCells[6].style.borderTop = "none";
+    
+    pitCells[7].style.borderLeft = "none";
+    pitCells[7].style.borderRight = "none";
+    pitCells[7].style.borderTop = "none";
+    
+    pitCells[8].style.borderLeft = "none";
+    pitCells[8].style.borderTop = "none";
+  }
+  
+  if (pitCells) {
+    if (happyFacesCheckbox.checked) {
+      pitCells.forEach(cell => cell.style.background = "floralwhite");
+      pitCells.forEach(cell => cell.innerHTML = String.fromCodePoint(0x1F33C));
+      
+      removeBorders();
+    } else {
+      pitCells.forEach(cell => cell.innerHTML = "");
+      pitCells.forEach(cell => cell.style.border = "1px solid black");
+      
+      pitCells[0].style.background =
+        "linear-gradient(to right bottom, white, white, black)";
+      pitCells[1].style.background = "linear-gradient(white, black)";
+      pitCells[2].style.background =
+        "linear-gradient(to left bottom, white, white, black)";
+      pitCells[3].style.background = "linear-gradient(to right, white, black)";
+      pitCells[4].style.background = "black";
+      pitCells[5].style.background = "linear-gradient(to left, white, black)";
+      pitCells[6].style.background =
+        "linear-gradient(to right top, white, white, black)";
+      pitCells[7].style.background = "linear-gradient(to top, white, black)";
+      pitCells[8].style.background =
+        "linear-gradient(to left top, white, white, black)";
+    }
+  }
+}
+
 function undo() {
   if (state == 0 && players[0].type != players[1].type) {
     if (boardObj.moves.length > (players[0].type == "CPU" ? 1 : 0)) {
@@ -335,7 +400,7 @@ function undo() {
         boardObj.grid[boardObj.last] = undefined;
         document.getElementById(
           "cell" + boardObj.last
-        ).firstChild.innerHTML = "";
+        ).innerHTML = "";
         boardObj.moves.pop();
         boardObj.last = boardObj.moves[boardObj.moves.length - 1];
       }
@@ -343,8 +408,12 @@ function undo() {
   }
 }
 
-function ahhh(event) {
-  alert("Ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+function pitDialog() {
+  if (happyFacesCheckbox.checked) {
+    alert("Please don't step on the daisies");
+  } else {
+    alert("Ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+  }
 }
 
 function init() {
@@ -389,21 +458,13 @@ function init() {
   boardObj = new Board(
     xArg,
     yArg,
-    gridSelectElem[gridSelectElem.selectedIndex].text
+    gridSelectElem.selectedIndex
   );
   turns = 0;
   state = 0;
   marker = markers[state].face;
   
   Array.from(boardElem.rows).forEach(row => row.remove());
-  
-  /*
-  if (boardObj.optionOrigin == "Pit of Death") {
-    boardElem.style.borderCollapse = "collapse";
-  } else {
-    boardElem.style.borderCollapse = "separate";
-  }
-  */
   
   for (let y = 0; y < boardObj.height; y++) {
     let row = document.createElement("tr");
@@ -413,7 +474,6 @@ function init() {
       cell.setAttribute("data-x", x);
       cell.setAttribute("data-y", y);
       cell.setAttribute("id", "cell" + (x + y * boardObj.width));
-      cell.appendChild(document.createElement("div"));
       row.appendChild(cell);
     }
     
@@ -424,8 +484,8 @@ function init() {
     cell.addEventListener("click", move);
   });
   
-  if (boardObj.optionOrigin == "Pit of Death") {
-    let pitCells = [
+  if (boardObj.gridOption == 3) {
+    pitCells = [
       ((boardObj.grid.length - 1) / 2) - (boardObj.width + 1),
       ((boardObj.grid.length - 1) / 2) - (boardObj.width),
       ((boardObj.grid.length - 1) / 2) - (boardObj.width - 1),
@@ -437,25 +497,13 @@ function init() {
       ((boardObj.grid.length - 1) / 2) + (boardObj.width + 1)
     ].map(index => document.getElementById("cell" + index));
     
-    pitCells[0].style.background =
-      "linear-gradient(to right bottom, white, white, black)";
-    pitCells[1].style.background = "linear-gradient(white, black)";
-    pitCells[2].style.background =
-      "linear-gradient(to left bottom, white, white, black)";
-    pitCells[3].style.background = "linear-gradient(to right, white, black)";
-    pitCells[4].style.backgroundColor = "black";
-    pitCells[5].style.background = "linear-gradient(to left, white, black)";
-    pitCells[6].style.background =
-      "linear-gradient(to right top, white, white, black)";
-    pitCells[7].style.background = "linear-gradient(to top, white, black)";
-    pitCells[8].style.background =
-      "linear-gradient(to left top, white, white, black)";
-    
-    pitCells.forEach(cell => cell.removeEventListener("click", move));
-    pitCells.forEach(cell => cell.addEventListener("click", ahhh));
     pitCells.forEach(cell => {
-      boardObj.grid[+cell.dataset.x + +cell.dataset.y * boardObj.width] = false;
+      boardObj.grid[
+        Number(cell.dataset.x) + Number(cell.dataset.y) * boardObj.width
+      ] = false;
     });
+    
+    updatePit();
   }
   
   if (players[0].type == "CPU") {
@@ -478,8 +526,8 @@ function about() {
     + "multiplayer, custom grid size, and undo (ctrl+z). Each piece played "
     + "(with the exception of the first piece) must border the last piece "
     + "played and border that piece only. The first player to play a piece "
-    + "bordering more than one piece (the last piece) loses the game. Make the "
-    + "last valid move to win!",
+    + "bordering more than one piece (the last piece) loses the game. Make "
+    + "the last valid move to win!",
     "GNU GPLv3 licensed source code available at "
     + "https://github.com/ndhorne/congo-skulls-js"
   ];
@@ -493,11 +541,13 @@ function start() {
   happyFacesCheckbox.addEventListener("click", event => {
     if (happyFacesCheckbox.checked) {
       markers = pieces["happyFace"];
-      updateMarkers();
+      gridSelectElem[3].text = "Pit of Daisies";
     } else {
       markers = pieces["skull"];
-      updateMarkers();
+      gridSelectElem[3].text = "Pit of Death";
     }
+    updateMarkers();
+    updatePit();
   });
   
   aboutElem.addEventListener("click", event => about());
