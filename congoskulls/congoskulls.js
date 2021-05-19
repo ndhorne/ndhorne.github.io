@@ -38,15 +38,21 @@ let gridSelectElem = document.getElementById("gridSelect");
 let player1SelectElem = document.getElementById("player1Select");
 let player2SelectElem = document.getElementById("player2Select");
 let happyFacesCheckbox = document.getElementById("happyFacesToggle");
+let player1InputElem = document.getElementById("player1InputOptions");
+let player2InputElem = document.getElementById("player2InputOptions");
+let player1InputSelectElem = document.getElementById("player1InputSelect");
+let player2InputSelectElem = document.getElementById("player2InputSelect");
 
 let players = [
   {
     name: "Player 1",
-    type: player1SelectElem.value
+    type: player1SelectElem.value,
+    input: null
   },
   {
     name: "Player 2",
-    type: player2SelectElem.value
+    type: player2SelectElem.value,
+    input: player2InputSelectElem.value
   }
 ];
 
@@ -81,7 +87,7 @@ let pieces = {
   ]
 }
 
-let boardObj, pitCells, turns, state;
+let boardObj, pitCells, turns, state, kbdIndex;
 let totalGames = 0, player1Score = 0, player2Score = 0;
 let markers = pieces["skull"];
 let marker = markers[0].face;
@@ -99,6 +105,14 @@ function newOptionSelectedAdministrivia() {
     boardObj.gridOption != gridSelectElem.selectedIndex
     || players[0].type != player1SelectElem.value
     || players[1].type != player2SelectElem.value
+    || (
+      players[0].type == "Human"
+      && players[0].input != player1InputSelectElem.value
+    )
+    || (
+      players[1].type == "Human"
+      && players[1].input != player2InputSelectElem.value
+    )
     || state != 0
   ) {
     highlightNewGameElem(500, "darkorange");
@@ -107,9 +121,43 @@ function newOptionSelectedAdministrivia() {
 
 player1SelectElem.addEventListener("change", event => {
   newOptionSelectedAdministrivia();
+  
+  if (event.target.value == "CPU") {
+    player1InputElem.style.visibility = "hidden";
+  } else {
+    if (player2SelectElem.value == "Human") {
+      if (player2InputSelectElem.selectedIndex == 0) {
+        player1InputSelectElem.selectedIndex = 1;
+      } else {
+        player1InputSelectElem.selectedIndex = 0;
+      }
+    }
+    player1InputElem.style.visibility = "visible";
+  }
 });
 
 player2SelectElem.addEventListener("change", event => {
+  newOptionSelectedAdministrivia();
+  
+  if (event.target.value == "CPU") {
+    player2InputElem.style.visibility = "hidden";
+  } else {
+    if (player1SelectElem.value == "Human") {
+      if (player1InputSelectElem.selectedIndex == 0) {
+        player2InputSelectElem.selectedIndex = 1;
+      } else {
+        player2InputSelectElem.selectedIndex = 0;
+      }
+    }
+    player2InputElem.style.visibility = "visible";
+  }
+});
+
+player1InputSelectElem.addEventListener("change", event => {
+  newOptionSelectedAdministrivia();
+});
+
+player2InputSelectElem.addEventListener("change", event => {
   newOptionSelectedAdministrivia();
 });
 
@@ -182,11 +230,40 @@ function getAvailableMoves(index) {
   );
 }
 
-function move(event) {
-  let x = Number(event.target.dataset.x);
-  let y = Number(event.target.dataset.y);
-  let width = boardObj.width;
-  let index = x + y * width;
+function mouseInputOn() {
+  Array.from(document.getElementsByTagName("td")).forEach(function(cell) {
+    cell.addEventListener("click", mouseMove, false);
+  });
+}
+
+function mouseInputOff() {
+  Array.from(document.getElementsByTagName("td")).forEach(function(cell) {
+    cell.removeEventListener("click", mouseMove, false);
+  });
+}
+
+function kbdInputOn() {
+  if (boardObj.moves.length == 0) {
+    document.addEventListener("keydown", kbdFirstMove, false);
+  } else {
+    document.addEventListener("keydown", kbdMove, false);
+  }
+}
+
+function kbdInputOff() {
+  document.removeEventListener("keydown", kbdFirstMove, false);
+  document.removeEventListener("keydown", kbdMove, false);
+}
+
+function fillCellBackground(index) {
+  document.getElementById("cell" + index).style.background = "cornflowerblue";
+}
+
+function clearCellBackground(index) {
+  document.getElementById("cell" + index).style.background = "";
+}
+
+function move(index) {
   let timeout;
   
   if (boardObj.grid[index] == false) {
@@ -195,8 +272,11 @@ function move(event) {
   }
   
   function setMark() {
+    mouseInputOff();
+    kbdInputOff();
+    
     boardObj.grid[index] = true;
-    event.target.innerHTML = marker;
+    document.getElementById("cell" + index).innerHTML = marker;
     boardObj.moves.push(index);
     boardObj.last = index;
     turns++;
@@ -228,9 +308,6 @@ function move(event) {
       state = 2;
     }
     
-    Array.from(document.getElementsByTagName("td")).forEach(function(cell) {
-      cell.removeEventListener("click", move);
-    });
     updateMarkers();
     
     setTimeout(function() {
@@ -303,9 +380,200 @@ function move(event) {
           }
         });
         
-        document.getElementById("cell" + nextMove).click();
+        move(nextMove);
       }
     }, timeout);
+    
+    if (players[turns % players.length].input == "Mouse") {
+      mouseInputOn();
+    }
+    
+    if (players[turns % players.length].input == "Keyboard") {
+      kbdIndex = boardObj.last;
+      fillCellBackground(kbdIndex);
+      kbdInputOn();
+    }
+  }
+}
+
+function mouseMove(event) {
+  move(+event.target.dataset.index);
+}
+
+function kbdFirstMove(event) {
+  switch (event.key) {
+    case "ArrowLeft":
+    case "A":
+    case "a":
+      event.preventDefault();
+      if (getBorderingIndicies(kbdIndex).includes(kbdIndex - 1)) {
+        clearCellBackground(kbdIndex);
+        kbdIndex -= 1;
+        fillCellBackground(kbdIndex);
+      }
+      break;
+    case "ArrowRight":
+    case "D":
+    case "d":
+      event.preventDefault();
+      if (getBorderingIndicies(kbdIndex).includes(kbdIndex + 1)) {
+        clearCellBackground(kbdIndex);
+        kbdIndex += 1;
+        fillCellBackground(kbdIndex);
+      }
+      break;
+    case "ArrowUp":
+    case "W":
+    case "w":
+      event.preventDefault();
+      if (
+        getBorderingIndicies(kbdIndex).includes(kbdIndex - boardObj.width)
+      ) {
+        clearCellBackground(kbdIndex);
+        kbdIndex -= boardObj.width;
+        fillCellBackground(kbdIndex);
+      }
+      break;
+    case "ArrowDown":
+    case "S":
+    case "s":
+      event.preventDefault();
+      if (
+        getBorderingIndicies(kbdIndex).includes(kbdIndex + boardObj.width)
+      ) {
+        clearCellBackground(kbdIndex);
+        kbdIndex += boardObj.width;
+        fillCellBackground(kbdIndex);
+      }
+      break;
+    case "Enter":
+    case " ":
+      event.preventDefault();
+      clearCellBackground(kbdIndex);
+      kbdInputOff();
+      move(kbdIndex);
+      break;
+    default:
+      break;
+  }
+}
+
+function kbdMove(event) {
+  switch (event.key) {
+    case "ArrowLeft":
+    case "A":
+    case "a":
+      event.preventDefault();
+      if (
+        getAvailableMoves(
+          boardObj.last
+        ).concat(
+          boardObj.last
+        ).includes(
+          kbdIndex - 1
+        )
+      ) {
+        clearCellBackground(kbdIndex);
+        kbdIndex -= 1;
+        fillCellBackground(kbdIndex);
+      } else if (
+        getAvailableMoves(boardObj.last).includes(boardObj.last - 1)
+      ) {
+        clearCellBackground(kbdIndex);
+        kbdIndex = boardObj.last - 1;
+        fillCellBackground(kbdIndex);
+      }
+      break;
+    case "ArrowRight":
+    case "D":
+    case "d":
+      event.preventDefault();
+      if (
+        getAvailableMoves(
+          boardObj.last
+        ).concat(
+          boardObj.last
+        ).includes(
+          kbdIndex + 1
+        )
+      ) {
+        clearCellBackground(kbdIndex);
+        kbdIndex += 1;
+        fillCellBackground(kbdIndex);
+      } else if (
+        getAvailableMoves(boardObj.last).includes(boardObj.last + 1)
+      ) {
+        clearCellBackground(kbdIndex);
+        kbdIndex = boardObj.last + 1;
+        fillCellBackground(kbdIndex);
+      }
+      break;
+    case "ArrowUp":
+    case "W":
+    case "w":
+      event.preventDefault();
+      if (
+        getAvailableMoves(
+          boardObj.last
+        ).concat(
+          boardObj.last
+        ).includes(
+          kbdIndex - boardObj.width
+        )
+      ) {
+        clearCellBackground(kbdIndex);
+        kbdIndex -= boardObj.width;
+        fillCellBackground(kbdIndex);
+      } else if (
+        getAvailableMoves(
+          boardObj.last
+        ).includes(
+          boardObj.last - boardObj.width
+        )
+      ) {
+        clearCellBackground(kbdIndex);
+        kbdIndex = boardObj.last - boardObj.width;
+        fillCellBackground(kbdIndex);
+      }
+      break;
+    case "ArrowDown":
+    case "S":
+    case "s":
+      event.preventDefault();
+      if (
+        getAvailableMoves(
+          boardObj.last
+        ).concat(
+          boardObj.last
+        ).includes(
+          kbdIndex + boardObj.width
+        )
+      ) {
+        clearCellBackground(kbdIndex);
+        kbdIndex += boardObj.width;
+        fillCellBackground(kbdIndex);
+      } else if (
+        getAvailableMoves(
+          boardObj.last
+        ).includes(
+          boardObj.last + boardObj.width
+        )
+      ) {
+        clearCellBackground(kbdIndex);
+        kbdIndex = boardObj.last + boardObj.width;
+        fillCellBackground(kbdIndex);
+      }
+      break;
+    case "Enter":
+    case " ":
+      event.preventDefault();
+      if (kbdIndex != boardObj.last) {
+        clearCellBackground(kbdIndex);
+        move(kbdIndex);
+      }
+      break;
+    default:
+      break;
   }
 }
 
@@ -313,10 +581,7 @@ function updateMarkers() {
   marker = markers[state].face;
   
   Array.from(document.getElementsByTagName("td")).forEach(function(cell) {
-    let x = Number(cell.dataset.x);
-    let y = Number(cell.dataset.y);
-    let width = boardObj.width;
-    let index = x + y * width;
+    let index = +cell.dataset.index;
     
     if (boardObj.grid[index] == true) {
       cell.classList.remove(...cell.classList);
@@ -403,6 +668,7 @@ function undo() {
         ).innerHTML = "";
         boardObj.moves.pop();
         boardObj.last = boardObj.moves[boardObj.moves.length - 1];
+        turns--;
       }
     }
   }
@@ -455,6 +721,18 @@ function init() {
   players[0].type = player1SelectElem.value;
   players[1].type = player2SelectElem.value;
   
+  if (players[0].type == "Human") {
+    players[0].input = player1InputSelectElem.value;
+  } else {
+    players[0].input = null;
+  }
+  
+  if (players[1].type == "Human") {
+    players[1].input = player2InputSelectElem.value;
+  } else {
+    players[1].input = null;
+  }
+  
   boardObj = new Board(
     xArg,
     yArg,
@@ -471,18 +749,17 @@ function init() {
     
     for (let x = 0; x < boardObj.width; x++) {
       let cell = document.createElement("td");
+      let index = x + y * boardObj.width;
+      
       cell.setAttribute("data-x", x);
       cell.setAttribute("data-y", y);
-      cell.setAttribute("id", "cell" + (x + y * boardObj.width));
+      cell.setAttribute("data-index", index);
+      cell.setAttribute("id", "cell" + index);
       row.appendChild(cell);
     }
     
     boardElem.appendChild(row);
   }
-  
-  Array.from(document.getElementsByTagName("td")).forEach(function(cell) {
-    cell.addEventListener("click", move);
-  });
   
   if (boardObj.gridOption == 3) {
     pitCells = [
@@ -497,14 +774,13 @@ function init() {
       ((boardObj.grid.length - 1) / 2) + (boardObj.width + 1)
     ].map(index => document.getElementById("cell" + index));
     
-    pitCells.forEach(cell => {
-      boardObj.grid[
-        Number(cell.dataset.x) + Number(cell.dataset.y) * boardObj.width
-      ] = false;
-    });
+    pitCells.forEach(cell => boardObj.grid[+cell.dataset.index] = false);
     
     updatePit();
   }
+  
+  mouseInputOff();
+  kbdInputOff();
   
   if (players[0].type == "CPU") {
     let index;
@@ -513,7 +789,17 @@ function init() {
       index = Math.floor(Math.random() * boardObj.grid.length)
     } while (boardObj.grid[index] == false);
     
-    document.getElementById("cell" + index).click();
+    move(index);
+  }
+  
+  if (players[0].input == "Keyboard") {
+    kbdIndex = 0;
+    fillCellBackground(kbdIndex);
+    kbdInputOn();
+  }
+  
+  if (players[0].input == "Mouse") {
+    mouseInputOn();
   }
 }
 
@@ -523,11 +809,11 @@ function about() {
     "A pointless diversion by Nicholas D. Horne",
     "A remake of Toggle Booleans' 1993 Windows 3.1 freeware classic Amazon "
     + "Skulls in JavaScript with some new features/amenities including local "
-    + "multiplayer, custom grid size, and undo (ctrl+z). Each piece played "
-    + "(with the exception of the first piece) must border the last piece "
-    + "played and border that piece only. The first player to play a piece "
-    + "bordering more than one piece (the last piece) loses the game. Make "
-    + "the last valid move to win!",
+    + "multiplayer, custom grid size, keyboard controls, and undo (ctrl+z). "
+    + "Each piece played (with the exception of the first piece) must border "
+    + "the last piece played and border that piece only. The first player to "
+    + "play a piece bordering more than one piece (the last piece) loses the "
+    + "game. Make the last valid move to win!",
     "GNU GPLv3 licensed source code available at "
     + "https://github.com/ndhorne/congo-skulls-js"
   ];
@@ -538,6 +824,22 @@ function about() {
 }
 
 function start() {
+  function ctrlZ(event) {
+    if (event.ctrlKey && event.key.toLowerCase() == "z") {
+      undo();
+      
+      if (players[turns % players.length].input == "Keyboard") {
+        kbdInputOff();
+        
+        clearCellBackground(kbdIndex);
+        kbdIndex = (boardObj.last || 0);
+        fillCellBackground(kbdIndex);
+        
+        kbdInputOn();
+      }
+    }
+  }
+  
   happyFacesCheckbox.addEventListener("click", event => {
     if (happyFacesCheckbox.checked) {
       markers = pieces["happyFace"];
@@ -550,19 +852,24 @@ function start() {
     updatePit();
   });
   
-  aboutElem.addEventListener("click", event => about());
-  newGameElem.addEventListener("click", event => init());
-
-  document.addEventListener("keydown", event => {
-    if (event.ctrlKey && event.key.toLowerCase() == "z") {
-      undo();
-    }
+  aboutElem.addEventListener("click", event => {
+    about();
+    aboutElem.blur();
   });
+  
+  newGameElem.addEventListener("click", event => {
+    init();
+    newGameElem.blur();
+  });
+  
+  document.addEventListener("keydown", ctrlZ);
   
   player1SelectElem.selectedIndex = 1;
   player2SelectElem.selectedIndex = 0;
   gridSelectElem.selectedIndex = 0;
   happyFacesCheckbox.checked = false;
+  player1InputSelectElem.selectedIndex = 1;
+  player2InputSelectElem.selectedIndex = 0;
   
   init();
 }
