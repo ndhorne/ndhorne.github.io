@@ -89,6 +89,7 @@ let pieces = {
 
 let boardObj, pitCells, turns, state, kbdIndex;
 let totalGames = 0, player1Score = 0, player2Score = 0;
+let selectColor = "cornflowerblue", nextMoveColor = "lavender";
 let markers = pieces["skull"];
 let marker = markers[0].face;
 let newGameElemHighlightTimeout;
@@ -255,23 +256,114 @@ function kbdInputOff() {
   document.removeEventListener("keydown", kbdMove, false);
 }
 
-function fillCellBackground(index) {
-  document.getElementById("cell" + index).style.background = "cornflowerblue";
+function fillCellBackground(index, color) {
+  document.getElementById("cell" + index).style.background = color;
 }
 
 function clearCellBackground(index) {
   document.getElementById("cell" + index).style.background = "";
 }
 
+function clearBorderingCellBackgrounds(index) {
+  getBorderingIndicies(index).forEach(
+    index => clearCellBackground(index)
+  );
+}
+
+function mouseOver(event) {
+  event.target.style.background = selectColor;
+}
+
+function mouseOut(event) {
+  if (boardObj.moves.length == 0) {
+    event.target.style.background = "";
+  } else {
+    event.target.style.background = nextMoveColor;
+  }
+}
+
+function mouseOverOn(index) {
+  if (
+    boardObj.moves.length == 0
+    && players[turns % players.length].input == "Mouse"
+  ) {
+    Array.from(document.getElementsByTagName("td")).forEach(function(cell) {
+      cell.addEventListener("mouseover", mouseOver, false);
+    });
+    Array.from(document.getElementsByTagName("td")).forEach(function(cell) {
+      cell.addEventListener("mouseout", mouseOut, false);
+    });
+  }
+  
+  if (Number.isInteger(+index)) {
+    getAvailableMoves(index).forEach(
+      index => document.getElementById(
+        "cell" + index
+      ).addEventListener(
+        "mouseover", mouseOver, false
+      )
+    );
+    
+    getAvailableMoves(index).forEach(
+      index => document.getElementById(
+        "cell" + index
+      ).addEventListener(
+        "mouseout", mouseOut, false
+      )
+    );
+  }
+}
+
+function mouseOverOff(index) {
+  if (
+    boardObj.moves.length == 0
+    && players[turns % players.length].input == "Mouse"
+  ) {
+    Array.from(document.getElementsByTagName("td")).forEach(function(cell) {
+      cell.removeEventListener("mouseover", mouseOver, false);
+    });
+    Array.from(document.getElementsByTagName("td")).forEach(function(cell) {
+      cell.removeEventListener("mouseout", mouseOut, false);
+    });
+    document.getElementById("cell" + index).style.background = "";
+  }
+  
+  if (boardObj.last != undefined) {
+    getBorderingIndicies(boardObj.last).forEach(
+      index => document.getElementById(
+        "cell" + index
+      ).removeEventListener(
+        "mouseover", mouseOver, false
+      )
+    );
+    
+    getBorderingIndicies(boardObj.last).forEach(
+      index => document.getElementById(
+        "cell" + index
+      ).removeEventListener(
+        "mouseout", mouseOut, false
+      )
+    );
+  }
+}
+
+function highlightMoves(index, color) {
+  if (boardObj.moves.length > 0) {
+    clearBorderingCellBackgrounds(boardObj.last);
+  }
+  
+  if (getBorderingPieces(index).length <= 1) {
+    getAvailableMoves(index).forEach(
+      index => fillCellBackground(index, color)
+    );
+  }
+}
+
 function move(index) {
   let timeout;
   
-  if (boardObj.grid[index] == false) {
-    pitDialog();
-    return;
-  }
-  
   function setMark() {
+    mouseOverOff(index);
     mouseInputOff();
     kbdInputOff();
     
@@ -284,11 +376,16 @@ function move(index) {
   
   let borderingPieces = getBorderingPieces(index);
   
-  if (boardObj.last == undefined) {
+  if (boardObj.grid[index] == false) {
+    pitDialog();
+    return;
+  } else if (boardObj.last == undefined) {
     setMark();
+    highlightMoves(index, nextMoveColor);
   } else if (!borderingPieces.includes(boardObj.last)) {
     return;
   } else if (boardObj.grid[index] == undefined) {
+    highlightMoves(index, nextMoveColor);
     setMark();
   } else {
     return;
@@ -355,6 +452,8 @@ function move(index) {
         )
       ) {
         init();
+      } else {
+        newGameElem.focus();
       }
     }, timeout);
     
@@ -386,11 +485,12 @@ function move(index) {
     
     if (players[turns % players.length].input == "Mouse") {
       mouseInputOn();
+      mouseOverOn(index);
     }
     
     if (players[turns % players.length].input == "Keyboard") {
       kbdIndex = boardObj.last;
-      fillCellBackground(kbdIndex);
+      fillCellBackground(kbdIndex, selectColor);
       kbdInputOn();
     }
   }
@@ -409,7 +509,7 @@ function kbdFirstMove(event) {
       if (getBorderingIndicies(kbdIndex).includes(kbdIndex - 1)) {
         clearCellBackground(kbdIndex);
         kbdIndex -= 1;
-        fillCellBackground(kbdIndex);
+        fillCellBackground(kbdIndex, selectColor);
       }
       break;
     case "ArrowRight":
@@ -419,7 +519,7 @@ function kbdFirstMove(event) {
       if (getBorderingIndicies(kbdIndex).includes(kbdIndex + 1)) {
         clearCellBackground(kbdIndex);
         kbdIndex += 1;
-        fillCellBackground(kbdIndex);
+        fillCellBackground(kbdIndex, selectColor);
       }
       break;
     case "ArrowUp":
@@ -431,7 +531,7 @@ function kbdFirstMove(event) {
       ) {
         clearCellBackground(kbdIndex);
         kbdIndex -= boardObj.width;
-        fillCellBackground(kbdIndex);
+        fillCellBackground(kbdIndex, selectColor);
       }
       break;
     case "ArrowDown":
@@ -443,7 +543,7 @@ function kbdFirstMove(event) {
       ) {
         clearCellBackground(kbdIndex);
         kbdIndex += boardObj.width;
-        fillCellBackground(kbdIndex);
+        fillCellBackground(kbdIndex, selectColor);
       }
       break;
     case "Enter":
@@ -474,14 +574,16 @@ function kbdMove(event) {
         )
       ) {
         clearCellBackground(kbdIndex);
+        highlightMoves(boardObj.last, nextMoveColor);
         kbdIndex -= 1;
-        fillCellBackground(kbdIndex);
+        fillCellBackground(kbdIndex, selectColor);
       } else if (
         getAvailableMoves(boardObj.last).includes(boardObj.last - 1)
       ) {
         clearCellBackground(kbdIndex);
+        highlightMoves(boardObj.last, nextMoveColor);
         kbdIndex = boardObj.last - 1;
-        fillCellBackground(kbdIndex);
+        fillCellBackground(kbdIndex, selectColor);
       }
       break;
     case "ArrowRight":
@@ -498,14 +600,16 @@ function kbdMove(event) {
         )
       ) {
         clearCellBackground(kbdIndex);
+        highlightMoves(boardObj.last, nextMoveColor);
         kbdIndex += 1;
-        fillCellBackground(kbdIndex);
+        fillCellBackground(kbdIndex, selectColor);
       } else if (
         getAvailableMoves(boardObj.last).includes(boardObj.last + 1)
       ) {
         clearCellBackground(kbdIndex);
+        highlightMoves(boardObj.last, nextMoveColor);
         kbdIndex = boardObj.last + 1;
-        fillCellBackground(kbdIndex);
+        fillCellBackground(kbdIndex, selectColor);
       }
       break;
     case "ArrowUp":
@@ -522,8 +626,9 @@ function kbdMove(event) {
         )
       ) {
         clearCellBackground(kbdIndex);
+        highlightMoves(boardObj.last, nextMoveColor);
         kbdIndex -= boardObj.width;
-        fillCellBackground(kbdIndex);
+        fillCellBackground(kbdIndex, selectColor);
       } else if (
         getAvailableMoves(
           boardObj.last
@@ -532,8 +637,9 @@ function kbdMove(event) {
         )
       ) {
         clearCellBackground(kbdIndex);
+        highlightMoves(boardObj.last, nextMoveColor);
         kbdIndex = boardObj.last - boardObj.width;
-        fillCellBackground(kbdIndex);
+        fillCellBackground(kbdIndex, selectColor);
       }
       break;
     case "ArrowDown":
@@ -550,8 +656,9 @@ function kbdMove(event) {
         )
       ) {
         clearCellBackground(kbdIndex);
+        highlightMoves(boardObj.last, nextMoveColor);
         kbdIndex += boardObj.width;
-        fillCellBackground(kbdIndex);
+        fillCellBackground(kbdIndex, selectColor);
       } else if (
         getAvailableMoves(
           boardObj.last
@@ -560,8 +667,9 @@ function kbdMove(event) {
         )
       ) {
         clearCellBackground(kbdIndex);
+        highlightMoves(boardObj.last, nextMoveColor);
         kbdIndex = boardObj.last + boardObj.width;
-        fillCellBackground(kbdIndex);
+        fillCellBackground(kbdIndex, selectColor);
       }
       break;
     case "Enter":
@@ -779,9 +887,6 @@ function init() {
     updatePit();
   }
   
-  mouseInputOff();
-  kbdInputOff();
-  
   if (players[0].type == "CPU") {
     let index;
     
@@ -794,12 +899,13 @@ function init() {
   
   if (players[0].input == "Keyboard") {
     kbdIndex = 0;
-    fillCellBackground(kbdIndex);
+    fillCellBackground(kbdIndex, selectColor);
     kbdInputOn();
   }
   
   if (players[0].input == "Mouse") {
     mouseInputOn();
+    mouseOverOn();
   }
 }
 
@@ -826,16 +932,30 @@ function about() {
 function start() {
   function ctrlZ(event) {
     if (event.ctrlKey && event.key.toLowerCase() == "z") {
-      undo();
-      
-      if (players[turns % players.length].input == "Keyboard") {
+      if (boardObj.moves.length > 0) {
+        clearBorderingCellBackgrounds(boardObj.last);
+        mouseOverOff(boardObj.last);
+        mouseInputOff();
         kbdInputOff();
         
-        clearCellBackground(kbdIndex);
-        kbdIndex = (boardObj.last || 0);
-        fillCellBackground(kbdIndex);
+        undo();
         
-        kbdInputOn();
+        if (players[turns % players.length].input == "Keyboard") {
+          clearCellBackground(kbdIndex);
+          kbdIndex = (boardObj.last || 0);
+          fillCellBackground(kbdIndex, selectColor);
+          
+          kbdInputOn();
+        }
+        
+        if (players[turns % players.length].input == "Mouse") {
+          mouseOverOn(boardObj.last);
+          mouseInputOn();
+        }
+        
+        if (boardObj.moves.length > 0) {
+          highlightMoves(boardObj.last, nextMoveColor);
+        }
       }
     }
   }
