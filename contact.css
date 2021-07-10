@@ -7,3 +7,13 @@ label {
 button {
   font-family: 'Noto Sans SC', Arial, Helvetica, sans-serif;
 }
+
+fieldset {
+  display: inline;
+  border-radius: 10px;
+}
+
+legend {
+  background-color: slategray;
+  color: floralwhite;
+}
