@@ -43,6 +43,29 @@ ul {
   margin-bottom: 0;
 }
 
+ul.breadcrumb {
+  list-style: none;
+  padding-left: 2.5px;
+  font-size: 13px;
+}
+
+ul.breadcrumb li {
+  display: inline;
+}
+
+ul.breadcrumb li+li:before {
+  content: "/\00a0";
+}
+
+ul.breadcrumb li a {
+  color: blue;
+  text-decoration: none;
+}
+
+ul.breadcrumb li a:hover {
+  text-decoration: underline;
+}
+
 div dl {
   margin-bottom: 0;
 }
