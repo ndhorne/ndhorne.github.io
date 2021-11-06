@@ -173,6 +173,11 @@ div dl {
   border-radius: unset;
 }
 
+#eff-blue-ribbon {
+  text-align: center;
+  margin-top: 15px;
+}
+
 .license-icon {
   vertical-align: top;
   width: 88px;
