@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Nicholas D. Horne
+Copyright 2020, 2021 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ quoteElement.style.maxWidth =
   containerElement.getBoundingClientRect().width * 0.95 + "px";
 
 quoteElement.title =
-  "Ephemeral Random Quotes Ajax Demonstration " +
+  "Ajax Ephemeral Random Quotes Demonstration " +
   "(scrollable w/ mouse wheel)";
 
 footerElement.style.display = "inline";
@@ -191,6 +191,10 @@ async function initQuotes() {
           }
         }
         
+        if (quote.note) {
+          footerElement.innerHTML += " (" + quote.note + ")";
+        }
+        
         quoteElement.style.width = "";
         quoteElement.style.width = Math.max(
           qElement.getBoundingClientRect().width,
@@ -233,10 +237,9 @@ async function initQuotes() {
   }
 }
 
-initQuotes()
-.then(function(result) {
+initQuotes().then(function(result) {
   let boundScrollQuote = result.scrollQuote.bind(result);
-  quoteElement.addEventListener("wheel", boundScrollQuote, true);
+  quoteElement.addEventListener("wheel", boundScrollQuote, false);
   result.setQuote();
   result.setQuoteTimeout();
 });
