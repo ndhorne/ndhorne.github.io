@@ -34,6 +34,7 @@ class Board {
 let boardElem = document.getElementById("board");
 let aboutElem = document.getElementById("aboutButton");
 let newGameElem = document.getElementById("newGameButton");
+let howToPlayElem = document.getElementById("howToPlayButton");
 let gridSelectElem = document.getElementById("gridSelect");
 let player1SelectElem = document.getElementById("player1Select");
 let player2SelectElem = document.getElementById("player2Select");
@@ -64,11 +65,11 @@ let pieces = {
     },
     {
       face: String.fromCodePoint(0x1F480),
-      classes: null
+      classes: ["rotate360", "rotate-360"]
     },
     {
       face: String.fromCodePoint(0x1F480),
-      classes: ["rotate90", "rotate270"]
+      classes: ["rotate90", "rotate-90"]
     }
   ],
   happyFace: [
@@ -78,11 +79,11 @@ let pieces = {
     },
     {
       face: String.fromCodePoint(0x1F61D),
-      classes: null
+      classes: ["rotate360", "rotate-360"]
     },
     {
       face: String.fromCodePoint(0x1F612),
-      classes: null
+      classes: ["rotate360", "rotate-360"]
     }
   ]
 }
@@ -392,7 +393,8 @@ function move(index) {
   }
   
   if (borderingPieces.length > 1) {
-    timeout = players[(turns - 1) % players.length].type == "CPU" ? 500 : 0;
+    //timeout = players[(turns - 1) % players.length].type == "CPU" ? 500 : 0;
+    timeout = 500;
     turns % players.length == 0 ? player1Score++ : player2Score++;
     totalGames++;
     
@@ -915,11 +917,7 @@ function about() {
     "A pointless diversion by Nicholas D. Horne",
     "A remake of Toggle Booleans' 1993 Windows 3.1 freeware classic Amazon "
     + "Skulls in JavaScript with some new features/amenities including local "
-    + "multiplayer, custom grid size, keyboard controls, and undo (ctrl+z). "
-    + "Each piece played (with the exception of the first piece) must border "
-    + "the last piece played and border that piece only. The first player to "
-    + "play a piece bordering more than one piece (the last piece) loses the "
-    + "game. Make the last valid move to win!",
+    + "multiplayer, custom grid size, keyboard controls, and undo (ctrl+z). ",
     "GNU GPLv3 licensed source code available at "
     + "https://github.com/ndhorne/congo-skulls-js"
   ];
@@ -927,6 +925,17 @@ function about() {
   alert(
     aboutText.join("\n\n")
   );
+}
+
+function howToPlay() {
+  let helpText =
+    "Each piece played (with the exception of the first piece) must border "
+    + "the last piece played and border that piece only. The first player to "
+    + "play a piece bordering more than one piece (the last piece) loses the "
+    + "game. Make the last valid move to win!"
+  ;
+  
+  alert(helpText);
 }
 
 function start() {
@@ -972,14 +981,19 @@ function start() {
     updatePit();
   });
   
-  aboutElem.addEventListener("click", event => {
-    about();
-    aboutElem.blur();
-  });
-  
   newGameElem.addEventListener("click", event => {
     init();
     newGameElem.blur();
+  });
+  
+  howToPlayElem.addEventListener("click", event => {
+    howToPlay();
+    howToPlayElem.blur();
+  });
+  
+  aboutElem.addEventListener("click", event => {
+    about();
+    aboutElem.blur();
   });
   
   document.addEventListener("keydown", ctrlZ);
