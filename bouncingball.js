@@ -129,12 +129,10 @@ function updateAnimation(step) {
   if (ballPos.x < borderLeft && Math.sign(speed.x) == -1 ||
       ballPos.x > borderRight && Math.sign(speed.x) == 1) {
     speed.x = -speed.x;
-    updateControls();
   }
   if (ballPos.y < borderTop && Math.sign(speed.y) == -1 ||
       ballPos.y > borderBottom && Math.sign(speed.y) == 1) {
     speed.y = -speed.y;
-    updateControls();
   }
 }
 
@@ -193,17 +191,17 @@ function clickHandler(event) {
 }
 
 function updateControls() {
-  speedControlX.value = speed.x;
-  speedControlY.value = speed.y;
+  speedControlX.value = Math.abs(speed.x);
+  speedControlY.value = Math.abs(speed.y);
   sizeControl.value = radius;
   colorControl.value = colors.indexOf(color);
 }
 
 speedControlX.addEventListener("input", function(e) {
-  speed.x = e.target.value;
+  speed.x = Math.sign(speed.x) * e.target.value;
 }, false);
 speedControlY.addEventListener("input", function(e) {
-  speed.y = e.target.value;
+  speed.y = Math.sign(speed.y) * e.target.value;
 }, false);
 sizeControl.addEventListener("input", function(e){
   newSize(e.target.value);
