@@ -616,6 +616,20 @@
     "note": null
   },
   {
+    "quote": "Talk is cheap. Show me the code.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Linus",
+        "middle": null,
+        "last": "Torvalds",
+        "suffix": null
+      }
+    },
+    "source": null,
+    "note": null
+  },
+  {
     "quote": "Continuous improvement is better than delayed perfection.",
     "author": {
       "name": {
