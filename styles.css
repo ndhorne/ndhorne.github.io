@@ -75,7 +75,6 @@ div dl {
   font-size: 12px;
   text-align: center;
   max-width: 1140px;
-  margin-top: .5em;
   margin-left: auto;
   margin-right: auto;
 }
@@ -173,9 +172,24 @@ div dl {
   border-radius: unset;
 }
 
+#ball {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#ballControls {
+  width: 364px;
+  margin: 0 auto;
+  text-align: left;
+  padding: 5px;
+  background-color: linen;
+  border-radius: 5px;
+}
+
 #eff-blue-ribbon {
   text-align: center;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .license-icon {
@@ -187,7 +201,7 @@ div dl {
 .section {
   width: 99%;
   margin-top: .5em;
-  margin-bottom: .5em;  
+  /* margin-bottom: .5em;  */
   margin-left: auto;
   margin-right: auto;  
   padding: .5em;
