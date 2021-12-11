@@ -70,6 +70,10 @@ div dl {
   margin-bottom: 0;
 }
 
+details {
+  cursor: default;
+}
+
 #foot {
   color: silver;
   font-size: 12px;
