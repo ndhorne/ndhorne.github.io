@@ -368,7 +368,13 @@
             <dt><label for="ballSize">Size:</label></dt>
             <dd><input type="range" id="ballSize" min="30" max="100"></dd>
             <dt><label for="ballColor">Color:</label></dt>
-            <dd><input type="range" id="ballColor"></dd>
+            <dd>
+              <input type="range" id="ballColor">
+              <details id="ballCustomColorDetails">
+                <summary style="font-size:14px;">Custom</summary>
+                <input type="color" id="ballCustomColor">
+              </details>
+            </dd>
           </dl>
         </details>
       </div>

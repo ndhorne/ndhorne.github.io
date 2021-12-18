@@ -66,6 +66,7 @@ let speedControlX = document.getElementById("ballSpeedX");
 let speedControlY = document.getElementById("ballSpeedY");
 let sizeControl = document.getElementById("ballSize");
 let colorControl = document.getElementById("ballColor");
+let customColorControl = document.getElementById("ballCustomColor");
 
 let colors = [
   "blue", "mediumblue", "darkblue", "midnightblue", "royalblue", "slateblue",
@@ -75,7 +76,6 @@ let colors = [
   "indigo", "teal"
 ];
 let color = randomColor();
-
 
 function randomInt(min, max, randomSign) {
   let randInt = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -126,12 +126,16 @@ function updateAnimation(step) {
   cx.fill();
   
   ballPos = ballPos.plus(speed.times(step));
-  if (ballPos.x < borderLeft && Math.sign(speed.x) == -1 ||
-      ballPos.x > borderRight && Math.sign(speed.x) == 1) {
+  if (
+    ballPos.x < borderLeft && Math.sign(speed.x) == -1
+    || ballPos.x > borderRight && Math.sign(speed.x) == 1
+  ) {
     speed.x = -speed.x;
   }
-  if (ballPos.y < borderTop && Math.sign(speed.y) == -1 ||
-      ballPos.y > borderBottom && Math.sign(speed.y) == 1) {
+  if (
+    ballPos.y < borderTop && Math.sign(speed.y) == -1
+    || ballPos.y > borderBottom && Math.sign(speed.y) == 1
+  ) {
     speed.y = -speed.y;
   }
 }
@@ -203,12 +207,19 @@ speedControlX.addEventListener("input", function(e) {
 speedControlY.addEventListener("input", function(e) {
   speed.y = Math.sign(speed.y) * e.target.value;
 }, false);
-sizeControl.addEventListener("input", function(e){
+sizeControl.addEventListener("input", function(e) {
   newSize(e.target.value);
   e.target.value = radius;
 }, false);
-colorControl.addEventListener("input", function(e){
-  color = colors[colorControl.value];
+colorControl.addEventListener("input", function(e) {
+  color = colors[e.target.value];
+  cx.fillStyle = color;
+}, false);
+customColorControl.addEventListener("change", function(e) {
+  colors.push(e.target.value);
+  colorControl.max = colors.length - 1;
+  colorControl.value = colors.length - 1;
+  color = colors[colors.length - 1];
   cx.fillStyle = color;
 }, false);
 
