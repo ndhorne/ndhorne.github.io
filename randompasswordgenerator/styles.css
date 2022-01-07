@@ -1,0 +1,62 @@
+html {
+  height: 100%;
+}
+
+body {
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 37px;
+  text-align: center;
+}
+
+ul {
+  margin-top: 12px;
+  padding-left: 0;
+}
+
+li {
+  list-style-type: none;
+  list-style-position: outside;
+}
+
+fieldset {
+  border-radius: 10px;
+}
+
+legend {
+  font-size: 16px;
+}
+
+#main {
+  width: 343px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+}
+
+#output {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 334px;
+}
+
+#specifics label {
+  display: inline-block;
+  width: 80px;
+}
+
+#generate {
+  margin-top: 5px;
+}
+
+#sets {
+  margin-top: 0;
+}

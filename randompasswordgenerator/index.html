@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script
+    async src="https://www.googletagmanager.com/gtag/js?id=G-7LMPTT5Z97"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-7LMPTT5Z97');
+  </script>
+  
+  <meta charset="utf-8">
+  <meta
+    name="description"
+    content="A random password generator utilizing crypto.getRandomValues()"
+  >
+  <meta name="author" content="Nicholas Horne">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Random Password Generator</title>
+  
+  <link href="../styles.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="styles.css" type="text/css">
+  
+  <style>
+    .github-corner:hover
+    .octo-arm {
+      animation: octocat-wave 560ms ease-in-out
+    }
+    @keyframes octocat-wave {
+      0%,100% {
+        transform: rotate(0)
+      }
+      20%,60% {
+        transform: rotate(-25deg)
+      }
+      40%,80% {
+        transform: rotate(10deg)
+      }
+    }
+    @media (max-width:500px) {
+      .github-corner:hover
+      .octo-arm {
+        animation: none
+      }
+      .github-corner
+      .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container" style="min-height: 92%;">
+    <a
+      href="https://github.com/ndhorne/random-password-generator-js"
+      target="_blank"
+      class="github-corner"
+      aria-label="View source on GitHub"
+    >
+      <svg
+        width="80"
+        height="80"
+        viewBox="0 0 250 250"
+        style="fill: #151513; color: #fff; position: absolute; top: 0; border: 0; right: 0; border-radius: 0 10px 0 0;"
+        aria-hidden="true"
+      >
+        <path
+          d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"
+        ></path>
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7
+            120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9
+            125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor"
+          style="transform-origin: 130px 106px;"
+          class="octo-arm"
+        ></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6
+            C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0
+            C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1
+            C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4
+            C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9
+            C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8
+            198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9
+            156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9
+            141.8,141.8 Z"
+          fill="currentColor"
+          class="octo-body"
+        ></path>
+      </svg>
+    </a>
+    
+    <ul class="breadcrumb">
+      <li><a href="../">Home</a></li>
+      <li>Random Password Generator</li>
+    </ul>
+    
+    <h1>Random Password Generator</h1>
+    
+    <div id="main">
+      <form>
+        <fieldset>
+          <legend>Options</legend>
+          <ul id="sets">
+            <li>
+              <input type="checkbox" id="loweralpha" checked>
+              <label for="loweralpha" title="abc...">
+                Lowercase letters
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="upperalpha">
+              <label for="upperalpha" title="ABC...">
+                Uppercase letters
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="numeric">
+              <label for="numeric" title="123...">
+                Numbers
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="special">
+              <label for="special" title="!@#...">
+                Special characters
+              </label>
+            </li>
+          </ul>
+          
+          <ul id="specifics">
+            <li>
+              <label for="length" title="Length of password(s)">
+                Length:
+              </label>
+              <input type="number" id="length" value="8" min="6">
+            </li>
+            <li>
+              <label for="quantity" title="Number of passwords">
+                Quantity:
+              </label>
+              <input type="number" id="quantity" value="1" min="1">
+            </li>
+            <li>
+              <label for="exclusions" title="Excluded characters">
+                Exclusions:
+              </label>
+              <input type="text" id="exclusions">
+            </li>
+            <li>
+              <label for="method" title="Randomization algorithm">
+                Method:
+              </label>
+              <select id="method">
+                <option value="0">Random set, random code</option>
+                <option value="1">Ordered array, random index</option>
+                <option value="2">Shuffled array, random index</option>
+              </select>
+            </li>
+          </ul>
+          
+          <ul id="amenities">
+            <li>
+              <input type="checkbox" id="beginwithletter">
+              <label
+                for="beginwithletter" title="Begin password(s) with a letter"
+              >
+                Begin with letter
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="excludesimilar">
+              <label for="excludesimilar" title="Il1|O0...">
+                Exclude similar characters
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="excludeduplicates">
+              <label
+                for="excludeduplicates"
+                title="Password(s) comprise unique characters"
+              >
+                Exclude duplicate characters
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="excludesequential">
+              <label for="excludesequential" title="ab, Ab, aB, AB, 12...">
+                Exclude sequential characters
+              </label>
+            </li>
+          </ul>
+        </fieldset>
+        
+        <button id="generate" title="Generate password(s)">Generate</button>
+      </form>
+      
+      <textarea id="output" rows="10" wrap="off" readonly></textarea>
+      
+      <div>
+        <div style="display:inline-block;width:169px">
+          <button id="copy" title="Copy password(s) to clipboard">
+            Copy
+          </button>
+          <button id="clear" title="Clear password(s)">
+            Clear
+          </button>
+        </div>
+        <div style="display:inline-block;width:169px;text-align:right">
+          <button id="about" title="About Random Password Generator">
+            About
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="randpass.js"></script>
+</body>
+</html>
