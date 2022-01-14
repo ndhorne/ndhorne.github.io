@@ -328,6 +328,22 @@ function getPass(e) {
     return;
   }
   
+  if (
+    config.excludeSimilar
+    && (
+      [
+        config.lowerAlpha,
+        config.upperAlpha,
+        config.numeric,
+        config.special
+      ].filter(option => option == true).length == 1
+    )
+  ) {
+    alert("No similar characters to exclude, deselecting");
+    config.excludeSimilar = false;
+    excludeSimilarCheckbox.click();
+  }
+  
   if (config.excludeSimilar) {
     config.exclusions.push("l", "I", "1", "|", "O", "0");
   }
