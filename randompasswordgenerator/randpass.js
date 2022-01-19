@@ -16,23 +16,35 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 "use strict";
 
-let lowerAlphaCheckbox = document.getElementById("loweralpha");
-let upperAlphaCheckbox = document.getElementById("upperalpha");
-let numericCheckbox = document.getElementById("numeric");
-let specialCharsCheckbox = document.getElementById("special");
-let lengthField = document.getElementById("length");
-let quantityField = document.getElementById("quantity");
-let exclusionsField = document.getElementById("exclusions");
-let outputTextarea = document.getElementById("output");
-let genButton = document.getElementById("generate");
-let copyButton = document.getElementById("copy");
-let clearButton = document.getElementById("clear");
-let aboutButton = document.getElementById("about");
-let methodSelect = document.getElementById("method");
-let beginWithLetterCheckbox = document.getElementById("beginwithletter");
-let excludeSimilarCheckbox = document.getElementById("excludesimilar");
-let excludeDuplicatesCheckbox = document.getElementById("excludeduplicates");
-let excludeSequentialCheckbox = document.getElementById("excludesequential");
+const lowerAlphaCheckbox = document.getElementById("loweralpha");
+const upperAlphaCheckbox = document.getElementById("upperalpha");
+const numericCheckbox = document.getElementById("numeric");
+const specialCharsCheckbox = document.getElementById("special");
+const lengthField = document.getElementById("length");
+const quantityField = document.getElementById("quantity");
+const exclusionsField = document.getElementById("exclusions");
+const outputTextarea = document.getElementById("output");
+const genButton = document.getElementById("generate");
+const copyButton = document.getElementById("copy");
+const clearButton = document.getElementById("clear");
+const aboutButton = document.getElementById("about");
+const methodSelect = document.getElementById("method");
+const beginWithLetterCheckbox = document.getElementById("beginwithletter");
+const excludeSimilarCheckbox = document.getElementById("excludesimilar");
+const excludeDuplicatesCheckbox = document.getElementById("excludeduplicates");
+const excludeSequentialCheckbox = document.getElementById("excludesequential");
+const statusDetails = document.getElementById("status");
+const statusSummary = document.getElementById("statussummary");
+const statusLog = document.getElementById("statuslog");
+
+const similars = ["l", "I", "1", "|", "O", "0"];
+
+const sets = {
+  lowerAlpha: "abcdefghijklmnopqrstuvwxyz",
+  upperAlpha: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+  numeric: "0123456789",
+  special: "!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~"
+};
 
 //get Math.random()-like values from crypto.getRandomValues()
 function random() {
@@ -51,11 +63,23 @@ function getRandomInt(min, max) {
   return Math.floor(random() * (max - min + 1)) + min;
 }
 
-Array.prototype.pushCharCodeRange = function(from, to) {
-  for (let i = from; i <= to; i++) {
-    this.push(String.fromCharCode(i));
-  }
-};
+if (!Array.prototype.pushCharCodeRange) {
+  Array.prototype.pushCharCodeRange = function(from, to) {
+    for (let i = from; i <= to; i++) {
+      this.push(String.fromCharCode(i));
+    }
+  };
+} else {
+  throw new Error("Array.prototype.pushCharCodeRange already exists");
+}
+
+if (!Array.prototype.distinct) {
+  Array.prototype.distinct = function() {
+    return [...new Set(this)];
+  };
+} else {
+  throw new Error("Array.prototype.distinct already exists");
+}
 
 function* genPass(config) {
   const charsets = [];
@@ -234,6 +258,151 @@ function* genPass(config) {
   } //end for
 }
 
+function getMaxUniqueLength() {
+  const lowerAlpha = lowerAlphaCheckbox.checked;
+  const upperAlpha = upperAlphaCheckbox.checked;
+  const numeric = numericCheckbox.checked;
+  const special = specialCharsCheckbox.checked;
+  const excludeSimilar = excludeSimilarCheckbox.checked;
+  const exclusions = exclusionsField.value.split("").distinct();
+  
+  const maxUniqueLength =
+    (lowerAlpha ? sets.lowerAlpha.length : 0)
+    + (upperAlpha ? sets.upperAlpha.length : 0)
+    + (numeric ? sets.numeric.length : 0)
+    + (special ? sets.special.length : 0)
+    - (
+      excludeSimilar
+        ? similars.concat(exclusions).distinct().length
+        : exclusions.length
+    )
+  ;
+  
+  return maxUniqueLength;
+}
+
+function optionsAdministrivia(e) {
+  let lowerAlpha = lowerAlphaCheckbox.checked;
+  let upperAlpha = upperAlphaCheckbox.checked;
+  let numeric = numericCheckbox.checked;
+  let special = specialCharsCheckbox.checked;
+  
+  let excludeSimilar = excludeSimilarCheckbox.checked;
+  let excludeDuplicates = excludeDuplicatesCheckbox.checked;
+  let exclusions = excludeSimilar
+    ? exclusionsField.value.split("").concat(similars).distinct()
+    : exclusionsField.value.split("").distinct()
+  ;
+  
+  let length = +lengthField.value;
+  let quantity = +quantityField.value;
+  
+  if (!lowerAlpha && !upperAlpha) {
+    if (beginWithLetterCheckbox.checked) {
+      beginWithLetterCheckbox.checked = false;
+    }
+    beginWithLetterCheckbox.disabled = true;
+  } else {
+    beginWithLetterCheckbox.disabled = false;
+  }
+  
+  if (sets.lowerAlpha.split("").every(char => exclusions.includes(char))
+  ) {
+    if (lowerAlphaCheckbox.checked) {
+      lowerAlphaCheckbox.checked = false;
+    }
+    lowerAlphaCheckbox.disabled = true;
+    lowerAlpha = lowerAlphaCheckbox.checked;
+  } else {
+    lowerAlphaCheckbox.disabled = false;
+  }
+  
+  if (sets.upperAlpha.split("").every(char => exclusions.includes(char))
+  ) {
+    if (upperAlphaCheckbox.checked) {
+      upperAlphaCheckbox.checked = false;
+    }
+    upperAlphaCheckbox.disabled = true;
+    upperAlpha = upperAlphaCheckbox.checked;
+  } else {
+    upperAlphaCheckbox.disabled = false;
+  }
+  
+  if (sets.numeric.split("").every(char => exclusions.includes(char))
+  ) {
+    if (numericCheckbox.checked) {
+      numericCheckbox.checked = false;
+    }
+    numericCheckbox.disabled = true;
+    numeric = numericCheckbox.checked;
+  } else {
+    numericCheckbox.disabled = false;
+  }
+  
+  if (sets.special.split("").every(char => exclusions.includes(char))
+  ) {
+    if (specialCharsCheckbox.checked) {
+      specialCharsCheckbox.checked = false;
+    }
+    specialCharsCheckbox.disabled = true;
+    special = specialCharsCheckbox.checked;
+  } else {
+    specialCharsCheckbox.disabled = false;
+  }
+  
+  if ([lowerAlpha, upperAlpha, numeric, special].filter(v => v).length <= 1) {
+    if (excludeSimilarCheckbox.checked) {
+      excludeSimilarCheckbox.checked = false;
+    }
+    excludeSimilarCheckbox.disabled = true;
+    excludeSimilar = excludeSimilarCheckbox.checked;
+  } else {
+    excludeSimilarCheckbox.disabled = false;
+  }
+  
+  const maxUniqueLength = getMaxUniqueLength();
+  
+  if (
+    (!lowerAlpha && !upperAlpha && !numeric && !special)
+    || length < 6
+    || (excludeDuplicates && length > maxUniqueLength)
+    || quantity < 1
+  ) {
+    genButton.disabled = true;
+    
+    statusSummary.style.color = "red";
+    statusLog.style.color = "red";
+    
+    let errorText = [];
+    
+    if (!lowerAlpha && !upperAlpha && !numeric && !special) {
+      errorText.push("No set selected");
+    }
+    if (length < 6) {
+      errorText.push("Minimum length is 6 characters");
+    }
+    if (quantity < 1) {
+      errorText.push("Minimum quantity is 1 password");
+    }
+    if (excludeDuplicates && length > maxUniqueLength) {
+      errorText.push("Maximum unique length exceeded");
+    }
+    
+    statusLog.textContent = errorText.join("\n");
+  } else if (
+    [lowerAlpha, upperAlpha, numeric, special].filter(v => v).length > 0
+    && length >= 6
+    && (!excludeDuplicates || (excludeDuplicates && length <= maxUniqueLength))
+    && quantity >= 1
+  ) {
+    genButton.disabled = false;
+    
+    statusSummary.style.color = "black";
+    statusLog.style.color = "black";
+    statusLog.textContent = "OK";
+  }
+}
+
 function getPass(e) {
   e.preventDefault();
   
@@ -246,120 +415,14 @@ function getPass(e) {
     excludeSimilar: excludeSimilarCheckbox.checked,
     excludeDuplicates: excludeDuplicatesCheckbox.checked,
     excludeSequential: excludeSequentialCheckbox.checked,
-    exclusions: exclusionsField.value.split(""),
+    exclusions: exclusionsField.value.split("").distinct(),
     method: +methodSelect.value,
     length: +lengthField.value,
     quantity: +quantityField.value
   };
   
-  if (
-    !config.lowerAlpha
-    && !config.upperAlpha
-    && !config.numeric
-    && !config.special
-  ) {
-    alert("Please select one or more character sets");
-    return;
-  }
-  
-  if (config.length < 6) {
-    alert("Bad length: minimum number of characters is 6");
-    return;
-  }
-  
-  if (config.quantity < 1) {
-    alert("Bad quantity: minimum number of passwords is 1");
-    return;
-  }
-  
-  if (
-    config.lowerAlpha
-    && sets.lowerAlpha.split("").every(char => config.exclusions.includes(char))
-  ) {
-    alert("Entire lowercase alpha set excluded, removing from included sets");
-    config.lowerAlpha = false;
-    lowerAlphaCheckbox.click();
-  }
-  
-  if (
-    config.upperAlpha
-    && sets.upperAlpha.split("").every(char => config.exclusions.includes(char))
-  ) {
-    alert("Entire uppercase alpha set excluded, removing from included sets");
-    config.upperAlpha = false;
-    upperAlphaCheckbox.click();
-  }
-  
-  if (
-    config.numeric
-    && sets.numeric.split("").every(char => config.exclusions.includes(char))
-  ) {
-    alert("Entire numeric set excluded, removing from included sets");
-    config.numeric = false;
-    numericCheckbox.click();
-  }
-  
-  if (
-    config.special
-    && sets.special.split("").every(char => config.exclusions.includes(char))
-  ) {
-    alert("Entire special character set excluded, removing from included sets");
-    config.special = false;
-    specialCharsCheckbox.click();
-  }
-  
-  //if entire excluded set is only set specified, silently cancel
-  if (
-    !config.lowerAlpha
-    && !config.upperAlpha
-    && !config.numeric
-    && !config.special
-  ) {
-    return;
-  }
-  
-  if (
-    config.beginWithLetter
-    && !config.lowerAlpha
-    && !config.upperAlpha
-  ) {
-    alert("Illegal option combination, cannot begin with letter");
-    beginWithLetterCheckbox.click();
-    return;
-  }
-  
-  if (
-    config.excludeSimilar
-    && (
-      [
-        config.lowerAlpha,
-        config.upperAlpha,
-        config.numeric,
-        config.special
-      ].filter(option => option == true).length == 1
-    )
-  ) {
-    alert("No similar characters to exclude, deselecting");
-    config.excludeSimilar = false;
-    excludeSimilarCheckbox.click();
-  }
-  
   if (config.excludeSimilar) {
-    config.exclusions.push("l", "I", "1", "|", "O", "0");
-  }
-  
-  const maxUniqueLength =
-    (config.lowerAlpha ? sets.lowerAlpha.length : 0)
-    + (config.upperAlpha ? sets.upperAlpha.length : 0)
-    + (config.numeric ? sets.numeric.length : 0)
-    + (config.special ? sets.special.length : 0)
-    - config.exclusions.length
-  ;
-  
-  if (config.excludeDuplicates && config.length > maxUniqueLength) {
-    alert("Length option exceeds maximum number of unique characters");
-    excludeDuplicatesCheckbox.click();
-    return;
+    config.exclusions = config.exclusions.concat(similars).distinct();
   }
   
   //clear previous passwords
@@ -398,14 +461,20 @@ function about(e) {
   );
 }
 
-const sets = {
-  lowerAlpha: "abcdefghijklmnopqrstuvwxyz",
-  upperAlpha: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-  numeric: "0123456789",
-  special: "!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~"
-};
+lowerAlphaCheckbox.addEventListener("change", optionsAdministrivia);
+upperAlphaCheckbox.addEventListener("change", optionsAdministrivia);
+numericCheckbox.addEventListener("change", optionsAdministrivia);
+specialCharsCheckbox.addEventListener("change", optionsAdministrivia);
+
+lengthField.addEventListener("input", optionsAdministrivia);
+quantityField.addEventListener("input", optionsAdministrivia);
+exclusionsField.addEventListener("input", optionsAdministrivia);
+
+excludeDuplicatesCheckbox.addEventListener("change", optionsAdministrivia);
 
 genButton.addEventListener("click", getPass);
 copyButton.addEventListener("click", copyToClipboard);
 clearButton.addEventListener("click", clearOutput);
 aboutButton.addEventListener("click", about);
+
+optionsAdministrivia(new CustomEvent("CustomEvent"));

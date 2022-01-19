@@ -61,3 +61,15 @@ legend {
 #sets {
   margin-top: 0;
 }
+
+#status {
+  height: 90px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+#statuslog {
+  margin-top: 5px;
+  margin-left: 10px;
+  font-size: 14px;
+}

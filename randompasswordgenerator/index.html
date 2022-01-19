@@ -160,9 +160,24 @@
                 Method:
               </label>
               <select id="method">
-                <option value="0">Random set, random code</option>
-                <option value="1">Ordered array, random index</option>
-                <option value="2">Shuffled array, random index</option>
+                <option
+                  value="0"
+                  title="Random character set chosen, then random character code"
+                >
+                  Random set, random code
+                </option>
+                <option
+                  value="1"
+                  title="Array constructed in character code order, indexes chosen at random"
+                >
+                  Ordered array, random index
+                </option>
+                <option
+                  value="2"
+                  title="Array with shuffled elements constructed, indexes chosen at random"
+                >
+                  Shuffled array, random index
+                </option>
               </select>
             </li>
           </ul>
@@ -219,6 +234,10 @@
             About
           </button>
         </div>
+        <details id="status">
+          <summary id="statussummary">Status</summary>
+          <pre id="statuslog">OK</pre>
+        </details>
       </div>
     </div>
   </div>
