@@ -1,103 +1,80 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script
-      async src="https://www.googletagmanager.com/gtag/js?id=G-7LMPTT5Z97"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'G-7LMPTT5Z97');
-    </script>
-    
-    <meta charset="utf-8">
-    <meta
-      name="description"
-      content="Nicholas D. Horne Source Code Showcase Contact Form"
-    >
-    <meta name="author" content="Nicholas Horne">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>
-      Nicholas D. Horne Source Code Showcase - Contact
-    </title>
-    
-    <link rel="stylesheet" href="gh-fork-ribbon.css">
-    <link href="styles.css" rel="stylesheet" type="text/css">
-    <link href="contact.css" rel="stylesheet" type="text/css">
-  </head>
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script
+    async src="https://www.googletagmanager.com/gtag/js?id=G-7LMPTT5Z97"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-7LMPTT5Z97');
+  </script>
   
-  <body>
-    <div id="container">
-      <a class="github-fork-ribbon right-top"
-        href="https://github.com/ndhorne"
-        data-ribbon="Fork me on GitHub"
-        title="Fork me on GitHub">
-        Fork me on GitHub
-      </a>
-      
-      <h1 style="width: 90%;">
-        Nicholas D. Horne Source Code Showcase &amp; Portfolio
-      </h1>
-      
-      <hr>
-      
-      <ul class="breadcrumb">
-        <li><a href="./">Home</a></li>
-        <li>Contact</li>
-      </ul>
-      
-      <p style="width: 95%">
-        Feel free to reach out with inquiries, salutations, and
-        correspondence of any other nature using the contact form below.
-      </p>
-      
-      <div class="section">
-        <h2>
-          Contact:
-        </h2>
-        <br>
-        <form action="https://formspree.io/f/xgepzwez" method="post">
-          <fieldset>
-            <legend>
-              Details
-            </legend>
-            <label for="name">
-              Name:
-            </label>
-            <input type="text" name="name" id="name" required autofocus>
-            <br>
-            <label for="email">
-              E-mail:
-            </label>
-            <input type="email" name="_replyto" id="email" required>
-            <br>
-            <label for="message">
-              Message:
-            </label>
-            <textarea
-              name="message" id="message" rows="10" cols="40" required
-            ></textarea>
-          </fieldset>
-          <br><br>
-          <button type="submit" id="submit">
-            Submit
-          </button>
-          <button type="reset" id="reset">
-            Clear
-          </button>
-        </form>
-      </div>
-      
-      <div id="quote"></div>
-      
+  <meta charset="utf-8">
+  <meta
+    name="description"
+    content="Nicholas D. Horne Source Code Showcase Contact Form"
+  >
+  <meta name="author" content="Nicholas Horne">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Nicholas D. Horne Source Code Showcase - Contact</title>
+  
+  <link rel="stylesheet" href="gh-fork-ribbon.css">
+  <link href="styles.css" rel="stylesheet" type="text/css">
+  <link href="contact.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <div id="container">
+    <a class="github-fork-ribbon right-top"
+      href="https://github.com/ndhorne"
+      data-ribbon="Fork me on GitHub"
+      title="Fork me on GitHub"
+    >Fork me on GitHub</a>
+    
+    <h1 style="width: 90%;">Nicholas D. Horne Source Code Showcase &amp; Portfolio</h1>
+    
+    <hr>
+    
+    <ul class="breadcrumb">
+      <li><a href="./">Home</a></li>
+      <li>Contact</li>
+    </ul>
+    
+    <p style="width: 95%">Feel free to reach out with inquiries, salutations, and correspondence of any other nature using the contact form below.</p>
+    
+    <div class="section">
+      <h2>Contact:</h2>
+      <br>
+      <form action="https://formspree.io/f/xgepzwez" method="post">
+        <fieldset>
+          <legend>Details</legend>
+          <label for="name">Name:</label>
+          <input type="text" name="name" id="name" required autofocus>
+          <br>
+          <label for="email">E-mail:</label>
+          <input type="email" name="_replyto" id="email" required>
+          <br>
+          <label for="message">Message:</label>
+          <textarea
+            name="message" id="message" rows="10" cols="40" required
+          ></textarea>
+        </fieldset>
+        <br><br>
+        <button type="submit" id="submit">Submit</button>
+        <button type="reset" id="reset">Clear</button>
+      </form>
     </div>
     
-    <script src="./contact.js"></script>
-    <script src="./randomquote.js"></script>
-  </body>
+    <div id="quote"></div>
+  </div>
+  
+  <script src="./contact.js"></script>
+  <script src="./randomquote.js"></script>
+</body>
 </html>
