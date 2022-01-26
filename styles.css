@@ -85,10 +85,16 @@ details {
 
 #foot a {
   color: lightgray;
+  text-decoration: none;
 }
 
 #foot a:visited {
   color: darkgray;
+  text-decoration: none;
+}
+
+#foot a:hover {
+  text-decoration: underline;
 }
 
 #container {
@@ -101,14 +107,26 @@ details {
   border-radius: 10px;
 }
 
+#bio a {
+  text-decoration: none;
+}
+
 #bio a:hover {
   background-color: lightsteelblue;
   border-radius: 3px;
 }
 
+#bio a:active {
+  text-decoration: underline;
+}
+
 #portfolio a:hover {
   background-color: lightsteelblue;
   border-radius: 3px;
+}
+
+#portfolio a:active {
+  text-decoration: none;
 }
 
 #bio dl #education ul {
@@ -147,11 +165,16 @@ details {
 #portfolio dl dt a:last-child {
   font-size: 13px;
   vertical-align: top;
+  text-decoration: none;
 }
 
 #portfolio dl dt a:first-child:hover {
   background-color: unset;
   border-radius: unset;
+}
+
+#portfolio dl dt a:last-child:active {
+  text-decoration: underline;
 }
 
 #portfolio dl dd ul {
