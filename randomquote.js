@@ -1,5 +1,5 @@
 /*
-Copyright 2020, 2021 Nicholas D. Horne
+Copyright 2020, 2021, 2022 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,47 +16,62 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 "use strict";
 
-let containerElement = document.getElementById("container");
-let quoteElement = document.getElementById("quote");
-let qElement = document.createElement("q");
-let footerElement = document.createElement("footer");
-let citeElement = document.createElement("cite");
+const containerElement = document.getElementById("container");
+const quoteElement = document.getElementById("quote");
+const quoteInnerContainer = document.createElement("div");
+const qElement = document.createElement("q");
+const footerElement = document.createElement("footer");
+const citeElement = document.createElement("cite");
 
-quoteElement.appendChild(qElement);
-quoteElement.appendChild(document.createElement("br"));
-quoteElement.appendChild(footerElement);
+let inTransition = false;
 
-quoteElement.style.visibility = "hidden";
+quoteInnerContainer.appendChild(qElement);
+quoteInnerContainer.appendChild(document.createElement("br"));
+quoteInnerContainer.appendChild(footerElement);
+
+quoteElement.appendChild(quoteInnerContainer);
+
 quoteElement.style.marginLeft = "auto";
 quoteElement.style.marginRight = "auto";
+quoteElement.style.textAlign = "center";
 quoteElement.style.padding = 15 + "px";
 quoteElement.style.borderRadius = 10 + "px";
+quoteElement.style.transitionDuration = "0.5s";
 quoteElement.style.backgroundColor = "whitesmoke";
 quoteElement.style.fontFamily = "Arial, Helvetica, sans-serif";
 quoteElement.style.maxWidth =
-  containerElement.getBoundingClientRect().width * 0.95 + "px";
+  containerElement.getBoundingClientRect().width * 0.95 + "px"
+;
 
 quoteElement.title =
-  "Ajax Ephemeral Random Quotes Demonstration " +
-  "(scrollable w/ mouse wheel)";
+  "Ajax Ephemeral Random Quotes Demonstration "
+  + "(scrollable w/ mouse wheel)"
+;
+
+quoteInnerContainer.style.display = "inline-block";
+quoteInnerContainer.style.textAlign = "left";
 
 footerElement.style.display = "inline";
 
 function isCharAtEnd(str, char) {
   if (typeof(str) != "string" || typeof(char) != "string") {
-    console.error("One or more arguments invalid,",
-      "strings expected at both parameters, returning false.");
+    console.error(
+      "One or more arguments invalid,",
+      "strings expected at both parameters, returning false."
+    );
     
     //no match so return false
     return false;
   }
   
   if (char.length > 1) {
-    console.error("Single character expected at second parameter,",
-      "only using first character of supplied string argument.");
+    console.error(
+      "Single character expected at second parameter,",
+      "only using first character of supplied string argument."
+    );
   }
   
-  let regEx = new RegExp(char[0]);
+  const regEx = new RegExp(char[0]);
   
   return regEx.test(str.slice(-1));
 }
@@ -138,17 +153,102 @@ function buildDate(dateObj) {
   return dateStr;
 }
 
-async function initQuotes() {
+function buildFooter(quoteObj) {
+  const foot = document.createElement("footer");
+  const cite = document.createElement("cite");
+  
+  if (quoteObj.author) {
+    if (quoteObj.author.name) {
+      foot.innerHTML = "— " +
+        buildName(quoteObj.author.name);
+    }
+  }
+  
+  if (quoteObj.source) {
+    if (quoteObj.source.title) {
+      cite.innerHTML = quoteObj.source.title;
+      foot.innerHTML += ", ";
+      foot.appendChild(cite);
+    }
+    
+    if (quoteObj.source.date) {
+      foot.innerHTML += ", " +
+        buildDate(quoteObj.source.date);
+    }
+  }
+  
+  if (quoteObj.note) {
+    foot.innerHTML += " (" + quoteObj.note + ")";
+  }
+  
+  return foot;
+}
+
+function getStage(quoteObj) {
+  const qStaged = document.createElement("q");
+  const footStaged = document.createElement("footer");
+  const stagingElement = document.createElement("div");
+  
+  stagingElement.style.position = "absolute";
+  stagingElement.style.left = "-5000px";
+  stagingElement.style.display = "inline-block";
+  stagingElement.style.padding = quoteElement.style.padding;
+  stagingElement.style.maxWidth = quoteElement.style.maxWidth;
+  
+  qStaged.innerHTML = quoteObj.quote;
+  footStaged.innerHTML = buildFooter(quoteObj).innerHTML;
+  
+  stagingElement.appendChild(qStaged);
+  stagingElement.appendChild(document.createElement("br"));
+  stagingElement.appendChild(footStaged);
+  
+  return {
+    getStageWidth: function() {
+      let width;
+      
+      document.body.appendChild(stagingElement);
+      width = stagingElement.getBoundingClientRect().width;
+      stagingElement.remove();
+      
+      return width;
+    },
+    getQuoteWidth: function() {
+      let width;
+      
+      document.body.appendChild(stagingElement);
+      width = qStaged.getBoundingClientRect().width;
+      stagingElement.remove();
+      
+      return width;
+    },
+    getFooterWidth: function() {
+      let width;
+      
+      document.body.appendChild(stagingElement);
+      width = footStaged.getBoundingClientRect().width;
+      stagingElement.remove();
+      
+      return width;
+    }
+  };
+}
+
+async function initQuotes(timeout = 15000, isEphemeral = true) {
   try {
-    let response = await fetch("quotes.json");
-    let quotes = JSON.parse(await response.text());
+    const response = await fetch("quotes.json");
+    const quotes = JSON.parse(await response.text());
     let index, quoteTimeout, previousIndices = [];
     
+    //public API
     return {
       setQuote: function(indexArg) {
-        if (typeof indexArg != "number"
-            || indexArg < 0
-            || indexArg >= quotes.length) {
+        inTransition = true;
+        
+        if (
+          typeof indexArg != "number"
+          || indexArg < 0
+          || indexArg >= quotes.length
+        ) {
           if (previousIndices.length == quotes.length) {
             previousIndices = [];
           }
@@ -165,70 +265,72 @@ async function initQuotes() {
           index = indexArg;
         }
         
-        let quote = quotes[index];
+        const quoteObj = quotes[index];
         
-        quoteElement.style.visibility = "hidden";
-        
-        qElement.innerHTML = quote.quote;
-        
-        if (quote.author) {
-          if (quote.author.name) {
-            footerElement.innerHTML = "— " +
-              buildName(quote.author.name);
-          }
-        }
-        
-        if (quote.source) {
-          if (quote.source.title) {
-            citeElement.innerHTML = quote.source.title;
-            footerElement.innerHTML += ", ";
-            footerElement.appendChild(citeElement);
+        if (
+          quoteElement.getBoundingClientRect().width
+          > getStage(quoteObj).getStageWidth()
+        ) {
+          function update() {
+            quoteElement.removeEventListener("transitionend", update);
+            inTransition = false;
           }
           
-          if (quote.source.date) {
-            footerElement.innerHTML += ", " +
-              buildDate(quote.source.date);
+          quoteElement.addEventListener("transitionend", update);
+          
+          qElement.innerHTML = quoteObj.quote;
+          footerElement.innerHTML = buildFooter(quoteObj).innerHTML;
+        } else {
+          function update() {
+            qElement.innerHTML = quoteObj.quote;
+            footerElement.innerHTML = buildFooter(quoteObj).innerHTML;
+            quoteElement.removeEventListener("transitionend", update);
+            inTransition = false;
           }
+          
+          quoteElement.addEventListener("transitionend", update);
         }
         
-        if (quote.note) {
-          footerElement.innerHTML += " (" + quote.note + ")";
-        }
-        
-        quoteElement.style.width = "";
         quoteElement.style.width = Math.max(
-          qElement.getBoundingClientRect().width,
-          footerElement.getBoundingClientRect().width) + "px";
-        quoteElement.style.visibility = "visible";
+          getStage(quoteObj).getQuoteWidth(),
+          getStage(quoteObj).getFooterWidth()
+        ) + "px";
       },
       scrollQuote: function(event) {
         event.preventDefault();
-        clearTimeout(quoteTimeout);
         
-        if (event.deltaY < 0) {
-          this.setQuote(
-            (--index < 0)
-            ? index += quotes.length
-            : index % quotes.length
-          );
-        } else {
-          this.setQuote(
-            ++index % quotes.length
-          );
+        if (!inTransition) {
+          clearTimeout(quoteTimeout);
+          
+          if (event.deltaY < 0) {
+            this.setQuote(
+              (--index < 0)
+              ? index += quotes.length
+              : index % quotes.length
+            );
+          } else {
+            this.setQuote(
+              ++index % quotes.length
+            );
+          }
+          
+          if (isEphemeral) {
+            this.setQuoteTimeout();
+          }
         }
-        
-        this.setQuoteTimeout();
       },
       setQuoteTimeout: function() {
-        quoteTimeout = setTimeout(() => {
-          //random quotes
-          this.setQuote();
-          
-          //sequential quotes
-          //this.setQuote(++index % quotes.length);
-          
-          this.setQuoteTimeout();
-        }, 15000);
+        if (isEphemeral) {
+          quoteTimeout = setTimeout(() => {
+            //random quotes
+            this.setQuote();
+            
+            //sequential quotes
+            //this.setQuote(++index % quotes.length);
+            
+            this.setQuoteTimeout();
+          }, timeout);
+        }
       }
     };
   } catch (e) {
@@ -237,9 +339,9 @@ async function initQuotes() {
   }
 }
 
-initQuotes().then(function(result) {
-  let boundScrollQuote = result.scrollQuote.bind(result);
+initQuotes().then(function(quoteAPI) {
+  const boundScrollQuote = quoteAPI.scrollQuote.bind(quoteAPI);
   quoteElement.addEventListener("wheel", boundScrollQuote, false);
-  result.setQuote();
-  result.setQuoteTimeout();
+  quoteAPI.setQuote();
+  quoteAPI.setQuoteTimeout();
 });
