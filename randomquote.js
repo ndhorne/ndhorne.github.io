@@ -204,28 +204,22 @@ function getStage(quoteObj) {
   
   return {
     getStageWidth: function() {
-      let width;
-      
       document.body.appendChild(stagingElement);
-      width = stagingElement.getBoundingClientRect().width;
+      const width = stagingElement.getBoundingClientRect().width;
       stagingElement.remove();
       
       return width;
     },
     getQuoteWidth: function() {
-      let width;
-      
       document.body.appendChild(stagingElement);
-      width = qStaged.getBoundingClientRect().width;
+      const width = qStaged.getBoundingClientRect().width;
       stagingElement.remove();
       
       return width;
     },
     getFooterWidth: function() {
-      let width;
-      
       document.body.appendChild(stagingElement);
-      width = footStaged.getBoundingClientRect().width;
+      const width = footStaged.getBoundingClientRect().width;
       stagingElement.remove();
       
       return width;
@@ -266,10 +260,10 @@ async function initQuotes(timeout = 15000, isEphemeral = true) {
         }
         
         const quoteObj = quotes[index];
+        const stage = getStage(quoteObj);
         
         if (
-          quoteElement.getBoundingClientRect().width
-          > getStage(quoteObj).getStageWidth()
+          quoteElement.getBoundingClientRect().width > stage.getStageWidth()
         ) {
           function update() {
             quoteElement.removeEventListener("transitionend", update);
@@ -292,8 +286,8 @@ async function initQuotes(timeout = 15000, isEphemeral = true) {
         }
         
         quoteElement.style.width = Math.max(
-          getStage(quoteObj).getQuoteWidth(),
-          getStage(quoteObj).getFooterWidth()
+          stage.getQuoteWidth(),
+          stage.getFooterWidth()
         ) + "px";
       },
       scrollQuote: function(event) {
