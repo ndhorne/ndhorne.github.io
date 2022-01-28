@@ -42,7 +42,7 @@
       target="_blank"
     >Fork me on GitHub</a>
     
-    <h1 style="width: 90%;">Nicholas D. Horne Source Code Showcase &amp; Portfolio</h1>
+    <h1>Nicholas D. Horne Source Code Showcase &amp; Portfolio</h1>
     
     <hr>
     
@@ -345,5 +345,18 @@
   
   <script src="./bouncingball.js"></script>
   <script src="./randomquote.js"></script>
+  <script>
+    if (
+      document.getElementById("container").getBoundingClientRect().width < 440
+    ) {
+      document.getElementById("ball").remove();
+    }
+    
+    if (
+      document.getElementById("container").getBoundingClientRect().width < 1145
+    ) {
+      document.getElementById("quote").remove();
+    }
+  </script>
 </body>
 </html>
