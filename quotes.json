@@ -236,7 +236,7 @@
       "name": {
         "prefix": null,
         "first": "Thomas",
-        "middle": "Alva",
+        "middle": null,
         "last": "Edison",
         "suffix": null
       }
@@ -305,6 +305,20 @@
         "day": null
       }
     },
+    "note": null
+  },
+  {
+    "quote": "Sometimes the best way to learn something is by doing it wrong and looking at what you did.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Neil",
+        "middle": null,
+        "last": "Gaiman",
+        "suffix": null
+      }
+    },
+    "source": null,
     "note": null
   },
   {
