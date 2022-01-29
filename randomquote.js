@@ -43,6 +43,9 @@ quoteElement.style.maxWidth =
   containerElement.getBoundingClientRect().width * 0.95 + "px"
 ;
 
+//for chrome
+quoteElement.style.width = quoteElement.getBoundingClientRect().width + "px";
+
 quoteElement.title =
   "Ajax Ephemeral Random Quotes Demonstration "
   + "(scrollable w/ mouse wheel)"
@@ -159,8 +162,7 @@ function buildFooter(quoteObj) {
   
   if (quoteObj.author) {
     if (quoteObj.author.name) {
-      foot.innerHTML = "— " +
-        buildName(quoteObj.author.name);
+      foot.innerHTML = "— " + buildName(quoteObj.author.name);
     }
   }
   
@@ -172,8 +174,7 @@ function buildFooter(quoteObj) {
     }
     
     if (quoteObj.source.date) {
-      foot.innerHTML += ", " +
-        buildDate(quoteObj.source.date);
+      foot.innerHTML += ", " + buildDate(quoteObj.source.date);
     }
   }
   
@@ -236,8 +237,6 @@ async function initQuotes(timeout = 15000, isEphemeral = true) {
     //public API
     return {
       setQuote: function(indexArg) {
-        inTransition = true;
-        
         if (
           typeof indexArg != "number"
           || indexArg < 0
@@ -284,6 +283,8 @@ async function initQuotes(timeout = 15000, isEphemeral = true) {
           
           quoteElement.addEventListener("transitionend", update);
         }
+        
+        inTransition = true;
         
         quoteElement.style.width = Math.max(
           stage.getQuoteWidth(),
