@@ -27,6 +27,36 @@
   <link rel="stylesheet" href="gh-fork-ribbon.css">
   <link href="styles.css" rel="stylesheet" type="text/css">
   <link href="contact.css" rel="stylesheet" type="text/css">
+  <style>
+    h1 {
+      width: 90%;
+    }
+    
+    @media (max-width:819px) {
+      h1 {
+        width: 85%;
+      }
+    }
+    
+    @media (max-width:449px) {
+      h1 {
+        width: 75%;
+      }
+    }
+    
+    @media (max-width:429px) {
+      input {
+        width: 69%
+      }
+      textarea {
+        width: 69%;
+      }
+    }
+    
+    #container {
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 
 <body>
@@ -35,9 +65,10 @@
       href="https://github.com/ndhorne"
       data-ribbon="Fork me on GitHub"
       title="Fork me on GitHub"
+      target="_blank"
     >Fork me on GitHub</a>
     
-    <h1 style="width: 90%;">Nicholas D. Horne Source Code Showcase &amp; Portfolio</h1>
+    <h1>Nicholas D. Horne Source Code Showcase &amp; Portfolio</h1>
     
     <hr>
     
@@ -76,5 +107,12 @@
   
   <script src="./contact.js"></script>
   <script src="./randomquote.js"></script>
+  <script>
+    if (
+      document.getElementById("container").getBoundingClientRect().width < 1145
+    ) {
+      document.getElementById("quote").remove();
+    }
+  </script>
 </body>
 </html>
