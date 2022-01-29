@@ -13,7 +13,6 @@ body {
 }
 
 h1 {
-  width: 90%;
   margin-top: 0;
   margin-bottom: 0;
   font-family: 'Noto Sans', Arial, Helvetica, sans-serif;
@@ -244,17 +243,5 @@ details {
 @media (max-width:799px) {
   .section {
     width: 94%;
-  }
-}
-
-@media (max-width:819px) {
-  h1 {
-    width: 85%;
-  }
-}
-
-@media (max-width:449px) {
-  h1 {
-    width: 75%;
   }
 }
