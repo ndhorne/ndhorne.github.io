@@ -326,6 +326,9 @@ async function initQuotes(timeout = 15000, isEphemeral = true) {
             this.setQuoteTimeout();
           }, timeout);
         }
+      },
+      clearQuoteTimeout: function() {
+        clearTimeout(quoteTimeout);
       }
     };
   } catch (e) {
@@ -337,6 +340,10 @@ async function initQuotes(timeout = 15000, isEphemeral = true) {
 initQuotes().then(function(quoteAPI) {
   const boundScrollQuote = quoteAPI.scrollQuote.bind(quoteAPI);
   quoteElement.addEventListener("wheel", boundScrollQuote, false);
+  
+  window.addEventListener("blur", e => quoteAPI.clearQuoteTimeout(), false);
+  window.addEventListener("focus", e => quoteAPI.setQuoteTimeout(), false);
+  
   quoteAPI.setQuote();
   quoteAPI.setQuoteTimeout();
 });
