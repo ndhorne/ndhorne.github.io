@@ -129,6 +129,10 @@ button:hover {
   vertical-align: top;
 }
 
+#gridSelect {
+  width: 109px;
+}
+
 #newGameButton {
   margin-top: 20px;
 }
