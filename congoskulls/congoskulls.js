@@ -917,7 +917,8 @@ function about() {
     "A pointless diversion by Nicholas D. Horne",
     "A remake of Toggle Booleans' 1993 Windows 3.1 freeware classic Amazon "
     + "Skulls in JavaScript with some new features/amenities including local "
-    + "multiplayer, custom grid size, keyboard controls, and undo (ctrl+z). ",
+    + "multiplayer, custom grid size, keyboard controls, next move indicators, "
+    + "and undo.",
     "GNU GPLv3 licensed source code available at "
     + "https://github.com/ndhorne/congo-skulls-js"
   ];
@@ -928,14 +929,22 @@ function about() {
 }
 
 function howToPlay() {
-  let helpText =
+  let helpText = [
     "Each piece played (with the exception of the first piece) must border "
     + "the last piece played and border that piece only. The first player to "
     + "play a piece bordering more than one piece (the last piece) loses the "
-    + "game. Make the last valid move to win!"
-  ;
+    + "game. Make the last valid move to win!",
+    "Keyboard Controls\n"
+    + "Move cursor: Arrow keys/WASD\n"
+    + "Finalize move: Enter/Space",
+    "Mouse Controls\n"
+    + "Finalize move: Mouse primary button",
+    "Undo: Ctrl+Z (Human vs. CPU only)"
+  ];
   
-  alert(helpText);
+  alert(
+    helpText.join("\n\n")
+  );
 }
 
 function start() {
