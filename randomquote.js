@@ -23,7 +23,7 @@ const qElement = document.createElement("q");
 const footerElement = document.createElement("footer");
 const citeElement = document.createElement("cite");
 
-let inTransition = false;
+let inTransition = false, windowIsBlurred = false;
 
 quoteInnerContainer.appendChild(qElement);
 quoteInnerContainer.appendChild(document.createElement("br"));
@@ -36,7 +36,7 @@ quoteElement.style.marginRight = "auto";
 quoteElement.style.textAlign = "center";
 quoteElement.style.padding = 15 + "px";
 quoteElement.style.borderRadius = 10 + "px";
-quoteElement.style.transitionDuration = "0.5s";
+quoteElement.style.transitionDuration = "0.75s";
 quoteElement.style.backgroundColor = "whitesmoke";
 quoteElement.style.fontFamily = "Arial, Helvetica, sans-serif";
 quoteElement.style.maxWidth =
@@ -261,6 +261,8 @@ async function initQuotes(timeout = 15000, isEphemeral = true) {
         const quoteObj = quotes[index];
         const stage = getStage(quoteObj);
         
+        inTransition = true;
+        
         if (
           quoteElement.getBoundingClientRect().width > stage.getStageWidth()
         ) {
@@ -283,8 +285,6 @@ async function initQuotes(timeout = 15000, isEphemeral = true) {
           
           quoteElement.addEventListener("transitionend", update);
         }
-        
-        inTransition = true;
         
         quoteElement.style.width = Math.max(
           stage.getQuoteWidth(),
@@ -341,8 +341,17 @@ initQuotes().then(function(quoteAPI) {
   const boundScrollQuote = quoteAPI.scrollQuote.bind(quoteAPI);
   quoteElement.addEventListener("wheel", boundScrollQuote, false);
   
-  window.addEventListener("blur", e => quoteAPI.clearQuoteTimeout(), false);
-  window.addEventListener("focus", e => quoteAPI.setQuoteTimeout(), false);
+  window.addEventListener("blur", e => {
+    windowIsBlurred = true;
+    quoteAPI.clearQuoteTimeout();
+  }, false);
+  
+  window.addEventListener("focus", e => {
+    if (windowIsBlurred) {
+      quoteAPI.setQuoteTimeout();
+      windowIsBlurred = false;
+    }
+  }, false);
   
   quoteAPI.setQuote();
   quoteAPI.setQuoteTimeout();
