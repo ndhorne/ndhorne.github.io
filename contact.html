@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -17,12 +17,12 @@
   <meta charset="utf-8">
   <meta
     name="description"
-    content="Nicholas D. Horne Source Code Showcase Contact Form"
+    content="Nicholas D. Horne Source Code Showcase/Programming Portfolio - Contact"
   >
   <meta name="author" content="Nicholas Horne">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Nicholas D. Horne Source Code Showcase - Contact</title>
+  <title>Nicholas D. Horne Source Code Showcase & Portfolio - Contact</title>
   
   <link rel="stylesheet" href="gh-fork-ribbon.css">
   <link href="styles.css" rel="stylesheet" type="text/css">
@@ -77,14 +77,20 @@
       <li>Contact</li>
     </ul>
     
-    <p style="width: 95%">Feel free to reach out with inquiries, salutations, and correspondence of any other nature using the contact form below.</p>
+    <p style="width:95%;margin-bottom:8px;">
+      Feel free to reach out with inquiries, salutations, and correspondence of any other nature via the contact form below.
+    </p>
     
-    <div class="section">
+    <ul class="nav">
+      <li><a href="./">Portfolio</a></li>
+      <li><a href="bio.html">Bio</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    
+    <div class="section" id="contact">
       <h2>Contact:</h2>
       <br>
       <form action="https://formspree.io/f/xgepzwez" method="post">
-        <fieldset>
-          <legend>Details</legend>
           <label for="name">Name:</label>
           <input type="text" name="name" id="name" required autofocus>
           <br>
@@ -95,7 +101,6 @@
           <textarea
             name="message" id="message" rows="10" cols="40" required
           ></textarea>
-        </fieldset>
         <br><br>
         <button type="submit" id="submit">Submit</button>
         <button type="reset" id="reset">Clear</button>
@@ -105,9 +110,21 @@
     <div id="quote"></div>
   </div>
   
+  <div id="eff-blue-ribbon" style="margin-top:12px;">
+    <a href="https://www.eff.org/pages/blue-ribbon-campaign" target="_blank">
+      <img
+        src="https://www.eff.org/files/brstrip.gif"
+        alt="Join the Blue Ribbon Online Free Speech Campaign"
+        title="Join the Blue Ribbon Online Free Speech Campaign!"
+      >
+    </a>
+  </div>
+  
   <script src="./contact.js"></script>
   <script src="./randomquote.js"></script>
   <script>
+    document.getElementById("contact").style.opacity = 1;
+    
     if (
       document.getElementById("container").getBoundingClientRect().width < 1145
     ) {

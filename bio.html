@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script
+    async src="https://www.googletagmanager.com/gtag/js?id=G-7LMPTT5Z97"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-7LMPTT5Z97');
+  </script>
+  
+  <meta charset="utf-8">
+  <meta
+    name="description"
+    content="Nicholas D. Horne Source Code Showcase/Programming Portfolio - Bio"
+  >
+  <meta name="author" content="Nicholas Horne">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="google-site-verification"
+    content="ZHrh370QkhbrV-cM5FVogR9NUDA_yg8hqi0JzkC4uks"
+  >
+  
+  <title>Nicholas D. Horne Source Code Showcase & Portfolio - Bio</title>
+  
+  <link rel="stylesheet" href="gh-fork-ribbon.css">
+  <link href="styles.css" rel="stylesheet" type="text/css">
+  <link href="bio.css" rel="stylesheet" type="text/css">
+  <style>
+    h1 {
+      width: 90%;
+    }
+    
+    @media (max-width:819px) {
+      h1 {
+        width: 85%;
+      }
+    }
+    
+    @media (max-width:449px) {
+      h1 {
+        width: 75%;
+      }
+    }
+  </style>
+</head>
+  
+<body>
+  <div id="container">
+    <a
+      class="github-fork-ribbon right-top"
+      href="https://github.com/ndhorne"
+      data-ribbon="Fork me on GitHub"
+      title="Fork me on GitHub"
+      target="_blank"
+    >Fork me on GitHub</a>
+    
+    <h1>Nicholas D. Horne Source Code Showcase &amp; Portfolio</h1>
+    
+    <hr>
+    
+    <ul class="breadcrumb">
+      <li><a href="./">Home</a></li>
+      <li>Bio</li>
+    </ul>
+    
+    <p style="width:95%;margin-bottom:8px;">
+      Below you can learn a bit about me, my education, my awards and honors, and my various ventures in IT certification.
+    </p>
+    
+    <ul class="nav">
+      <li><a href="./">Portfolio</a></li>
+      <li><a href="bio.html">Bio</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    
+    <div class="section" id="bio">
+      <h2>About me:</h2>
+      
+      <dl>
+        <dt>In a few words:</dt>
+        <dd>Aspiring programmer residing in Inland Southern California with big dreams of solving problems through sequence, selection, and repetition, and managing complexity through abstraction, encapsulation, inheritance, and polymorphism (where available) for both fun and profit.</dd>
+        
+        <dt>Education:</dt>
+        <dd id="education">
+          <ul>
+            <li><a href="https://www.ucr.edu/">University of California, Riverside</a>
+              <ul>
+                <li>B.S. in Business Administration, <em>summa cum laude</em>
+                  <ul>
+                    <li>Management Information Systems (MIS) concentration</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </dd>
+        
+        <dt>Honor Societies:</dt>
+        <dd id="honor-societies">
+          <ul>
+            <li><a href="https://www.betagammasigma.org">Beta Gamma Sigma International Business Honor Society</a></li>
+            <li><a href="https://www.goldenkey.org/">Golden Key International Honour Society</a></li>
+          </ul>
+        </dd>
+        
+        <dt>Certifications:</dt>
+        <dd id="certificates">
+          <li>Microsoft Certified Solutions Associate (MCSA): Windows Server 2012, 2008</li>
+          <li>Microsoft Certified IT Professional (MCITP): Enterprise Administrator 2008, Server Administrator 2008</li>
+          <li>Microsoft Certified Systems Engineer (MCSE) 2003</li>
+          <li>Microsoft Certified Systems Administrator (MCSA) 2003</li>
+          <li>Microsoft Certified Technology Specialist (MCTS)</li>
+          <li>Microsoft Certified Professional (MCP)</li>
+          <li>Linux Professional Institute LPIC-2: Linux Network Professional, LPIC-1: Linux Server Professional</li>
+          <li>Novell SUSE Certified Linux Administrator</li>
+          <li>CompTIA Linux+, Server+, Security+, Network+, A+</li>
+        </dd>
+        
+        <!--
+        <dt>Contact:</dt>
+        <dd id="contact">
+          <ul>
+            <li><a href="./contact.html">Online Contact Submission Form</a></li>
+          </ul>
+        </dd>
+        
+        <dt>GitHub:</dt>
+        <dd id="github">
+          <ul>
+            <li><a href="https://github.com/ndhorne">https://github.com/ndhorne</a></li>
+          </ul>
+        </dd>
+        -->
+      </dl>
+    </div>
+    
+    <div id="quote"></div>
+  </div>
+  
+  <div id="eff-blue-ribbon" style="margin-top:12px;">
+    <a href="https://www.eff.org/pages/blue-ribbon-campaign" target="_blank">
+      <img
+        src="https://www.eff.org/files/brstrip.gif"
+        alt="Join the Blue Ribbon Online Free Speech Campaign"
+        title="Join the Blue Ribbon Online Free Speech Campaign!"
+      >
+    </a>
+  </div>
+  
+  <script src="./randomquote.js"></script>
+  <script>
+    document.getElementById("bio").style.opacity = 1;
+    
+    if (
+      document.getElementById("container").getBoundingClientRect().width < 1145
+    ) {
+      document.getElementById("quote").remove();
+    }
+  </script>
+</body>
+</html>

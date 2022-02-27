@@ -10,6 +10,8 @@ body {
   font-size: 16px;
   height: 100%;
   overflow-y: scroll;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 h1 {
@@ -43,12 +45,9 @@ dd {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-ul {
+ul.breadcrumb {
   margin-top: 0;
   margin-bottom: 0;
-}
-
-ul.breadcrumb {
   list-style: none;
   padding-left: 2.5px;
   font-size: 13px;
@@ -69,6 +68,35 @@ ul.breadcrumb li a {
 
 ul.breadcrumb li a:hover {
   text-decoration: underline;
+}
+
+ul.nav {
+  list-style-type: none;
+  margin: 0 auto;
+  padding: 0;
+  background-color: #333333;
+  border-radius: 10px;
+}
+
+ul.nav li {
+  display: inline-block;
+}
+
+ul.nav li a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  text-decoration: none;
+}
+
+ul.nav li a:hover {
+  background-color: #111111;
+}
+
+ul.nav li:first-child a {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 div dl {
@@ -112,98 +140,6 @@ details {
   border-radius: 10px;
 }
 
-#bio a {
-  text-decoration: none;
-}
-
-#bio a:hover {
-  background-color: lightsteelblue;
-  border-radius: 3px;
-}
-
-#bio a:active {
-  text-decoration: underline;
-}
-
-#portfolio a:hover {
-  background-color: lightsteelblue;
-  border-radius: 3px;
-}
-
-#portfolio a:active {
-  text-decoration: none;
-}
-
-#bio dl #education ul {
-  list-style: disc inside none;
-  padding-left: 0;
-}
-
-#bio dl #education ul li ul {
-  list-style: circle outside none;
-  padding-left: 40px;
-}
-
-#bio dl #education ul li ul li ul {
-  list-style: square outside none;
-}
-
-#bio dl #honor-societies ul {
-  list-style-position: inside;
-  padding-left: 0;
-}
-
-#bio dl #github ul {
-  list-style: disc inside none;
-  padding-left: 0;
-}
-
-#bio dl #contact ul {
-  list-style: disc inside none;
-  padding-left: 0;
-}
-
-#portfolio dl dt a:first-child {
-  vertical-align: baseline;
-}
-
-#portfolio dl dt a:last-child {
-  font-size: 13px;
-  vertical-align: top;
-  text-decoration: none;
-}
-
-#portfolio dl dt a:first-child:hover {
-  background-color: unset;
-  border-radius: unset;
-}
-
-#portfolio dl dt a:last-child:active {
-  text-decoration: underline;
-}
-
-#portfolio dl dd ul {
-  list-style: none inside url("icons8-source-code-16.png");
-  padding-left: 0;
-  font-family: 'Share Tech Mono', Arial, Helvetica, sans-serif;
-}
-
-#portfolio dl dd ul a {
-  font-family: 'Syne Mono', Arial, Helvetica, sans-serif;
-}
-
-#portfolio dl dd ul li ul {
-  list-style: disc outside none;
-  padding-left: 40px;
-  font-size: 14px;
-  font-family: 'Work Sans', Arial, Helvetica, sans-serif;
-}
-
-#portfolio dl dd ul li ul li a:hover {
-  background-color: unset;
-  border-radius: unset;
-}
-
 #ball {
   margin-top: 10px;
   margin-bottom: 20px;
@@ -221,7 +157,7 @@ details {
 
 #eff-blue-ribbon {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 16px;
 }
 
 .license-icon {
@@ -231,7 +167,6 @@ details {
 }
 
 .section {
-  width: 98%;
   margin-top: .5em;
   margin-bottom: .5em;
   margin-left: auto;

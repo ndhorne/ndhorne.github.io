@@ -1,3 +1,8 @@
+#contact {
+  opacity: 0;
+  transition-duration: 0.75s;
+}
+
 label {
   display: inline-block;
   vertical-align: top;

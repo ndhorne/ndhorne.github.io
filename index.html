@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -30,6 +30,7 @@
   
   <link rel="stylesheet" href="gh-fork-ribbon.css">
   <link href="styles.css" rel="stylesheet" type="text/css">
+  <link href="portfolio.css" rel="stylesheet" type="text/css">
   <style>
     h1 {
       width: 90%;
@@ -67,8 +68,17 @@
       <li>Home</li>
     </ul>
     
-    <p style="width: 95%;">Welcome to my humble GitHub Pages site, below you can learn a bit about me and my various programming pursuits.</p>
+    <p style="width:95%;margin-bottom:8px;">
+      Welcome to my humble GitHub Pages site, below you can learn a bit about me and my various programming pursuits.
+    </p>
     
+    <ul class="nav">
+      <li><a href="./">Portfolio</a></li>
+      <li><a href="bio.html">Bio</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    
+    <!--
     <div class="section" id="bio">
       <h2>About me:</h2>
       
@@ -99,6 +109,19 @@
           </ul>
         </dd>
         
+        <dt>Certifications:</dt>
+        <dd id="certificates">
+          <li>Microsoft Certified Solutions Associate (MCSA): Windows Server 2012, 2008</li>
+          <li>Microsoft Certified IT Professional (MCITP): Enterprise Administrator 2008, Server Administrator 2008</li>
+          <li>Microsoft Certified Systems Engineer (MCSE) 2003</li>
+          <li>Microsoft Certified Systems Administrator (MCSA) 2003</li>
+          <li>Microsoft Certified Technology Specialist (MCTS)</li>
+          <li>Microsoft Certified Professional (MCP)</li>
+          <li>Linux Professional Institute LPIC-2: Linux Network Professional, LPIC-1: Linux Server Professional</li>
+          <li>Novell SUSE Certified Linux Administrator</li>
+          <li>CompTIA Linux+, Server+, Security+, Network+, A+</li>
+        </dd>
+        
         <dt>Contact:</dt>
         <dd id="contact">
           <ul>
@@ -114,12 +137,19 @@
         </dd>
       </dl>
     </div>
+    -->
     
     <div class="section" id="portfolio">
-      <h2>Portfolio:</h2>
+      <h2 style="margin-bottom:8px;">Portfolio:</h2>
       
-      <dl>
-        <h3>Games:</h3>
+      <ul class="nav">
+        <li><a href="#games">Games</a></li>
+        <li><a href="#utilities">Utilities</a></li>
+      </ul>
+      
+      <dl style="margin-top:8px;">
+        <h3 id="games">Games:</h3>
+        
         <dt>
           Congo Skulls
           <a href="./congoskulls" style="text-decoration: none;">
@@ -127,7 +157,7 @@
           </a>
           <a href="./congoskulls">Play</a>
         </dt>
-        <dd>A remake of Toggle Booleans' 1993 Windows 3.1 freeware classic Amazon Skulls in JavaScript with some new features/amenities including local multiplayer, custom grid size, keyboard controls, next move indicators, and undo (ctrl+z). Each piece played (with the exception of the first piece) must border the last piece played and border that piece only. The first player to play a piece bordering more than one piece (the last piece) loses the game. Make the last valid move to win!
+        <dd>A remake of Toggle Booleans' 1993 Windows 3.1 freeware classic Amazon Skulls in JavaScript with some new features/amenities including local multiplayer, custom grid size, keyboard controls, next move indicators, and undo (ctrl+z). Each piece played (with the exception of the first piece) must border the last piece played and border that piece only. The first player to play a piece bordering more than one piece (the last piece) loses the game. Make the last valid move to win! Play the original Amazon Skulls at <a href="https://archive.org/details/win3_AmazonSk" target="_blank">archive.org</a>.
           <ul>
             <li>Source code is available at
               <a
@@ -287,7 +317,7 @@
           </ul>
         </dd>
         
-        <h3>Utilities:</h3>
+        <h3 id="utilities">Utilities:</h3>
         <dt>
           Random Password Generator
           <a href="./randompasswordgenerator" style="text-decoration: none;">
@@ -365,6 +395,8 @@
   <script src="./bouncingball.js"></script>
   <script src="./randomquote.js"></script>
   <script>
+    document.getElementById("portfolio").style.opacity = 1;
+    
     if (
       document.getElementById("container").getBoundingClientRect().width < 440
     ) {

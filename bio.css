@@ -1,0 +1,50 @@
+#bio {
+  opacity: 0;
+  transition-duration: 0.75s;
+}
+
+#bio a {
+  text-decoration: none;
+}
+
+#bio a:hover {
+  text-decoration: underline;
+}
+
+#bio a:active {
+  background-color: lightsteelblue;
+  border-radius: 3px;
+}
+
+#bio dl ul {
+  margin-top: 0;
+}
+
+#bio dl #education ul {
+  list-style: disc inside none;
+  padding-left: 0;
+}
+
+#bio dl #education ul li ul {
+  list-style: circle outside none;
+  padding-left: 40px;
+}
+
+#bio dl #education ul li ul li ul {
+  list-style: square outside none;
+}
+
+#bio dl #honor-societies ul {
+  list-style-position: inside;
+  padding-left: 0;
+}
+
+#bio dl #github ul {
+  list-style: disc inside none;
+  padding-left: 0;
+}
+
+#bio dl #contact ul {
+  list-style: disc inside none;
+  padding-left: 0;
+}
