@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -105,70 +105,323 @@
       <li>Congo Skulls</li>
     </ul>
     
-    <h1>Congo Skulls</h1>
-    
-    <table id="board"></table>
-    
-    <div id="happyFacesOption">
-      <input type="checkbox" id="happyFacesToggle" name="happyFacesToggle">
-      <label for="happyFacesToggle" style="vertical-align: 15%;"
-        title="Toggle between skull and happy face playing pieces"
-      >
-        Congo Happy Faces
-      </label>
-    </div>
-    
-    <div id="selectOptions">
-      <div id="player1Options">
-        <label for="player1Select">Player 1:</label>
-        <br>
-        <select id="player1Select" name="player1Select">
-          <option>Human</option>
-          <option>CPU</option>
-        </select>
-        <div id="player1InputOptions">
-          <label for="player1InputSelect">Input:</label>
-          <br>
-          <select id="player1InputSelect"  name="player1InputSelect">
-            <option>Mouse</option>
-            <option>Keyboard</option>
-          </select>
-        </div>
+    <main>
+      <h1>Congo Skulls</h1>
+      
+      <table id="board"></table>
+      
+      <div id="happyFacesOption">
+        <input type="checkbox" id="happyFacesToggle" name="happyFacesToggle">
+        <label for="happyFacesToggle" style="vertical-align: 15%;"
+          title="Toggle between skull and happy face playing pieces"
+        >
+          Congo Happy Faces
+        </label>
       </div>
       
-      <div id="player2Options">
-        <label for="player2Select">Player 2:</label>
-        <br>
-        <select id="player2Select" name="player2Select">
-          <option>Human</option>
-          <option>CPU</option>
-        </select>
-        <div id="player2InputOptions">
-          <label for="player2InputSelect">Input:</label>
-          <br>
-          <select id="player2InputSelect"  name="player2InputSelect">
-            <option>Mouse</option>
-            <option>Keyboard</option>
-          </select>
-        </div>
-      </div>
-      
-      <div id="gridOptions">
-        <label for="gridSelect">Grid:</label>
-        <br>
-        <select id="gridSelect" name="gridSelect">
-          <option value='{"x": 6, "y": 5}'>6 x 5</option>
-          <option value='{"x": 8, "y": 8}'>8 x 8</option>
-          <option value='{"x": 12, "y": 12}'>12 x 12</option>
-          <option value='{"x": 11, "y": 11}'>Pit of Death</option>
-          <option>Custom</option>
-        </select>
-      </div>
-    </div>
+      <button type="button" id="newGameButton">New Game</button>
+      <button type="button" id="howToPlayButton">How to Play</button>
+      <button type="button" id="aboutButton">About</button>
+    </main>
     
-    <button type="button" id="newGameButton">New Game</button>
-    <button type="button" id="howToPlayButton">How to Play</button>
-    <button type="button" id="aboutButton">About</button>
+    <!-- New Game Modal -->
+    <div id="newGameModal" class="modal">
+      
+      <!-- Modal content -->
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <!--
+          <span class="close">&times;</span>
+          -->
+          
+          <h2>New Game</h2>
+        </div>
+        
+        <div class="modal-body">
+          <div id="selectOptions">
+            <div id="player1Options">
+              <label for="player1Select">Player 1:</label>
+              <br>
+              <select id="player1Select" name="player1Select">
+                <option>Human</option>
+                <option>CPU</option>
+              </select>
+              <div id="player1InputOptions">
+                <label for="player1InputSelect">Input:</label>
+                <br>
+                <select id="player1InputSelect"  name="player1InputSelect">
+                  <option>Mouse</option>
+                  <option>Keyboard</option>
+                </select>
+              </div>
+            </div>
+            
+            <div id="player2Options">
+              <label for="player2Select">Player 2:</label>
+              <br>
+              <select id="player2Select" name="player2Select">
+                <option>Human</option>
+                <option>CPU</option>
+              </select>
+              <div id="player2InputOptions">
+                <label for="player2InputSelect">Input:</label>
+                <br>
+                <select id="player2InputSelect"  name="player2InputSelect">
+                  <option>Mouse</option>
+                  <option>Keyboard</option>
+                </select>
+              </div>
+            </div>
+            
+            <div id="gridOptions">
+              <label for="gridSelect">Grid:</label>
+              <br>
+              <select id="gridSelect" name="gridSelect">
+                <option value='{"x": 6, "y": 5}'>6 x 5</option>
+                <option value='{"x": 8, "y": 8}'>8 x 8</option>
+                <option value='{"x": 12, "y": 12}'>12 x 12</option>
+                <option value='{"x": 11, "y": 11}'>Pit of Death</option>
+                <option>Custom</option>
+              </select>
+              <div id="customGridOptions">
+                <label for="customGridWidth" class="dimensionLabel">Width:</label>
+                <input
+                  type="number"
+                  id="customGridWidth"
+                  class="dimensionInput"
+                  min="4"
+                >
+                <br>
+                <label
+                  for="customGridHeight"
+                  class="dimensionLabel"
+                >Height:</label>
+                <input
+                  type="number"
+                  id="customGridHeight"
+                  class="dimensionInput"
+                  min="3"
+                >
+                <br>
+                <label
+                  id="customPitLabel"
+                  for="customPitCheckbox"
+                  title="Odd numbered width and height of at least 7 each required for pit"
+                >Pit of Death:</label>
+                <input type="checkbox" id="customPitCheckbox" disabled>
+              </div>
+            </div>
+          </div>
+        </div> <!-- .modal-body -->
+        
+        <div class="modal-footer">
+          <button type="button" id="newGameCancelButton">Cancel</button>
+          <button type="button" id="newGameStartButton">Start</button>
+          
+          <div id="miscOptions">
+            <input type="checkbox" id="resetScoreCheckbox">
+            <label for="resetScoreCheckbox">Reset Score</label>
+          </div>
+        </div>
+        
+      </div> <!-- .modal-content -->
+      
+    </div> <!-- #newGameModal -->
+    
+    <!-- How to Play Modal -->
+    <div id="howToPlayModal" class="modal">
+      
+      <!-- Modal content -->
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <!--
+          <span class="close">&times;</span>
+          -->
+          
+          <h2>How to Play</h2>
+        </div>
+        
+        <div class="modal-body">
+          <p>
+            Each piece played (with the exception of the first piece) must border the last piece played and border that piece only. The first player to play a piece bordering more than one piece (the last piece) loses the game. Make the last valid move to win!
+          </p>
+          
+          <h3>Keyboard Controls</h3>
+          <table>
+            <tr>
+              <td>
+                Move cursor
+              </td>
+              <td>
+                Arrow keys/WASD
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Finalize move
+              </td>
+              <td>
+                Enter/Space
+              </td>
+            </tr>
+          </table>
+          
+          <h3>Mouse Controls</h3>
+          <table>
+            <tr>
+              <td>
+                Finalize move
+              </td>
+              <td>
+                Mouse primary button
+              </td>
+            </tr>
+          </table>
+          
+          <table>
+            <tr>
+              <td>
+                Undo
+              </td>
+              <td>
+                Ctrl+Z (Human vs. CPU only)
+              </td>
+            </tr>
+          </table>
+        </div> <!-- .modal-body -->
+        
+        <div class="modal-footer">
+          <button type="button" id="howToPlayOK">OK</button>
+        </div>
+        
+      </div> <!-- .modal-content -->
+      
+    </div> <!-- #howToPlayModal -->
+    
+    <!-- About Modal -->
+    <div id="aboutModal" class="modal">
+      
+      <!-- Modal content -->
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <!--
+          <span class="close">&times;</span>
+          -->
+          
+          <h2>About</h2>
+        </div>
+        
+        <div class="modal-body">
+          <p>
+            Congo Skulls
+          </p>
+          
+          <p>
+            A pointless diversion by Nicholas D. Horne
+          </p>
+          
+          <p>
+            A remake of Toggle Booleans' 1993 Windows 3.1 freeware classic Amazon Skulls in JavaScript with some new features/amenities including local multiplayer, custom grid size, keyboard controls, next move indicators, and undo.
+          </p>
+          
+          <p>
+            GNU GPLv3 licensed source code available at <a href="https://github.com/ndhorne/congo-skulls-js" target="_blank">https://github.com/ndhorne/congo-skulls-js</a>
+          </p>
+          
+          <p>
+            Play the original Amazon Skulls at <a href="https://archive.org/details/win3_AmazonSk" target="_blank">archive.org</a>
+          </p>
+        </div> <!-- .modal-body -->
+        
+        <div class="modal-footer">
+          <button type="button" id="aboutOK">OK</button>
+        </div>
+        
+      </div> <!-- .modal-content -->
+      
+    </div> <!-- #aboutModal -->
+    
+    <!-- Pit Modal -->
+    <div id="pitModal" class="modal">
+      
+      <!-- Modal content -->
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <!--
+          <span class="close">&times;</span>
+          -->
+          
+          <h2 id="pitHeader"></h2>
+        </div>
+        
+        <div class="modal-body">
+          <p id="pitText"></p>
+        </div> <!-- .modal-body -->
+        
+        <div class="modal-footer">
+          <button type="button" id="pitOK">OK</button>
+        </div>
+        
+      </div> <!-- .modal-content -->
+      
+    </div> <!-- #pitModal -->
+    
+    <!-- Play Again Modal -->
+    <div id="playAgainModal" class="modal">
+      
+      <!-- Modal content -->
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <!--
+          <span class="close">&times;</span>
+          -->
+          
+          <h2 id="playAgainHeader"></h2>
+        </div>
+        
+        <div class="modal-body">
+          <pre><span id="playAgainText"></span></pre>
+        </div> <!-- .modal-body -->
+        
+        <div class="modal-footer">
+          <button type="button" id="playAgainNo">No</button>
+          <button type="button" id="playAgainYes">Yes</button>
+        </div>
+        
+      </div> <!-- .modal-content -->
+      
+    </div> <!-- #playAgainModal -->
+    
+    <!-- Error Modal -->
+    <div id="errorModal" class="modal">
+      
+      <!-- Modal content -->
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <!--
+          <span class="close">&times;</span>
+          -->
+          
+          <h2 id="errorModalHeader"></h2>
+        </div>
+        
+        <div class="modal-body">
+          <p id="errorModalText"></p>
+        </div> <!-- .modal-body -->
+        
+        <div class="modal-footer">
+          <button type="button" id="errorModalOK">OK</button>
+        </div>
+        
+      </div> <!-- .modal-content -->
+      
+    </div> <!-- #errorModal -->
     
     <script src="congoskulls.js"></script>
   </div>

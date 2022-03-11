@@ -1,5 +1,5 @@
 /*
-Copyright 2021 Nicholas D. Horne
+Copyright 2021, 2022 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,17 +32,53 @@ class Board {
 }
 
 let boardElem = document.getElementById("board");
+
 let aboutElem = document.getElementById("aboutButton");
 let newGameElem = document.getElementById("newGameButton");
 let howToPlayElem = document.getElementById("howToPlayButton");
-let gridSelectElem = document.getElementById("gridSelect");
+let happyFacesCheckbox = document.getElementById("happyFacesToggle");
+
 let player1SelectElem = document.getElementById("player1Select");
 let player2SelectElem = document.getElementById("player2Select");
-let happyFacesCheckbox = document.getElementById("happyFacesToggle");
 let player1InputElem = document.getElementById("player1InputOptions");
 let player2InputElem = document.getElementById("player2InputOptions");
 let player1InputSelectElem = document.getElementById("player1InputSelect");
 let player2InputSelectElem = document.getElementById("player2InputSelect");
+
+let gridSelectElem = document.getElementById("gridSelect");
+let customGridOptions = document.getElementById("customGridOptions");
+let customGridWidth = document.getElementById("customGridWidth");
+let customGridHeight = document.getElementById("customGridHeight");
+let customPitLabelElem = document.getElementById("customPitLabel");
+let customPitCheckbox = document.getElementById("customPitCheckbox");
+
+let resetScoreCheckbox = document.getElementById("resetScoreCheckbox");
+
+let newGameModal = document.getElementById("newGameModal");
+let newGameStartButton = document.getElementById("newGameStartButton");
+let newGameCancelButton = document.getElementById("newGameCancelButton");
+
+let howToPlayModal = document.getElementById("howToPlayModal");
+let howToPlayOKButton = document.getElementById("howToPlayOK");
+
+let aboutModal = document.getElementById("aboutModal");
+let aboutOKButton = document.getElementById("aboutOK");
+
+let pitModal = document.getElementById("pitModal");
+let pitTextElem = document.getElementById("pitText");
+let pitOKButton = document.getElementById("pitOK");
+let pitHeaderElem = document.getElementById("pitHeader");
+
+let playAgainModal = document.getElementById("playAgainModal");
+let playAgainTextElem = document.getElementById("playAgainText");
+let playAgainNoButton = document.getElementById("playAgainNo");
+let playAgainYesButton = document.getElementById("playAgainYes");
+let playAgainHeaderElem = document.getElementById("playAgainHeader");
+
+let errorModal = document.getElementById("errorModal");
+let errorModalHeaderElem = document.getElementById("errorModalHeader");
+let errorModalTextElem = document.getElementById("errorModalText");
+let errorModalOKButton = document.getElementById("errorModalOK");
 
 let players = [
   {
@@ -88,7 +124,7 @@ let pieces = {
   ]
 }
 
-let boardObj, pitCells, turns, state, kbdIndex;
+let boardObj, boardCells, pitCells, turns, state, kbdIndex;
 let totalGames = 0, player1Score = 0, player2Score = 0;
 let selectColor = "cornflowerblue", nextMoveColor = "lavender";
 let markers = pieces["skull"];
@@ -101,6 +137,7 @@ function clearNewGameElemHighlightTimeout() {
 }
 
 function newOptionSelectedAdministrivia() {
+  /*
   clearNewGameElemHighlightTimeout();
   
   if (
@@ -119,6 +156,20 @@ function newOptionSelectedAdministrivia() {
   ) {
     highlightNewGameElem(500, "darkorange");
   }
+  */
+  
+  if (
+    gridSelectElem.selectedIndex == 4
+    && customGridWidth.value % 2 == 1
+    && customGridHeight.value % 2 == 1
+    && +customGridWidth.value >= 7
+    && +customGridHeight.value >= 7
+  ) {
+    customPitCheckbox.disabled = false;
+  } else {
+    customPitCheckbox.checked = false;
+    customPitCheckbox.disabled = true;
+  }
 }
 
 player1SelectElem.addEventListener("change", event => {
@@ -136,7 +187,7 @@ player1SelectElem.addEventListener("change", event => {
     }
     player1InputElem.style.visibility = "visible";
   }
-});
+}, false);
 
 player2SelectElem.addEventListener("change", event => {
   newOptionSelectedAdministrivia();
@@ -153,19 +204,33 @@ player2SelectElem.addEventListener("change", event => {
     }
     player2InputElem.style.visibility = "visible";
   }
-});
+}, false);
 
 player1InputSelectElem.addEventListener("change", event => {
   newOptionSelectedAdministrivia();
-});
+}, false);
 
 player2InputSelectElem.addEventListener("change", event => {
   newOptionSelectedAdministrivia();
-});
+}, false);
 
 gridSelectElem.addEventListener("change", event => {
   newOptionSelectedAdministrivia();
-});
+  
+  if (gridSelectElem.selectedIndex == 4) {
+    customGridOptions.style.visibility = "visible";
+  } else {
+    customGridOptions.style.visibility = "hidden";
+  }
+}, false);
+
+customGridWidth.addEventListener("input", event => {
+  newOptionSelectedAdministrivia();
+}, false);
+
+customGridHeight.addEventListener("input", event => {
+  newOptionSelectedAdministrivia();
+}, false);
 
 //blink border around new game button until timeout is cleared
 function highlightNewGameElem(timeout, color) {
@@ -233,13 +298,13 @@ function getAvailableMoves(index) {
 }
 
 function mouseInputOn() {
-  Array.from(document.getElementsByTagName("td")).forEach(function(cell) {
+  Array.from(boardCells).forEach(function(cell) {
     cell.addEventListener("click", mouseMove, false);
   });
 }
 
 function mouseInputOff() {
-  Array.from(document.getElementsByTagName("td")).forEach(function(cell) {
+  Array.from(boardCells).forEach(function(cell) {
     cell.removeEventListener("click", mouseMove, false);
   });
 }
@@ -288,10 +353,10 @@ function mouseOverOn(index) {
     boardObj.moves.length == 0
     && players[turns % players.length].input == "Mouse"
   ) {
-    Array.from(document.getElementsByTagName("td")).forEach(function(cell) {
+    Array.from(boardCells).forEach(function(cell) {
       cell.addEventListener("mouseover", mouseOver, false);
     });
-    Array.from(document.getElementsByTagName("td")).forEach(function(cell) {
+    Array.from(boardCells).forEach(function(cell) {
       cell.addEventListener("mouseout", mouseOut, false);
     });
   }
@@ -320,10 +385,10 @@ function mouseOverOff(index) {
     boardObj.moves.length == 0
     && players[turns % players.length].input == "Mouse"
   ) {
-    Array.from(document.getElementsByTagName("td")).forEach(function(cell) {
+    Array.from(boardCells).forEach(function(cell) {
       cell.removeEventListener("mouseover", mouseOver, false);
     });
-    Array.from(document.getElementsByTagName("td")).forEach(function(cell) {
+    Array.from(boardCells).forEach(function(cell) {
       cell.removeEventListener("mouseout", mouseOut, false);
     });
     document.getElementById("cell" + index).style.background = "";
@@ -409,6 +474,7 @@ function move(index) {
     
     updateMarkers();
     
+    /*
     setTimeout(function() {
       if (
         confirm(
@@ -456,10 +522,58 @@ function move(index) {
         init();
       } else {
         newGameElem.focus();
+        highlightNewGameElem(500, "darkorange");
       }
     }, timeout);
+    */
     
-    highlightNewGameElem(500, "darkorange");
+    setTimeout(function() {
+      let playAgainDialogText =
+        (
+          (
+            players[0].type != players[1].type
+          )
+          ? players[turns % players.length].type == "Human"
+            ? "Congratulations! "
+            : "Bummer! "
+          : ""
+        )
+        + (
+          (
+            players[0].type == "Human" && players[1].type == "CPU"
+          )
+          ? "Wins:" + player1Score
+            + " Losses:" + (totalGames - player1Score)
+          : ""
+        )
+        + (
+          (
+            players[0].type == "CPU" && players[1].type == "Human"
+          )
+          ? "Wins:" + player2Score
+            + " Losses:" + (totalGames - player2Score)
+          : ""
+        )
+        + (
+          (
+            players[0].type == players[1].type
+          )
+          ? players[turns % players.length].name + " wins!\n\n"
+            + "Player 1: "
+            + "Wins:" + player1Score
+            + " Losses:" + (totalGames - player1Score) + "\n"
+            + "Player 2: "
+            + "Wins:" + player2Score
+            + " Losses:" + (totalGames - player2Score)
+          : ""
+        )
+        + "\n\nPlay again?"
+      ;
+      
+      playAgainHeaderElem.innerHTML = "Game #" + totalGames;
+      playAgainTextElem.innerHTML = playAgainDialogText;
+      playAgainModal.style.display = "block";
+    }, timeout);
   } else {
     timeout = players[0].type == "CPU" && players[1].type == "CPU" ? 500 : 0;
     
@@ -690,7 +804,7 @@ function kbdMove(event) {
 function updateMarkers() {
   marker = markers[state].face;
   
-  Array.from(document.getElementsByTagName("td")).forEach(function(cell) {
+  Array.from(boardCells).forEach(function(cell) {
     let index = +cell.dataset.index;
     
     if (boardObj.grid[index] == true) {
@@ -786,10 +900,18 @@ function undo() {
 
 function pitDialog() {
   if (happyFacesCheckbox.checked) {
-    alert("Please don't step on the daisies");
+    //alert("Please don't step on the daisies");
+    
+    pitHeaderElem.innerHTML = "Pit of Daisies";
+    pitTextElem.innerHTML = "Please don't step on the daisies";
   } else {
-    alert("Ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+    //alert("Ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+    
+    pitHeaderElem.innerHTML = "Pit of Death";
+    pitTextElem.innerHTML = "Ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh";
   }
+  
+  pitModal.style.display = "block";
 }
 
 function init() {
@@ -799,6 +921,7 @@ function init() {
   let xArg, yArg;
   
   if (gridSelectElem.value == "Custom") {
+    /*
     customX = Number(prompt("Desired board width:"));
     if (!Number.isInteger(customX) || customX < 2) {
       alert("Please enter a whole number of at least two.");
@@ -810,6 +933,28 @@ function init() {
     customY = Number(prompt("Desired board height:"));
     if (!Number.isInteger(customY) || customY < 2) {
       alert("Please enter a whole number of at least two.");
+      return;
+    } else {
+      yArg = customY;
+    }
+    */
+    
+    customX = +customGridWidth.value;
+    customY = +customGridHeight.value;
+    
+    if (!Number.isInteger(customX) || customX < 4) {
+      errorModalHeaderElem.innerHTML = "Width Invalid";
+      errorModalTextElem.innerHTML = "Please enter a width of at least 4.";
+      errorModal.style.display = "block";
+      return;
+    } else {
+      xArg = customX;
+    }
+    
+    if (!Number.isInteger(customY) || customY < 3) {
+      errorModalHeaderElem.innerHTML = "Height Invalid";
+      errorModalTextElem.innerHTML = "Please enter a height of at least 3.";
+      errorModal.style.display = "block";
       return;
     } else {
       yArg = customY;
@@ -848,9 +993,18 @@ function init() {
     yArg,
     gridSelectElem.selectedIndex
   );
+  
   turns = 0;
   state = 0;
   marker = markers[state].face;
+  
+  if (resetScoreCheckbox.checked) {
+    totalGames = 0;
+    player1Score = 0;
+    player2Score = 0;
+    
+    resetScoreCheckbox.checked = false;
+  }
   
   Array.from(boardElem.rows).forEach(row => row.remove());
   
@@ -871,7 +1025,17 @@ function init() {
     boardElem.appendChild(row);
   }
   
-  if (boardObj.gridOption == 3) {
+  boardCells = [];
+  Array.from(boardElem.rows).forEach(
+    row => Array.from(row.cells).forEach(
+      cell => boardCells.push(cell)
+    )
+  );
+  
+  if (
+    boardObj.gridOption == 3
+    || (boardObj.gridOption == 4 && customPitCheckbox.checked)
+  ) {
     pitCells = [
       ((boardObj.grid.length - 1) / 2) - (boardObj.width + 1),
       ((boardObj.grid.length - 1) / 2) - (boardObj.width),
@@ -909,6 +1073,8 @@ function init() {
     mouseInputOn();
     mouseOverOn();
   }
+  
+  newGameModal.style.display = "none";
 }
 
 function about() {
@@ -982,30 +1148,103 @@ function start() {
     if (happyFacesCheckbox.checked) {
       markers = pieces["happyFace"];
       gridSelectElem[3].text = "Pit of Daisies";
+      customPitLabelElem.innerHTML = "Pit of Daisies:";
+      customPitCheckbox.style.marginLeft = "0";
     } else {
       markers = pieces["skull"];
       gridSelectElem[3].text = "Pit of Death";
+      customPitLabelElem.innerHTML = "Pit of Death:";
+      customPitCheckbox.style.marginLeft = "7px";
     }
     updateMarkers();
     updatePit();
-  });
+  }, false);
   
   newGameElem.addEventListener("click", event => {
-    init();
+    //init();
+    
+    newGameModal.style.display = "block";    
     newGameElem.blur();
-  });
+  }, false);
   
   howToPlayElem.addEventListener("click", event => {
-    howToPlay();
+    //howToPlay();
+    
+    howToPlayModal.style.display = "block";
     howToPlayElem.blur();
-  });
+  }, false);
   
   aboutElem.addEventListener("click", event => {
-    about();
+    //about();
+    
+    aboutModal.style.display = "block";
     aboutElem.blur();
-  });
+  }, false);
   
-  document.addEventListener("keydown", ctrlZ);
+  document.addEventListener("keydown", ctrlZ, false);
+  
+  window.addEventListener("click", event => {
+    if (event.target == newGameModal) {
+      newGameModal.style.display = "none";
+    }
+    
+    if (event.target == howToPlayModal) {
+      howToPlayModal.style.display = "none";
+    }
+    
+    if (event.target == aboutModal) {
+      aboutModal.style.display = "none";
+    }
+    
+    if (event.target == pitModal) {
+      pitModal.style.display = "none";
+    }
+    
+    if (event.target == playAgainModal) {
+      playAgainModal.style.display = "none";
+      newGameElem.focus();
+      highlightNewGameElem(500, "darkorange");
+    }
+    
+    if (event.target == errorModal) {
+      errorModal.style.display = "none";
+    }
+  }, false);
+  
+  newGameStartButton.addEventListener("click", event => {
+    init();
+  }, false);
+  
+  newGameCancelButton.addEventListener("click", event => {
+    newGameModal.style.display = "none";
+  }, false);
+  
+  howToPlayOKButton.addEventListener("click", event => {
+    howToPlayModal.style.display = "none";
+  }, false);
+  
+  aboutOKButton.addEventListener("click", event => {
+    aboutModal.style.display = "none";
+  }, false);
+  
+  pitOKButton.addEventListener("click", event => {
+    pitModal.style.display = "none";
+  }, false);
+  
+  playAgainYesButton.addEventListener("click", event => {
+    playAgainModal.style.display = "none";
+    init();
+  }, false);
+  
+  playAgainNoButton.addEventListener("click", event => {
+    playAgainModal.style.display = "none";
+    newGameElem.focus();
+    highlightNewGameElem(500, "darkorange");
+  }, false);
+  
+  errorModalOKButton.addEventListener("click", event => {
+    errorModal.style.display = "none";
+  }, false);
   
   player1SelectElem.selectedIndex = 1;
   player2SelectElem.selectedIndex = 0;
@@ -1013,6 +1252,10 @@ function start() {
   happyFacesCheckbox.checked = false;
   player1InputSelectElem.selectedIndex = 1;
   player2InputSelectElem.selectedIndex = 0;
+  customGridWidth.value = "";
+  customGridHeight.value = "";
+  customPitCheckbox.checked = false;
+  customPitCheckbox.disabled = true;
   
   init();
 }
