@@ -124,7 +124,7 @@ let pieces = {
   ]
 }
 
-let boardObj, boardCells, pitCells, turns, state, kbdIndex;
+let boardObj, boardCells, pitCells, turns, state, kbdIndex, currentOptions;
 let totalGames = 0, player1Score = 0, player2Score = 0;
 let selectColor = "cornflowerblue", nextMoveColor = "lavender";
 let markers = pieces["skull"];
@@ -160,15 +160,18 @@ function newOptionSelectedAdministrivia() {
   
   if (
     gridSelectElem.selectedIndex == 4
-    && customGridWidth.value % 2 == 1
-    && customGridHeight.value % 2 == 1
-    && +customGridWidth.value >= 7
-    && +customGridHeight.value >= 7
+    && customPitCheckbox.checked
+    && (
+      customGridWidth.value % 2 != 1
+      || customGridHeight.value % 2 != 1
+      || customGridWidth.value < 7
+      || customGridHeight.value < 7
+    )
   ) {
-    customPitCheckbox.disabled = false;
-  } else {
+    errorModalHeaderElem.innerHTML = "Dimensions Invalid";
+    errorModalTextElem.innerHTML = "An odd width and height of at least 7 x 7 is required for pit.";
+    errorModal.style.display = "block";
     customPitCheckbox.checked = false;
-    customPitCheckbox.disabled = true;
   }
 }
 
@@ -230,6 +233,24 @@ customGridWidth.addEventListener("input", event => {
 
 customGridHeight.addEventListener("input", event => {
   newOptionSelectedAdministrivia();
+}, false);
+
+customPitCheckbox.addEventListener("change", event => {
+  newOptionSelectedAdministrivia();
+  
+  if (customPitCheckbox.checked) {
+    customGridWidth.min = "7";
+    customGridHeight.min = "7"
+    
+    customGridWidth.step = "2";
+    customGridHeight.step = "2";
+  } else {
+    customGridWidth.min = "4";
+    customGridHeight.min = "3"
+    
+    customGridWidth.step = "1";
+    customGridHeight.step = "1";
+  }
 }, false);
 
 //blink border around new game button until timeout is cleared
@@ -920,6 +941,17 @@ function init() {
   let customX, customY;
   let xArg, yArg;
   
+  currentOptions = {
+    player1Type: player1SelectElem.selectedIndex,
+    player2Type: player2SelectElem.selectedIndex,
+    player1Input: player1InputSelectElem.selectedIndex,
+    player2Input: player2InputSelectElem.selectedIndex,
+    grid: gridSelectElem.selectedIndex,
+    customWidth: customGridWidth.value,
+    customHeight: customGridHeight.value,
+    pitBool: customPitCheckbox.checked
+  };
+  
   if (gridSelectElem.value == "Custom") {
     /*
     customX = Number(prompt("Desired board width:"));
@@ -1113,6 +1145,37 @@ function howToPlay() {
   );
 }
 
+function cancelNewGameModalAdministrivia() {
+  newGameModal.style.display = "none";
+  
+  player1SelectElem.selectedIndex = currentOptions.player1Type;
+  player2SelectElem.selectedIndex = currentOptions.player2Type;
+  player1InputSelectElem.selectedIndex = currentOptions.player1Input;
+  player2InputSelectElem.selectedIndex = currentOptions.player2Input;
+  gridSelectElem.selectedIndex = currentOptions.grid;
+  customGridWidth.value = currentOptions.customWidth;
+  customGridHeight.value = currentOptions.customHeight;
+  customPitCheckbox.checked = currentOptions.pitBool;
+  
+  if (player1SelectElem.selectedIndex == 1) {
+    player1InputElem.style.visibility = "hidden";
+  } else {
+    player1InputElem.style.visibility = "visible";
+  }
+  
+  if (player2SelectElem.selectedIndex == 1) {
+    player2InputElem.style.visibility = "hidden";
+  } else {
+    player2InputElem.style.visibility = "visible";
+  }
+  
+  if (gridSelectElem.selectedIndex != 4) {
+    customGridOptions.style.visibility = "hidden";
+  } else {
+    customGridOptions.style.visibility = "visible";
+  }
+}
+
 function start() {
   function ctrlZ(event) {
     if (event.ctrlKey && event.key.toLowerCase() == "z") {
@@ -1185,7 +1248,7 @@ function start() {
   
   window.addEventListener("click", event => {
     if (event.target == newGameModal) {
-      newGameModal.style.display = "none";
+      cancelNewGameModalAdministrivia();
     }
     
     if (event.target == howToPlayModal) {
@@ -1216,7 +1279,7 @@ function start() {
   }, false);
   
   newGameCancelButton.addEventListener("click", event => {
-    newGameModal.style.display = "none";
+    cancelNewGameModalAdministrivia();
   }, false);
   
   howToPlayOKButton.addEventListener("click", event => {
@@ -1252,10 +1315,9 @@ function start() {
   happyFacesCheckbox.checked = false;
   player1InputSelectElem.selectedIndex = 1;
   player2InputSelectElem.selectedIndex = 0;
-  customGridWidth.value = "";
-  customGridHeight.value = "";
+  customGridWidth.value = "4";
+  customGridHeight.value = "3";
   customPitCheckbox.checked = false;
-  customPitCheckbox.disabled = true;
   
   init();
 }
