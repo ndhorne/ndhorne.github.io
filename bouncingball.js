@@ -1,5 +1,5 @@
 /*
-Copyright 2019, 2020, 2021 Nicholas D. Horne
+Copyright 2019, 2020, 2021, 2022 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -60,13 +60,6 @@ let ballPos = new Vec(
 );
 
 let lastTime = null;
-let autoNewBallInterval;
-
-let speedControlX = document.getElementById("ballSpeedX");
-let speedControlY = document.getElementById("ballSpeedY");
-let sizeControl = document.getElementById("ballSize");
-let colorControl = document.getElementById("ballColor");
-let customColorControl = document.getElementById("ballCustomColor");
 
 let colors = [
   "blue", "mediumblue", "darkblue", "midnightblue", "royalblue", "slateblue",
@@ -76,6 +69,15 @@ let colors = [
   "indigo", "teal"
 ];
 let color = randomColor();
+
+let rafID, ballPaused, autoNewBallInterval;
+
+let speedControlX = document.getElementById("ballSpeedX");
+let speedControlY = document.getElementById("ballSpeedY");
+let sizeControl = document.getElementById("ballSize");
+let colorControl = document.getElementById("ballColor");
+let customColorControl = document.getElementById("ballCustomColor");
+let pauseButton = document.getElementById("pauseBall");
 
 function randomInt(min, max, randomSign) {
   let randInt = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -115,7 +117,7 @@ function frame(time) {
     updateAnimation(Math.min(100, time - lastTime) / 1000);
   }
   lastTime = time;
-  requestAnimationFrame(frame);
+  rafID = requestAnimationFrame(frame);
 }
 
 function updateAnimation(step) {
@@ -163,6 +165,10 @@ function newBall() {
   color = randomColor();
   cx.fillStyle = color;
   updateControls();
+  
+  if (ballPaused) {
+    updateAnimation(0);
+  }
 }
 
 function clickHandler(event) {
@@ -204,23 +210,39 @@ function updateControls() {
 speedControlX.addEventListener("input", function(e) {
   speed.x = Math.sign(speed.x) * e.target.value;
 }, false);
+
 speedControlY.addEventListener("input", function(e) {
   speed.y = Math.sign(speed.y) * e.target.value;
 }, false);
+
 sizeControl.addEventListener("input", function(e) {
   newSize(e.target.value);
   e.target.value = radius;
 }, false);
+
 colorControl.addEventListener("input", function(e) {
   color = colors[e.target.value];
   cx.fillStyle = color;
 }, false);
+
 customColorControl.addEventListener("change", function(e) {
   colors.push(e.target.value);
   colorControl.max = colors.length - 1;
   colorControl.value = colors.length - 1;
   color = colors[colors.length - 1];
   cx.fillStyle = color;
+}, false);
+
+pauseButton.addEventListener("click", function(e) {
+  if (ballPaused) {
+    rafID = requestAnimationFrame(frame);
+    ballPaused = false;
+    pauseButton.innerHTML = "Pause";
+  } else {
+    cancelAnimationFrame(rafID);
+    ballPaused = true;
+    pauseButton.innerHTML = "Resume";
+  }
 }, false);
 
 colorControl.max = colors.length - 1;
@@ -242,6 +264,6 @@ canvas.style.height = canvasHeight + "px";
 cx.strokeStyle = "black";
 cx.fillStyle = color;
 
-requestAnimationFrame(frame);
+rafID = requestAnimationFrame(frame);
 
 //autoNewBallInterval = setInterval(() => newBall(), 15000);

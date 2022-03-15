@@ -155,9 +155,13 @@ details {
   border-radius: 5px;
 }
 
+#pauseBall {
+  width: 70px;
+}
+
 #eff-blue-ribbon {
   text-align: center;
-  margin-top: 16px;
+  margin-top: 12px;
 }
 
 .license-icon {
