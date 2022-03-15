@@ -33,8 +33,11 @@ const beginWithLetterCheckbox = document.getElementById("beginwithletter");
 const excludeSimilarCheckbox = document.getElementById("excludesimilar");
 const excludeDuplicatesCheckbox = document.getElementById("excludeduplicates");
 const excludeSequentialCheckbox = document.getElementById("excludesequential");
-const statusDetails = document.getElementById("status");
-const statusSummary = document.getElementById("statussummary");
+
+//const statusDetails = document.getElementById("statusdetails");
+//const statusSummary = document.getElementById("statussummary");
+
+const statusDiv = document.getElementById("statusdiv");
 const statusLog = document.getElementById("statuslog");
 
 const similars = ["l", "I", "1", "|", "O", "0"];
@@ -370,8 +373,9 @@ function optionsAdministrivia(e) {
   ) {
     genButton.disabled = true;
     
-    statusSummary.style.color = "red";
+    //statusSummary.style.color = "red";
     statusLog.style.color = "red";
+    statusDiv.style.bottom = 0;
     
     let errorText = [];
     
@@ -397,9 +401,12 @@ function optionsAdministrivia(e) {
   ) {
     genButton.disabled = false;
     
-    statusSummary.style.color = "black";
-    statusLog.style.color = "black";
+    //statusSummary.style.color = "black";
+    statusLog.style.color = "green";
     statusLog.textContent = "OK";
+    setTimeout(function() {
+      statusDiv.style.bottom = "-300px";
+    }, 500);
   }
 }
 

@@ -52,7 +52,7 @@ legend {
 
 #specifics label {
   display: inline-block;
-  width: 81px;
+  width: 82px;
 }
 
 #generate {
@@ -63,14 +63,29 @@ legend {
   margin-top: 0;
 }
 
-#status {
+#statusdetails {
   height: 90px;
   margin-top: 10px;
   font-size: 14px;
+}
+
+#statusdiv {
+  position: fixed;
+  width: 300px;
+  height: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  border: 1px solid black;
+  border-radius: 6px;
+  bottom: -300px;
+  transition-duration: 0.4s;
+  background-color: white;
 }
 
 #statuslog {
   margin-top: 5px;
   margin-left: 10px;
   font-size: 14px;
+  color: green;
 }
