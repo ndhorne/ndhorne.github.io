@@ -40,6 +40,9 @@ const excludeSequentialCheckbox = document.getElementById("excludesequential");
 const statusDiv = document.getElementById("statusdiv");
 const statusLog = document.getElementById("statuslog");
 
+const aboutModal = document.getElementById("aboutModal");
+const aboutOKButton = document.getElementById("aboutOK");
+
 const similars = ["l", "I", "1", "|", "O", "0"];
 
 const sets = {
@@ -450,6 +453,7 @@ function clearOutput(e) {
 }
 
 function about(e) {
+  /*
   const aboutText = [
     "Random Password Generator",
     "A random password generator utilizing crypto.getRandomValues()",
@@ -466,7 +470,16 @@ function about(e) {
   alert(
     aboutText.join("\n\n")
   );
+  */
+  
+  aboutModal.style.display = "block";
 }
+
+window.addEventListener("click", event => {
+  if (event.target == aboutModal) {
+    aboutModal.style.display = "none";
+  }
+}, false);
 
 lowerAlphaCheckbox.addEventListener("change", optionsAdministrivia);
 upperAlphaCheckbox.addEventListener("change", optionsAdministrivia);
@@ -482,6 +495,10 @@ excludeDuplicatesCheckbox.addEventListener("change", optionsAdministrivia);
 genButton.addEventListener("click", getPass);
 copyButton.addEventListener("click", copyToClipboard);
 clearButton.addEventListener("click", clearOutput);
+
 aboutButton.addEventListener("click", about);
+aboutOKButton.addEventListener("click", e => {
+  aboutModal.style.display = "none";
+}, false);
 
 optionsAdministrivia(new CustomEvent("CustomEvent"));
