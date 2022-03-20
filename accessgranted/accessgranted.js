@@ -1,5 +1,5 @@
 /*
-Copyright 2018-2021 Nicholas D. Horne
+Copyright 2018-2022 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -50,6 +50,29 @@ let aboutText = [
   "GNU GPLv3 licensed source code available at " +
   "https://github.com/ndhorne/access-granted-js"
 ];
+
+let accessGrantedModal = document.getElementById("accessGrantedModal");
+let accessGrantedOKButton = document.getElementById("accessGrantedOK");
+let accessGrantedModalText = document.getElementById("accessGrantedModalText");
+
+let aboutModal = document.getElementById("aboutModal");
+let aboutOKButton = document.getElementById("aboutOK");
+
+let errorModal = document.getElementById("errorModal");
+let errorModalHeader = document.getElementById("errorModalHeader");
+let errorModalText = document.getElementById("errorModalText");
+let errorModalOKButton = document.getElementById("errorModalOK");
+
+let customInput, customText;
+let mode1CustomInput = document.createElement("input");
+let mode2CustomInput = document.createElement("input");
+let mode2CustomInputText = document.createTextNode("\"");
+
+mode1CustomInput.style.width = "27px";
+mode1CustomInput.style.margin = "0 2px";
+
+mode2CustomInput.style.width = "27px";
+mode2CustomInput.style.margin = "0 2px";
 
 //append individual option element to select element
 function appendSelectOption(selectElement, optionText, optionValue) {
@@ -104,7 +127,8 @@ mode2OptionsLabel.htmlFor = "mode2Options";
 
 //fine sizing/positioning
 optionsElement.style.width =
-  modeElement.getBoundingClientRect().width + "px";
+  modeElement.getBoundingClientRect().width + "px"
+;
 
 //wires up auto new game checkbox with callback to set analogous flag
 autoNewGameElement.addEventListener("change", (event) => {
@@ -113,7 +137,7 @@ autoNewGameElement.addEventListener("change", (event) => {
   } else {
     autoNew = false;
   }
-});
+}, false);
 
 //updates game log
 function updateLog(line, spacing = 1) {
@@ -142,6 +166,36 @@ function newGameButtonBorderBlinkHighlight(timeout) {
   })(timeout);
 }
 
+mode1OptionsElement.addEventListener("change", event => {
+  if (event.target.value == "Custom") {
+    customInput = optionsElement.insertBefore(
+      mode1CustomInput,
+      newGameElement
+    );
+    customInput.focus();
+  } else {
+    customInput.remove();
+    customText.remove();
+  }
+}, false);
+
+mode2OptionsElement.addEventListener("change", event => {
+  if (event.target.value == "Custom") {
+    customInput = optionsElement.insertBefore(
+      mode2CustomInput,
+      newGameElement
+    );
+    customText = optionsElement.insertBefore(
+      mode2CustomInputText,
+      newGameElement
+    );
+    customInput.focus();
+  } else {
+    customInput.remove();
+    customText.remove();
+  }
+}, false);
+
 //wires up mode select element with callback function to update
 //interface when switching game modes
 modeElement.addEventListener("change", event => {
@@ -163,6 +217,14 @@ modeElement.addEventListener("change", event => {
   
   if (logElement.innerHTML.slice(-8) != "<br><br>") {
     logElement.appendChild(document.createElement("br"));
+  }
+  
+  if (customInput) {
+    customInput.remove();
+  }
+  
+  if (customText) {
+    customText.remove();
   }
   
   switch (event.target.selectedIndex) {
@@ -208,6 +270,14 @@ modeElement.addEventListener("change", event => {
         mode1OptionsElement, newGameElement
       );
       
+      if (mode1OptionsElement.value == "Custom") {
+        customInput = optionsElement.insertBefore(
+          mode1CustomInput,
+          newGameElement
+        );
+        customInput.focus();
+      }
+      
       setModeOptionEvents();
       
       if (gameMode != event.target.selectedIndex) {
@@ -238,6 +308,20 @@ modeElement.addEventListener("change", event => {
         mode2OptionsElement, newGameElement
       );
       
+      if (mode2OptionsElement.value == "Custom") {
+        customInput = optionsElement.insertBefore(
+          mode2CustomInput,
+          newGameElement
+        );
+        
+        customText = optionsElement.insertBefore(
+          mode2CustomInputText,
+          newGameElement
+        );
+        
+        customInput.focus();
+      }
+      
       setModeOptionEvents();
       
       if (gameMode != event.target.selectedIndex) {
@@ -250,7 +334,7 @@ modeElement.addEventListener("change", event => {
     default:
       console.error("No case defined for chosen option");
   }
-});
+}, false);
 
 //wires up mode options select element with callback function to update
 //interface when switching options
@@ -280,6 +364,22 @@ function setModeOptionEvents() {
   });
 }
 
+mode1CustomInput.addEventListener("focus", event => {
+  locked = true;
+}, false);
+
+mode1CustomInput.addEventListener("blur", event => {
+  locked = false;
+}, false);
+
+mode2CustomInput.addEventListener("focus", event => {
+  locked = true;
+}, false);
+
+mode2CustomInput.addEventListener("blur", event => {
+  locked = false;
+}, false);
+
 //initializes buttons array with references to button elements
 for (let i = 0; i < 10; i++) {
   buttons[i] = document.getElementById("button" + i);
@@ -308,7 +408,7 @@ window.addEventListener("keydown", event => {
       }
     }
   }
-});
+}, false);
 
 //updates #lcd div element with current entry
 function updateDisplay() {
@@ -446,13 +546,26 @@ function initGame(pinArg) {
       autoSolveElement.disabled = true;
       
       if (modeOptionsElement.value == "Custom") {
+        /*
         mode1CustomValue = prompt("Desired number of attempts:");
         if (mode1CustomValue == null) {
           return;
         }
-        if (!Number.isInteger(Number(mode1CustomValue))
-            || mode1CustomValue <= 0) {
-          alert("Please enter a whole number greater than zero.");
+        */
+        
+        mode1CustomValue = mode1CustomInput.value;
+        
+        if (
+          !Number.isInteger(Number(mode1CustomValue))
+          || mode1CustomValue <= 0
+        ) {
+          //alert("Please enter a whole number greater than zero.");
+          
+          errorModalHeader.innerHTML = "Input Invalid";
+          errorModalText.innerHTML = 
+            "Please enter a whole number greater than zero."
+          ;
+          errorModal.style.display = "block";
           return;
         } else {
           maxAttempts = mode1CustomValue;
@@ -470,15 +583,28 @@ function initGame(pinArg) {
       autoSolveElement.disabled = true;
       
       if (modeOptionsElement.value == "Custom") {
+        /*
         mode2CustomValue = prompt(
           "Desired length of time (in seconds):"
         );
         if (mode2CustomValue == null) {
           return;
         }
-        if (!Number.isInteger(Number(mode2CustomValue))
-            || mode2CustomValue <= 0) {
-          alert("Please enter a whole number greater than zero.");
+        */
+        
+        mode2CustomValue = mode2CustomInput.value;
+        
+        if (
+          !Number.isInteger(Number(mode2CustomValue))
+          || mode2CustomValue <= 0
+        ) {
+          //alert("Please enter a whole number greater than zero.");
+          
+          errorModalHeader.innerHTML = "Input Invalid";
+          errorModalText.innerHTML = 
+            "Please enter a whole number greater than zero."
+          ;
+          errorModal.style.display = "block";
           return;
         } else {
           if (mode2CustomValue <= 360000) {
@@ -585,7 +711,10 @@ function verifyEntry(entryArg) {
     
     updateLog(status);
     if (!silent) {
-      alert(status);
+      //alert(status);
+      
+      accessGrantedModalText.innerHTML = status;
+      accessGrantedModal.style.display = "block";
     }
     
     hintElement.disabled = true;
@@ -721,11 +850,17 @@ function newGame(event) {
 }
 
 //displays about dialog
-function about(event) {
+function aboutAlert(event) {
   alert(
     aboutText.join("\n\n")
   );
   event.preventDefault();
+}
+
+function about(event) {
+  event.preventDefault();
+  
+  aboutModal.style.display = "block";
 }
 
 //flash incremental number of keys in pin upon hint request
@@ -1050,6 +1185,32 @@ function autoSolveBenchmarks() {
   
   silent = false;
 }
+
+window.addEventListener("click", event => {
+  if (event.target == aboutModal) {
+    aboutModal.style.display = "none";
+  }
+  
+  if (event.target == accessGrantedModal) {
+    accessGrantedModal.style.display = "none";
+  }
+  
+  if (event.target == errorModal) {
+    errorModal.style.display = "none";
+  }
+}, false);
+
+accessGrantedOKButton.addEventListener("click", event => {
+  accessGrantedModal.style.display = "none";
+}, false);
+
+aboutOKButton.addEventListener("click", event => {
+  aboutModal.style.display = "none";
+}, false);
+
+errorModalOKButton.addEventListener("click", event => {
+  errorModal.style.display = "none";
+}, false);
 
 //initializes first game
 function start() {
