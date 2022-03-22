@@ -218,11 +218,19 @@ speedControlY.addEventListener("input", function(e) {
 sizeControl.addEventListener("input", function(e) {
   newSize(e.target.value);
   e.target.value = radius;
+  
+  if (ballPaused) {
+    updateAnimation(0);
+  }
 }, false);
 
 colorControl.addEventListener("input", function(e) {
   color = colors[e.target.value];
   cx.fillStyle = color;
+  
+  if (ballPaused) {
+    updateAnimation(0);
+  }
 }, false);
 
 customColorControl.addEventListener("change", function(e) {
@@ -231,6 +239,10 @@ customColorControl.addEventListener("change", function(e) {
   colorControl.value = colors.length - 1;
   color = colors[colors.length - 1];
   cx.fillStyle = color;
+  
+  if (ballPaused) {
+    updateAnimation(0);
+  }
 }, false);
 
 pauseButton.addEventListener("click", function(e) {
@@ -266,4 +278,5 @@ cx.fillStyle = color;
 
 rafID = requestAnimationFrame(frame);
 
+//new ball every 15 seconds
 //autoNewBallInterval = setInterval(() => newBall(), 15000);
