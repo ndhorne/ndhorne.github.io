@@ -56,29 +56,35 @@ let resetScoreCheckbox = document.getElementById("resetScoreCheckbox");
 
 let newGameModal = document.getElementById("newGameModal");
 let newGameStartButton = document.getElementById("newGameStartButton");
-let newGameCancelButton = document.getElementById("newGameCancelButton");
+let closeNewGame = document.getElementById("closeNewGame");
+//let newGameCancelButton = document.getElementById("newGameCancelButton");
 
 let howToPlayModal = document.getElementById("howToPlayModal");
-let howToPlayOKButton = document.getElementById("howToPlayOK");
+let closeHowToPlay = document.getElementById("closeHowToPlay");
+//let howToPlayOKButton = document.getElementById("howToPlayOK");
 
 let aboutModal = document.getElementById("aboutModal");
-let aboutOKButton = document.getElementById("aboutOK");
+let closeAbout = document.getElementById("closeAbout");
+//let aboutOKButton = document.getElementById("aboutOK");
 
 let pitModal = document.getElementById("pitModal");
 let pitTextElem = document.getElementById("pitText");
-let pitOKButton = document.getElementById("pitOK");
 let pitHeaderElem = document.getElementById("pitHeader");
+let closePit = document.getElementById("closePit");
+//let pitOKButton = document.getElementById("pitOK");
 
 let playAgainModal = document.getElementById("playAgainModal");
 let playAgainTextElem = document.getElementById("playAgainText");
 let playAgainNoButton = document.getElementById("playAgainNo");
 let playAgainYesButton = document.getElementById("playAgainYes");
 let playAgainHeaderElem = document.getElementById("playAgainHeader");
+let closePlayAgain = document.getElementById("closePlayAgain");
 
 let errorModal = document.getElementById("errorModal");
 let errorModalHeaderElem = document.getElementById("errorModalHeader");
 let errorModalTextElem = document.getElementById("errorModalText");
-let errorModalOKButton = document.getElementById("errorModalOK");
+let closeError = document.getElementById("closeError");
+//let errorModalOKButton = document.getElementById("errorModalOK");
 
 let players = [
   {
@@ -495,50 +501,52 @@ function move(index) {
     
     updateMarkers();
     
+    let playAgainDialogText =
+      (
+        (
+          players[0].type != players[1].type
+        )
+        ? players[turns % players.length].type == "Human"
+          ? "Congratulations! "
+          : "Bummer! "
+        : ""
+      )
+      + (
+        (
+          players[0].type == "Human" && players[1].type == "CPU"
+        )
+        ? "Wins:" + player1Score
+          + " Losses:" + (totalGames - player1Score)
+        : ""
+      )
+      + (
+        (
+          players[0].type == "CPU" && players[1].type == "Human"
+        )
+        ? "Wins:" + player2Score
+          + " Losses:" + (totalGames - player2Score)
+        : ""
+      )
+      + (
+        (
+          players[0].type == players[1].type
+        )
+        ? players[turns % players.length].name + " wins!\n\n"
+          + "Player 1: "
+          + "Wins:" + player1Score
+          + " Losses:" + (totalGames - player1Score) + "\n"
+          + "Player 2: "
+          + "Wins:" + player2Score
+          + " Losses:" + (totalGames - player2Score)
+        : ""
+      )
+      + "\n\nPlay again?"
+    ;
+    
     /*
     setTimeout(function() {
       if (
-        confirm(
-          (
-            (
-              players[0].type != players[1].type
-            )
-            ? players[turns % players.length].type == "Human"
-              ? "Congratulations! "
-              : "Bummer! "
-            : ""
-          )
-          + (
-            (
-              players[0].type == "Human" && players[1].type == "CPU"
-            )
-            ? "Wins:" + player1Score
-              + " Losses:" + (totalGames - player1Score)
-            : ""
-          )
-          + (
-            (
-              players[0].type == "CPU" && players[1].type == "Human"
-            )
-            ? "Wins:" + player2Score
-              + " Losses:" + (totalGames - player2Score)
-            : ""
-          )
-          + (
-            (
-              players[0].type == players[1].type
-            )
-            ? players[turns % players.length].name + " wins!\n\n"
-              + "Player 1: "
-              + "Wins:" + player1Score
-              + " Losses:" + (totalGames - player1Score) + "\n"
-              + "Player 2: "
-              + "Wins:" + player2Score
-              + " Losses:" + (totalGames - player2Score)
-            : ""
-          )
-          + "\n\nPlay again?"
-        )
+        confirm(playAgainDialogText)
       ) {
         init();
       } else {
@@ -549,48 +557,6 @@ function move(index) {
     */
     
     setTimeout(function() {
-      let playAgainDialogText =
-        (
-          (
-            players[0].type != players[1].type
-          )
-          ? players[turns % players.length].type == "Human"
-            ? "Congratulations! "
-            : "Bummer! "
-          : ""
-        )
-        + (
-          (
-            players[0].type == "Human" && players[1].type == "CPU"
-          )
-          ? "Wins:" + player1Score
-            + " Losses:" + (totalGames - player1Score)
-          : ""
-        )
-        + (
-          (
-            players[0].type == "CPU" && players[1].type == "Human"
-          )
-          ? "Wins:" + player2Score
-            + " Losses:" + (totalGames - player2Score)
-          : ""
-        )
-        + (
-          (
-            players[0].type == players[1].type
-          )
-          ? players[turns % players.length].name + " wins!\n\n"
-            + "Player 1: "
-            + "Wins:" + player1Score
-            + " Losses:" + (totalGames - player1Score) + "\n"
-            + "Player 2: "
-            + "Wins:" + player2Score
-            + " Losses:" + (totalGames - player2Score)
-          : ""
-        )
-        + "\n\nPlay again?"
-      ;
-      
       playAgainHeaderElem.innerHTML = "Game #" + totalGames;
       playAgainTextElem.innerHTML = playAgainDialogText;
       playAgainModal.style.display = "block";
@@ -941,17 +907,6 @@ function init() {
   let customX, customY;
   let xArg, yArg;
   
-  currentOptions = {
-    player1Type: player1SelectElem.selectedIndex,
-    player2Type: player2SelectElem.selectedIndex,
-    player1Input: player1InputSelectElem.selectedIndex,
-    player2Input: player2InputSelectElem.selectedIndex,
-    grid: gridSelectElem.selectedIndex,
-    customWidth: customGridWidth.value,
-    customHeight: customGridHeight.value,
-    pitBool: customPitCheckbox.checked
-  };
-  
   if (gridSelectElem.value == "Custom") {
     /*
     customX = Number(prompt("Desired board width:"));
@@ -995,6 +950,17 @@ function init() {
     xArg = JSON.parse(gridSelectElem.value).x;
     yArg = JSON.parse(gridSelectElem.value).y;
   }
+  
+  currentOptions = {
+    player1Type: player1SelectElem.selectedIndex,
+    player2Type: player2SelectElem.selectedIndex,
+    player1Input: player1InputSelectElem.selectedIndex,
+    player2Input: player2InputSelectElem.selectedIndex,
+    grid: gridSelectElem.selectedIndex,
+    customWidth: customGridWidth.value,
+    customHeight: customGridHeight.value,
+    pitBool: customPitCheckbox.checked
+  };
   
   if (
     players[0].type != player1SelectElem.value
@@ -1278,10 +1244,33 @@ function start() {
     init();
   }, false);
   
-  newGameCancelButton.addEventListener("click", event => {
+  closeNewGame.addEventListener("click", event => {
     cancelNewGameModalAdministrivia();
   }, false);
   
+  /*
+  newGameCancelButton.addEventListener("click", event => {
+    cancelNewGameModalAdministrivia();
+  }, false);
+  */
+  
+  closeHowToPlay.addEventListener("click", event => {
+    howToPlayModal.style.display = "none";
+  }, false);
+  
+  closeAbout.addEventListener("click", event => {
+    aboutModal.style.display = "none";
+  }, false);
+  
+  closePit.addEventListener("click", event => {
+    pitModal.style.display = "none";
+  }, false);
+  
+  closeError.addEventListener("click", event => {
+    errorModal.style.display = "none";
+  }, false);
+  
+  /*
   howToPlayOKButton.addEventListener("click", event => {
     howToPlayModal.style.display = "none";
   }, false);
@@ -1294,6 +1283,11 @@ function start() {
     pitModal.style.display = "none";
   }, false);
   
+  errorModalOKButton.addEventListener("click", event => {
+    errorModal.style.display = "none";
+  }, false);
+  */
+  
   playAgainYesButton.addEventListener("click", event => {
     playAgainModal.style.display = "none";
     init();
@@ -1305,8 +1299,10 @@ function start() {
     highlightNewGameElem(500, "darkorange");
   }, false);
   
-  errorModalOKButton.addEventListener("click", event => {
-    errorModal.style.display = "none";
+  closePlayAgain.addEventListener("click", event => {
+    playAgainModal.style.display = "none";
+    newGameElem.focus();
+    highlightNewGameElem(500, "darkorange");
   }, false);
   
   player1SelectElem.selectedIndex = 1;

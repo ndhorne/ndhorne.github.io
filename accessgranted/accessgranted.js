@@ -38,32 +38,35 @@ let aboutText = [
   "Access Granted JS",
   "A pointless diversion by Nicholas D. Horne",
   "Crack a PIN knowing the digits that the PIN comprises",
-  "Can you actually crack a four-digit PIN on your " +
-  "first attempt as seen in the movies on a telltale " +
-  "worn keypad? The \"worn\" keys contained in the " +
-  "PIN have been highlighted on the keypad. PINs " +
-  "are four digits in length. Digits may be repeated " +
-  "resulting in PINs with less than four keys being " +
-  "highlighted. PINs may begin with zero. Input is " +
-  "accepted by way of both mouse primary button " +
-  "and keyboard number keys.",
-  "GNU GPLv3 licensed source code available at " +
-  "https://github.com/ndhorne/access-granted-js"
+  "Can you actually crack a four-digit PIN on your "
+  + "first attempt as seen in the movies on a telltale "
+  + "worn keypad? The \"worn\" keys contained in the "
+  + "PIN have been highlighted on the keypad. PINs "
+  + "are four digits in length. Digits may be repeated "
+  + "resulting in PINs with less than four keys being "
+  + "highlighted. PINs may begin with zero. Input is "
+  + "accepted by way of both mouse primary button "
+  + "and keyboard number keys.",
+  "GNU GPLv3 licensed source code available at "
+  + "https://github.com/ndhorne/access-granted-js"
 ];
 
-let accessGrantedModal = document.getElementById("accessGrantedModal");
-let accessGrantedOKButton = document.getElementById("accessGrantedOK");
-let accessGrantedModalText = document.getElementById("accessGrantedModalText");
+let winModal = document.getElementById("winModal");
+let closeWinModal = document.getElementById("closeWinModal");
+let winModalText = document.getElementById("winModalText");
+//let winOKButton = document.getElementById("winOK");
 
 let aboutModal = document.getElementById("aboutModal");
-let aboutOKButton = document.getElementById("aboutOK");
+let closeAbout = document.getElementById("closeAbout");
+//let aboutOKButton = document.getElementById("aboutOK");
 
 let errorModal = document.getElementById("errorModal");
 let errorModalHeader = document.getElementById("errorModalHeader");
 let errorModalText = document.getElementById("errorModalText");
-let errorModalOKButton = document.getElementById("errorModalOK");
+let closeErrorModal = document.getElementById("closeErrorModal");
+//let errorModalOKButton = document.getElementById("errorModalOK");
 
-let customInput, customText;
+let customInput, customText, customInputHasFocus;
 let mode1CustomInput = document.createElement("input");
 let mode2CustomInput = document.createElement("input");
 let mode2CustomInputText = document.createTextNode("\"");
@@ -175,7 +178,9 @@ mode1OptionsElement.addEventListener("change", event => {
     customInput.focus();
   } else {
     customInput.remove();
-    customText.remove();
+    if (customText) {
+      customText.remove();
+    }
   }
 }, false);
 
@@ -192,7 +197,9 @@ mode2OptionsElement.addEventListener("change", event => {
     customInput.focus();
   } else {
     customInput.remove();
-    customText.remove();
+    if (customText) {
+      customText.remove();
+    }
   }
 }, false);
 
@@ -200,7 +207,10 @@ mode2OptionsElement.addEventListener("change", event => {
 //interface when switching game modes
 modeElement.addEventListener("change", event => {
   function newModeSelectedAdministrivia() {
-    if (!solved && !locked) {
+    if (
+      !solved && !locked
+      || !solved && locked && customInputHasFocus && state != 3
+    ) {
       clearTimeout(newGameButtonBorderBlinkTimeout);
       newGameElement.style.removeProperty("border");
       
@@ -209,7 +219,10 @@ modeElement.addEventListener("change", event => {
   }
   
   function currentModeSelectedAdministrivia() {
-    if (!solved && !locked) {
+    if (
+      !solved && !locked
+      || !solved && locked && customInputHasFocus && state != 3
+    ) {
       clearTimeout(newGameButtonBorderBlinkTimeout);
       newGameElement.style.removeProperty("border");
     }
@@ -275,6 +288,7 @@ modeElement.addEventListener("change", event => {
           mode1CustomInput,
           newGameElement
         );
+        
         customInput.focus();
       }
       
@@ -283,7 +297,11 @@ modeElement.addEventListener("change", event => {
       if (gameMode != event.target.selectedIndex) {
         newModeSelectedAdministrivia();
       } else {
-        currentModeSelectedAdministrivia();
+        if (optionIndex != modeOptionsElement.selectedIndex) {
+          newModeSelectedAdministrivia();
+        } else {
+          currentModeSelectedAdministrivia();
+        }
       }
       
       break;
@@ -327,7 +345,11 @@ modeElement.addEventListener("change", event => {
       if (gameMode != event.target.selectedIndex) {
         newModeSelectedAdministrivia();
       } else {
-        currentModeSelectedAdministrivia();
+        if (optionIndex != modeOptionsElement.selectedIndex) {
+          newModeSelectedAdministrivia();
+        } else {
+          currentModeSelectedAdministrivia();
+        }
       }
       
       break;
@@ -341,7 +363,10 @@ modeElement.addEventListener("change", event => {
 function setModeOptionEvents() {
   modeOptionsElement.addEventListener("change", event => {
     function newModeOptionSelectedAdministrivia() {
-      if (gameMode == modeElement.selectedIndex && !solved && !locked) {
+      if (
+        !solved && !locked
+        || !solved && locked && customInputHasFocus && state != 3
+      ) {
         clearTimeout(newGameButtonBorderBlinkTimeout);
         newGameElement.style.removeProperty("border");
         
@@ -350,7 +375,10 @@ function setModeOptionEvents() {
     }
     
     function currentModeOptionSelectedAdministrivia() { 
-      if (gameMode == modeElement.selectedIndex && !solved && !locked) {
+      if (
+        !solved && !locked
+        || !solved && locked && customInputHasFocus && state != 3
+      ) {
         clearTimeout(newGameButtonBorderBlinkTimeout);
         newGameElement.style.removeProperty("border");
       }
@@ -359,25 +387,41 @@ function setModeOptionEvents() {
     if (optionIndex != event.target.selectedIndex) {
       newModeOptionSelectedAdministrivia();
     } else {
-      currentModeOptionSelectedAdministrivia();
+      if (gameMode != modeElement.selectedIndex) {
+        newModeOptionSelectedAdministrivia();
+      } else {
+        currentModeOptionSelectedAdministrivia();
+      }
     }
   });
 }
 
 mode1CustomInput.addEventListener("focus", event => {
-  locked = true;
+  if (state != 3) {
+    locked = true;
+  }
+  customInputHasFocus = true;
 }, false);
 
 mode1CustomInput.addEventListener("blur", event => {
-  locked = false;
+  if (state != 3) {
+    locked = false;
+  }
+  customInputHasFocus = false;
 }, false);
 
 mode2CustomInput.addEventListener("focus", event => {
-  locked = true;
+  if (state != 3) {
+    locked = true;
+  }
+  customInputHasFocus = true;
 }, false);
 
 mode2CustomInput.addEventListener("blur", event => {
-  locked = false;
+  if (state != 3) {
+    locked = false;
+  }
+  customInputHasFocus = false;
 }, false);
 
 //initializes buttons array with references to button elements
@@ -488,7 +532,8 @@ function timeLeftString() {
       ? number >= 10
         ? number
         : "0" + number
-      : "00";
+      : "00"
+    ;
   }
   
   hours = Math.floor(timeLeft / 3600000);
@@ -539,12 +584,9 @@ function initGame(pinArg) {
       gameMode = 0;
       hintElement.disabled = false;
       autoSolveElement.disabled = false;
+      
       break;
     case 1:
-      gameMode = 1;
-      hintElement.disabled = true;
-      autoSolveElement.disabled = true;
-      
       if (modeOptionsElement.value == "Custom") {
         /*
         mode1CustomValue = prompt("Desired number of attempts:");
@@ -569,19 +611,20 @@ function initGame(pinArg) {
           return;
         } else {
           maxAttempts = mode1CustomValue;
-          updateLog("Number of entry attempts set to custom value " +
-            mode1CustomValue);
+          updateLog(
+            "Number of entry attempts set to custom value " + mode1CustomValue
+          );
         }
       } else {
         maxAttempts = modeOptionsElement.value;
       }
       
-      break;
-    case 2:
-      gameMode = 2;
+      gameMode = 1;
       hintElement.disabled = true;
       autoSolveElement.disabled = true;
       
+      break;
+    case 2:
       if (modeOptionsElement.value == "Custom") {
         /*
         mode2CustomValue = prompt(
@@ -610,14 +653,14 @@ function initGame(pinArg) {
           if (mode2CustomValue <= 360000) {
             timeLeft = mode2CustomValue * 1000;
             updateLog(
-              "Time length allotted to solve within set to custom" +
-              " value " + humanReadableTimeString(mode2CustomValue)
+              "Time length allotted to solve within set to custom"
+              + " value " + humanReadableTimeString(mode2CustomValue)
             );
           } else {
             timeLeft = 360000 * 1000;
             updateLog(
-              "Time length allotted to solve within set to maximum" +
-              " value 100 hours"
+              "Time length allotted to solve within set to maximum"
+              + " value 100 hours"
             );
           }
           
@@ -625,6 +668,10 @@ function initGame(pinArg) {
       } else {
         timeLeft = modeOptionsElement.value * 1000;
       }
+      
+      gameMode = 2;
+      hintElement.disabled = true;
+      autoSolveElement.disabled = true;
       
       break;
     default:
@@ -686,9 +733,11 @@ function verifyEntry(entryArg) {
     
     let status = "PIN " + pin + " cracked in " + entries.length
       + " attempt" + (entries.length > 1 ? "s" : "")
-      + (gameMode != 2 && !autoSolve
+      + (
+        gameMode != 2 && !autoSolve
         ? " over " + humanReadableTimeString((Date.now() - startTime) / 1000)
-        : "")
+        : ""
+      )
     ;
     if (autoSolve) {
       status = status.replace(/cracked/, "autosolved");
@@ -697,24 +746,26 @@ function verifyEntry(entryArg) {
       status = status.replace(/cracked/, "cracked with "
         + keysRevealed + " position"
         + (keysRevealed > 1 ? "s" : "")
-        + " revealed");
+        + " revealed")
+      ;
     }
     if (gameMode == 2) {
       status += " with "
         + humanReadableTimeString(timeLeft / 1000)
-        + " remaining";
+        + " remaining"
+      ;
     }
     if (pin == "0451") {
-      status =
-        status.replace(/0451/, "0451 (long live Looking Glass!)");
+      status = status.replace(/0451/, "0451 (long live Looking Glass!)");
     }
+    status += ".";
     
     updateLog(status);
     if (!silent) {
       //alert(status);
       
-      accessGrantedModalText.innerHTML = status;
-      accessGrantedModal.style.display = "block";
+      winModalText.innerHTML = status;
+      winModal.style.display = "block";
     }
     
     hintElement.disabled = true;
@@ -939,14 +990,18 @@ function inferAbsentDigits() {
     }
   } else if (uniqueDigits.length == 2) {
     for (let i = 0; i < 2; i++) {
-      inferences.push(uniqueDigits.join("") + uniqueDigits[i] +
-        uniqueDigits[i]);
+      inferences.push(
+        uniqueDigits.join("") + uniqueDigits[i] + uniqueDigits[i]
+      );
     }
-    inferences.push(uniqueDigits.join("") + uniqueDigits[0] +
-      uniqueDigits[1]);
+    inferences.push(
+      uniqueDigits.join("") + uniqueDigits[0] + uniqueDigits[1]
+    );
   } else if (uniqueDigits.length == 1) {
-    inferences.push(uniqueDigits.join("") + uniqueDigits[0] +
-      uniqueDigits[0] + uniqueDigits[0]);
+    inferences.push(
+      uniqueDigits.join("")
+      + uniqueDigits[0] + uniqueDigits[0] + uniqueDigits[0]
+    );
   } else {
     console.error("uniqueDigits has bad length");
   }
@@ -1177,10 +1232,12 @@ function autoSolveBenchmarks() {
     startTime = Date.now();
     autoSolveFunctions[i](new CustomEvent("CustomEvent"));
     endTime = Date.now();
-    console.log(autoSolveFunctions[i].name +
-      " ".repeat(21 - autoSolveFunctions[i].name.length) +
-      "(" + benchpin + ") : " +
-      +(endTime - startTime) + "ms");
+    console.log(
+      autoSolveFunctions[i].name
+      + " ".repeat(21 - autoSolveFunctions[i].name.length)
+      + "(" + benchpin + ") : "
+      + +(endTime - startTime) + "ms"
+    );
   }
   
   silent = false;
@@ -1191,8 +1248,8 @@ window.addEventListener("click", event => {
     aboutModal.style.display = "none";
   }
   
-  if (event.target == accessGrantedModal) {
-    accessGrantedModal.style.display = "none";
+  if (event.target == winModal) {
+    winModal.style.display = "none";
   }
   
   if (event.target == errorModal) {
@@ -1200,8 +1257,21 @@ window.addEventListener("click", event => {
   }
 }, false);
 
-accessGrantedOKButton.addEventListener("click", event => {
-  accessGrantedModal.style.display = "none";
+closeWinModal.addEventListener("click", event => {
+  winModal.style.display = "none";
+}, false);
+
+closeAbout.addEventListener("click", event => {
+  aboutModal.style.display = "none";
+}, false);
+
+closeErrorModal.addEventListener("click", event => {
+  errorModal.style.display = "none";
+}, false);
+
+/*
+winOKButton.addEventListener("click", event => {
+  winModal.style.display = "none";
 }, false);
 
 aboutOKButton.addEventListener("click", event => {
@@ -1211,6 +1281,7 @@ aboutOKButton.addEventListener("click", event => {
 errorModalOKButton.addEventListener("click", event => {
   errorModal.style.display = "none";
 }, false);
+*/
 
 //initializes first game
 function start() {

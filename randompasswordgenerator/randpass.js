@@ -41,7 +41,8 @@ const statusDiv = document.getElementById("statusdiv");
 const statusLog = document.getElementById("statuslog");
 
 const aboutModal = document.getElementById("aboutModal");
-const aboutOKButton = document.getElementById("aboutOK");
+const closeAbout = document.getElementById("closeAbout");
+//const aboutOKButton = document.getElementById("aboutOK");
 
 const similars = ["l", "I", "1", "|", "O", "0"];
 
@@ -481,6 +482,10 @@ window.addEventListener("click", event => {
   }
 }, false);
 
+closeAbout.addEventListener("click", event => {
+  aboutModal.style.display = "none";
+}, false);
+
 lowerAlphaCheckbox.addEventListener("change", optionsAdministrivia);
 upperAlphaCheckbox.addEventListener("change", optionsAdministrivia);
 numericCheckbox.addEventListener("change", optionsAdministrivia);
@@ -497,8 +502,11 @@ copyButton.addEventListener("click", copyToClipboard);
 clearButton.addEventListener("click", clearOutput);
 
 aboutButton.addEventListener("click", about);
+
+/*
 aboutOKButton.addEventListener("click", e => {
   aboutModal.style.display = "none";
 }, false);
+*/
 
 optionsAdministrivia(new CustomEvent("CustomEvent"));
