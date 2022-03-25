@@ -71,10 +71,10 @@ let mode1CustomInput = document.createElement("input");
 let mode2CustomInput = document.createElement("input");
 let mode2CustomInputText = document.createTextNode("\"");
 
-mode1CustomInput.style.width = "27px";
+mode1CustomInput.style.width = "26px";
 mode1CustomInput.style.margin = "0 2px";
 
-mode2CustomInput.style.width = "27px";
+mode2CustomInput.style.width = "26px";
 mode2CustomInput.style.margin = "0 2px";
 
 //append individual option element to select element

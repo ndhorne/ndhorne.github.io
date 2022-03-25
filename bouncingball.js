@@ -276,7 +276,13 @@ canvas.style.height = canvasHeight + "px";
 cx.strokeStyle = "black";
 cx.fillStyle = color;
 
-rafID = requestAnimationFrame(frame);
-
 //new ball every 15 seconds
 //autoNewBallInterval = setInterval(() => newBall(), 15000);
+
+if (
+  document.getElementById("container").getBoundingClientRect().width < 440
+) {
+  document.getElementById("ball").remove();
+} else {
+  rafID = requestAnimationFrame(frame);
+}

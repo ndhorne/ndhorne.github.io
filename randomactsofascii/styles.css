@@ -26,12 +26,14 @@ button {
 }
 
 #response {
+  box-sizing: border-box;
+  display: block;
   margin-bottom: 3px;
-  width: 345px;
+  width: 100%;
 }
 
 #game {
-  width: 500px;
+  max-width: 500px;
   padding-top: 14px;
   padding-bottom: 22px;
   margin-left: auto;
@@ -45,6 +47,8 @@ button {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 #challenge-response {

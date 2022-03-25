@@ -341,18 +341,22 @@ initQuotes().then(function(quoteAPI) {
   const boundScrollQuote = quoteAPI.scrollQuote.bind(quoteAPI);
   quoteElement.addEventListener("wheel", boundScrollQuote, false);
   
-  window.addEventListener("blur", e => {
-    windowIsBlurred = true;
-    quoteAPI.clearQuoteTimeout();
-  }, false);
-  
-  window.addEventListener("focus", e => {
-    if (windowIsBlurred) {
-      quoteAPI.setQuoteTimeout();
-      windowIsBlurred = false;
-    }
-  }, false);
-  
-  quoteAPI.setQuote();
-  quoteAPI.setQuoteTimeout();
+  if (containerElement.getBoundingClientRect().width < 1145) {
+    quoteElement.remove();
+  } else {
+    window.addEventListener("blur", e => {
+      windowIsBlurred = true;
+      quoteAPI.clearQuoteTimeout();
+    }, false);
+    
+    window.addEventListener("focus", e => {
+      if (windowIsBlurred) {
+        quoteAPI.setQuoteTimeout();
+        windowIsBlurred = false;
+      }
+    }, false);
+    
+    quoteAPI.setQuote();
+    quoteAPI.setQuoteTimeout();
+  }
 });

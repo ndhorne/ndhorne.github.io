@@ -259,3 +259,17 @@ pre span {
 #howToPlayModal .modal-body table td:nth-child(1) {
   width: 150px;
 }
+
+@media (max-width:379px) {
+  #board td {
+    width: 53px;
+    height: 53px;
+  }
+}
+
+@media (max-width:359px) {
+  #board td {
+    width: 46px;
+    height: 46px;
+  }
+}
