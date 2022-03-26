@@ -184,8 +184,10 @@ ul.nav li:first-child a {
   background-color: #333;
 }
 
+/*
 @media (max-width:799px) {
   .section {
     width: 94%;
   }
 }
+*/
