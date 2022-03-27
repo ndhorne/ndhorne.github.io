@@ -155,8 +155,12 @@ ul.nav li:first-child a {
   border-radius: 5px;
 }
 
+#randomBall {
+  width: 88px;
+}
+
 #pauseBall {
-  width: 70px;
+  width: 88px;
 }
 
 #eff-blue-ribbon {

@@ -78,6 +78,7 @@ let sizeControl = document.getElementById("ballSize");
 let colorControl = document.getElementById("ballColor");
 let customColorControl = document.getElementById("ballCustomColor");
 let pauseButton = document.getElementById("pauseBall");
+let randomBallButton = document.getElementById("randomBall");
 
 function randomInt(min, max, randomSign) {
   let randInt = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -255,6 +256,10 @@ pauseButton.addEventListener("click", function(e) {
     ballPaused = true;
     pauseButton.innerHTML = "Resume";
   }
+}, false);
+
+randomBallButton.addEventListener("click", function(e) {
+  newBall();
 }, false);
 
 colorControl.max = colors.length - 1;
