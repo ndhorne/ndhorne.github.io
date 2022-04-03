@@ -167,6 +167,7 @@
         >New Game</button>
       </div>
       
+      <!--
       <div style="text-align: center; font-size: 14px;">
         <input type="checkbox" id="autoNew" name="autoNew">
         <label
@@ -175,6 +176,7 @@
           title="Automatically start new game upon win/loss"
         >Autostart new game</label>
       </div>
+      -->
       
       <div id="logContainer">
         <p id="logLabel">
@@ -189,29 +191,41 @@
   
   </div>
   
-  <!-- Win Modal -->
-  <div id="winModal" class="modal">
+  <!-- Play Again Modal -->
+  <div id="playAgainModal" class="modal">
     
     <!-- Modal content -->
     <div class="modal-content">
       
       <div class="modal-header">
-        <span id="closeWinModal" class="close">&times;</span>
+        <span id="closePlayAgainModal" class="close">&times;</span>
         
-        <h2>Access Granted</h2>
+        <h2 id="playAgainModalHeader"></h2>
       </div>
       
       <div class="modal-body">
-        <p id="winModalText"></p>
+        <p id="playAgainModalText"></p>
+        <p>Play again?</p>
+        
+        <div style="text-align:center;">
+        <button
+          id="playAgainNo"
+          class="gameButton playAgainButton"
+        >No</button>
+        <button
+          id="playAgainYes"
+          class="gameButton playAgainButton"
+        >Yes</button>
+        </div>
       </div> <!-- .modal-body -->
       
       <div class="modal-footer">
-        <!-- <button type="button" id="winOK" class="gameButton">OK</button> -->
+        <!-- <button type="button" id="playAgainOK" class="gameButton">OK</button> -->
       </div>
       
     </div> <!-- .modal-content -->
     
-  </div> <!-- #winModal -->
+  </div> <!-- #playAgainModal -->
   
   <!-- About Modal -->
   <div id="aboutModal" class="modal">

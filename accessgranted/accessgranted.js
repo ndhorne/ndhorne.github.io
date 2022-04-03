@@ -24,15 +24,15 @@ let logLabelElement = document.getElementById("logLabel");
 let logElement = document.getElementById("log");
 let newGameElement = document.getElementById("newGameButton");
 let autoSolveElement = document.getElementById("autoSolveButton");
-let autoNewGameElement = document.getElementById("autoNew");
 let hintElement = document.getElementById("hintButton");
 let modeOptionsElement, modeOptionsLabel;
+//let autoNewGameElement = document.getElementById("autoNew");
 
 let pin, entry, entries, state, gameMode, timeLeft, maxAttempts, startTime;
-let silent, solved, locked, autoSolve, autoNew, optionIndex;
+let silent, solved, locked, autoSolve, optionIndex; //autoNew;
 let hintsGiven, keysRevealed, mode1CustomValue, mode2CustomValue;
 let verifyTimeout, timeLeftTimeout, resetDisplayTimeout, hintTimeout;
-let newGameButtonBorderBlinkTimeout;
+let playAgainTimeout, newGameButtonBorderBlinkTimeout;
 let buttons = [];
 let aboutText = [
   "Access Granted JS",
@@ -51,10 +51,13 @@ let aboutText = [
   + "https://github.com/ndhorne/access-granted-js"
 ];
 
-let winModal = document.getElementById("winModal");
-let closeWinModal = document.getElementById("closeWinModal");
-let winModalText = document.getElementById("winModalText");
-//let winOKButton = document.getElementById("winOK");
+let playAgainModal = document.getElementById("playAgainModal");
+let closePlayAgainModal = document.getElementById("closePlayAgainModal");
+let playAgainModalHeader = document.getElementById("playAgainModalHeader");
+let playAgainModalText = document.getElementById("playAgainModalText");
+let playAgainYesButton = document.getElementById("playAgainYes");
+let playAgainNoButton = document.getElementById("playAgainNo");
+//let playAgainOKButton = document.getElementById("playAgainOK");
 
 let aboutModal = document.getElementById("aboutModal");
 let closeAbout = document.getElementById("closeAbout");
@@ -134,6 +137,7 @@ optionsElement.style.width =
 ;
 
 //wires up auto new game checkbox with callback to set analogous flag
+/*
 autoNewGameElement.addEventListener("change", (event) => {
   if (autoNewGameElement.checked) {
     autoNew = true;
@@ -141,6 +145,7 @@ autoNewGameElement.addEventListener("change", (event) => {
     autoNew = false;
   }
 }, false);
+*/
 
 //updates game log
 function updateLog(line, spacing = 1) {
@@ -177,7 +182,9 @@ mode1OptionsElement.addEventListener("change", event => {
     );
     customInput.focus();
   } else {
-    customInput.remove();
+    if (customInput) {
+      customInput.remove();
+    }
     if (customText) {
       customText.remove();
     }
@@ -196,7 +203,9 @@ mode2OptionsElement.addEventListener("change", event => {
     );
     customInput.focus();
   } else {
-    customInput.remove();
+    if (customInput) {
+      customInput.remove();
+    }
     if (customText) {
       customText.remove();
     }
@@ -764,8 +773,11 @@ function verifyEntry(entryArg) {
     if (!silent) {
       //alert(status);
       
-      winModalText.innerHTML = status;
-      winModal.style.display = "block";
+      playAgainTimeout = setTimeout(() => {
+        playAgainModalHeader.innerHTML = "Access Granted";
+        playAgainModalText.innerHTML = status;
+        playAgainModal.style.display = "block";
+      }, 1000);
     }
     
     hintElement.disabled = true;
@@ -793,12 +805,14 @@ function verifyEntry(entryArg) {
       }, 0);
     }
     
+    /*
     if (autoNew) {
       //reinitializes game upon success
       resetDisplayTimeout = setTimeout(() => {
         initGame();
       }, 3000);
     }
+    */
   } else {
     state = 2;
     
@@ -846,11 +860,21 @@ function verifyEntry(entryArg) {
           "LOCKED! Allotted number of entry attempts exhausted"
         );
         
+        playAgainTimeout = setTimeout(() => {
+          playAgainModalHeader.innerHTML = "Access Denied";
+          playAgainModalText.innerHTML =
+            "LOCKED! Allotted number of entry attempts exhausted."
+          ;
+          playAgainModal.style.display = "block";
+        }, 1000);
+        
+        /*
         if (autoNew) {
           resetDisplayTimeout = setTimeout(() => {
             initGame();
           }, 5000);
         }
+        */
       }, 1500);
     }
     
@@ -881,11 +905,22 @@ function verifyEntry(entryArg) {
               + " expired"
             );
             
+            playAgainTimeout = setTimeout(() => {
+              playAgainModalHeader.innerHTML = "Access Denied";
+              playAgainModalText.innerHTML =
+                "LOCKED! Time length allotted to enter correct PIN within"
+                + " has expired."
+              ;
+              playAgainModal.style.display = "block";
+            }, 1000);
+            
+            /*
             if (autoNew) {
               resetDisplayTimeout = setTimeout(() => {
                 initGame();
               }, 5000);
             }
+            */
           }
         }, 10);
       })();
@@ -896,7 +931,13 @@ function verifyEntry(entryArg) {
 //initializes user invoked new game
 function newGame(event) {
   clearTimeout(resetDisplayTimeout);
+  clearTimeout(playAgainTimeout);
   initGame();
+  
+  if (window.scrollY > document.getElementById("keypadContainer").offsetTop) {
+    document.getElementsByTagName("html")[0].scrollIntoView();
+  }
+  
   event.preventDefault();
 }
 
@@ -1248,8 +1289,8 @@ window.addEventListener("click", event => {
     aboutModal.style.display = "none";
   }
   
-  if (event.target == winModal) {
-    winModal.style.display = "none";
+  if (event.target == playAgainModal) {
+    playAgainModal.style.display = "none";
   }
   
   if (event.target == errorModal) {
@@ -1257,8 +1298,8 @@ window.addEventListener("click", event => {
   }
 }, false);
 
-closeWinModal.addEventListener("click", event => {
-  winModal.style.display = "none";
+closePlayAgainModal.addEventListener("click", event => {
+  playAgainModal.style.display = "none";
 }, false);
 
 closeAbout.addEventListener("click", event => {
@@ -1269,9 +1310,18 @@ closeErrorModal.addEventListener("click", event => {
   errorModal.style.display = "none";
 }, false);
 
+playAgainNoButton.addEventListener("click", event => {
+  playAgainModal.style.display = "none";
+}, false);
+
+playAgainYesButton.addEventListener("click", event => {
+  playAgainModal.style.display = "none";
+  newGame(new CustomEvent("CustomEvent"));
+}, false);
+
 /*
-winOKButton.addEventListener("click", event => {
-  winModal.style.display = "none";
+playAgainOKButton.addEventListener("click", event => {
+  playAgainModal.style.display = "none";
 }, false);
 
 aboutOKButton.addEventListener("click", event => {
@@ -1286,7 +1336,7 @@ errorModalOKButton.addEventListener("click", event => {
 //initializes first game
 function start() {
   modeElement.selectedIndex = 0;
-  autoNewGameElement.checked = false;
+  //autoNewGameElement.checked = false;
   initGame();
   
   aboutText.forEach(line => {
