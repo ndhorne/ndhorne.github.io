@@ -137,11 +137,17 @@ h1 {
 
 /* Modal Content/Box */
 .modal-content {
+  position: relative;
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  /* 15% from the top and centered */
+  /* margin: 15% auto; */
+  margin-left: auto;
+  margin-right: auto;
   padding: 0 20px;
   border: 1px solid #888;
   max-width: 450px;
+  top: 50%;
+  transform: translateY(-50%);
   border-radius: 6px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
@@ -180,6 +186,11 @@ h1 {
   text-align: right;
 }
 
+#playAgainModal .modal-content {
+  top: 25%;
+  transform: translateY(-25%);
+}
+
 @media (max-width:760px) {
   #keypadContainer {
     width: 202px;
@@ -200,5 +211,10 @@ h1 {
     width: 50px;
     height: 50px;
     font-size: 28px;
+  }
+  
+  #playAgainModal .modal-content {
+    top: 50%;
+    transform: translateY(-50%);
   }
 }

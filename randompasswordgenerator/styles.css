@@ -33,11 +33,18 @@ legend {
   font-size: 16px;
 }
 
+#container {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  /*padding-bottom: 0;*/
+}
+
 #main {
   max-width: 343px;
+  margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
-  padding: 10px;
+  /*padding: 10px;*/
 }
 
 #output {
@@ -49,6 +56,22 @@ legend {
   margin-right: auto;
   width: 100%;
   resize: none;
+}
+
+#outputButtons {
+  position: relative;
+}
+
+#outputButtonsLeft {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+}
+
+#outputButtonsRight {
+  display: inline-block;
+  position: absolute;
+  right: 0;
 }
 
 #specifics label {
@@ -107,11 +130,17 @@ legend {
 
 /* Modal Content/Box */
 .modal-content {
+  position: relative;
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  /* 15% from the top and centered */
+  /* margin: 15% auto; */
+  margin-left: auto;
+  margin-right: auto;
   padding: 0 20px;
   border: 1px solid #888;
   max-width: 450px;
+  top: 50%;
+  transform: translateY(-50%);
   border-radius: 6px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
@@ -148,4 +177,10 @@ legend {
 .modal-footer {
   margin: 20px auto;
   text-align: right;
+}
+
+@media (max-width: 385px) {
+  #specifics label {
+    display: block;
+  }
 }
