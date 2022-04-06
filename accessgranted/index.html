@@ -153,9 +153,15 @@
       <div id="options">
         <label for="mode">Game Mode:</label>
         <select id="mode" name="mode">
-          <option>Crack the Code</option>
-          <option>Lockout</option>
-          <option>Beat the Clock</option>
+          <option
+            title="No restrictions, no limits (time, attempts, or otherwise), attempt every possible permutation (and then some) at your own leisure and convenience."
+          >Crack the Code</option>
+          <option
+            title="Crack the PIN within the designated number of entry attempts, otherwise, should the maximum number of entry attempts be exhausted, the panel will lock."
+          >Lockout</option>
+          <option
+            title="First rejected entry triggers a timer whithin which the correct PIN must be entered, otherwise, should the remaining time expire, the panel will lock."
+          >Beat the Clock</option>
         </select>
         
         <button
