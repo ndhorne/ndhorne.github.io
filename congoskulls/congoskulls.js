@@ -24,7 +24,7 @@ class Board {
     
     this.width = width;
     this.height = height;
-    this.grid = new Array(width * height);
+    this.grid = new Array(width * height).fill(undefined);
     this.gridOption = gridOption;
     this.moves = [];
     this.last;
@@ -175,7 +175,9 @@ function newOptionSelectedAdministrivia() {
     )
   ) {
     errorModalHeaderElem.innerHTML = "Dimensions Invalid";
-    errorModalTextElem.innerHTML = "An odd width and height of at least 7 x 7 is required for pit.";
+    errorModalTextElem.innerHTML =
+      "An odd width and height of at least 7 x 7 is required for pit."
+    ;
     errorModal.style.display = "block";
     customPitCheckbox.checked = false;
   }
@@ -486,7 +488,7 @@ function move(index) {
   
   if (borderingPieces.length > 1) {
     //timeout = players[(turns - 1) % players.length].type == "CPU" ? 500 : 0;
-    timeout = 500;
+    timeout = 1000;
     turns % players.length == 0 ? player1Score++ : player2Score++;
     totalGames++;
     
@@ -853,18 +855,22 @@ function updatePit() {
       pitCells.forEach(cell => cell.style.border = "1px solid black");
       
       pitCells[0].style.background =
-        "linear-gradient(to right bottom, white, white, black)";
+        "linear-gradient(to right bottom, white, white, black)"
+      ;
       pitCells[1].style.background = "linear-gradient(white, black)";
       pitCells[2].style.background =
-        "linear-gradient(to left bottom, white, white, black)";
+        "linear-gradient(to left bottom, white, white, black)"
+      ;
       pitCells[3].style.background = "linear-gradient(to right, white, black)";
       pitCells[4].style.background = "black";
       pitCells[5].style.background = "linear-gradient(to left, white, black)";
       pitCells[6].style.background =
-        "linear-gradient(to right top, white, white, black)";
+        "linear-gradient(to right top, white, white, black)"
+      ;
       pitCells[7].style.background = "linear-gradient(to top, white, black)";
       pitCells[8].style.background =
-        "linear-gradient(to left top, white, white, black)";
+        "linear-gradient(to left top, white, white, black)"
+      ;
     }
   }
 }
@@ -1242,6 +1248,14 @@ function start() {
   
   newGameStartButton.addEventListener("click", event => {
     init();
+    
+    if (window.scrollY > boardElem.offsetTop) {
+      boardElem.scrollIntoView(
+        {
+          behavior: "smooth"
+        }
+      );
+    }
   }, false);
   
   closeNewGame.addEventListener("click", event => {
