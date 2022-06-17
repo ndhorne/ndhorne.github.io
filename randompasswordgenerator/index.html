@@ -113,72 +113,66 @@
             <ul id="sets">
               <li>
                 <input type="checkbox" id="loweralpha" checked>
-                <label for="loweralpha" title="abc...">
-                  Lowercase letters
-                </label>
+                <label
+                  for="loweralpha" title="abc..."
+                >Lowercase letters</label>
               </li>
               <li>
                 <input type="checkbox" id="upperalpha">
-                <label for="upperalpha" title="ABC...">
-                  Uppercase letters
-                </label>
+                <label
+                  for="upperalpha" title="ABC..."
+                >Uppercase letters</label>
               </li>
               <li>
                 <input type="checkbox" id="numeric">
-                <label for="numeric" title="123...">
-                  Numbers
-                </label>
+                <label
+                  for="numeric" title="123..."
+                >Numbers</label>
               </li>
               <li>
                 <input type="checkbox" id="special">
-                <label for="special" title="!@#...">
-                  Special characters
-                </label>
+                <label
+                  for="special" title="!@#..."
+                >Special characters</label>
               </li>
             </ul>
             
             <ul id="specifics">
               <li>
-                <label for="length" title="Length of password(s)">
-                  Length:
-                </label>
+                <label
+                  for="length" title="Length of password(s)"
+                >Length:</label>
                 <input type="number" id="length" value="8" min="6">
               </li>
               <li>
-                <label for="quantity" title="Number of passwords">
-                  Quantity:
-                </label>
+                <label
+                  for="quantity" title="Number of passwords"
+                >Quantity:</label>
                 <input type="number" id="quantity" value="1" min="1">
               </li>
               <li>
-                <label for="exclusions" title="Excluded characters">
-                  Exclusions:
-                </label>
+                <label
+                  for="exclusions" title="Excluded characters"
+                >Exclusions:</label>
                 <input type="text" id="exclusions">
               </li>
               <li>
-                <label for="method" title="Randomization algorithm">
-                  Method:
-                </label>
+                <label
+                  for="method" title="Randomization algorithm"
+                >Method:</label>
                 <select id="method">
                   <option
                     value="0"
                     title="Random character set chosen, then random character code"
-                  >
-                    Random set, random code
-                  </option>
+                  >Random set, random code</option>
                   <option
                     value="1"
                     title="Array constructed in character code order, indexes chosen at random"
-                  >
-                    Ordered array, random index
-                  </option>
+                  >Ordered array, random index</option>
                   <option
                     value="2"
                     title="Array with shuffled elements constructed, indexes chosen at random"
-                  >
-                    Shuffled array, random index
-                  </option>
+                  >Shuffled array, random index</option>
                 </select>
               </li>
             </ul>
@@ -188,30 +182,26 @@
                 <input type="checkbox" id="beginwithletter">
                 <label
                   for="beginwithletter" title="Begin password(s) with a letter"
-                >
-                  Begin with letter
-                </label>
+                >Begin with letter</label>
               </li>
               <li>
                 <input type="checkbox" id="excludesimilar">
-                <label for="excludesimilar" title="Il1|O0...">
-                  Exclude similar characters
-                </label>
+                <label
+                  for="excludesimilar" title="Il1|O0..."
+                >Exclude similar characters</label>
               </li>
               <li>
                 <input type="checkbox" id="excludeduplicates">
                 <label
                   for="excludeduplicates"
                   title="Passwords comprise unique characters"
-                >
-                  Exclude duplicate characters
-                </label>
+                >Exclude duplicate characters</label>
               </li>
               <li>
                 <input type="checkbox" id="excludesequential">
-                <label for="excludesequential" title="ab, Ab, aB, AB, 12...">
-                  Exclude sequential characters
-                </label>
+                <label
+                  for="excludesequential" title="ab, Ab, aB, AB, 12..."
+                >Exclude sequential characters</label>
               </li>
             </ul>
           </fieldset>
@@ -221,31 +211,31 @@
         
         <textarea id="output" rows="10" wrap="off" readonly></textarea>
         
-        <div style="position:relative;">
-          <div style="display:inline-block;position:absolute;left:0;">
-            <button id="copy" title="Copy password(s) to clipboard">
-              Copy
-            </button>
-            <button id="clear" title="Clear password(s)">
-              Clear
-            </button>
+        <div id="outputButtons">
+          <div id="outputButtonsLeft">
+            <button
+              id="copy" title="Copy password(s) to clipboard"
+            >Copy</button>
+            <button
+              id="clear" title="Clear password(s)"
+            >Clear</button>
           </div>
-          <div style="display:inline-block;position:absolute;right:0;">
-            <button id="about" title="About Random Password Generator">
-              About
-            </button>
+          <div id="outputButtonsRight">
+            <button
+              id="about" title="About Random Password Generator"
+            >About</button>
           </div>
-          
-          <!--
-          <details id="statusdetails">
-            <summary id="statussummary">Status</summary>
-            <pre id="statuslog">OK</pre>
-          </details>
-          -->
-          
-          <div id="statusdiv">
-            <pre id="statuslog">OK</pre>
-          </div>
+        </div>
+        
+        <!--
+        <details id="statusdetails">
+          <summary id="statussummary">Status</summary>
+          <pre id="statuslog">OK</pre>
+        </details>
+        -->
+        
+        <div id="statusdiv">
+          <pre id="statuslog">OK</pre>
         </div>
       </div>
     </main>

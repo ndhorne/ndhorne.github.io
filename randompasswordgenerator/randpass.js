@@ -33,6 +33,7 @@ const beginWithLetterCheckbox = document.getElementById("beginwithletter");
 const excludeSimilarCheckbox = document.getElementById("excludesimilar");
 const excludeDuplicatesCheckbox = document.getElementById("excludeduplicates");
 const excludeSequentialCheckbox = document.getElementById("excludesequential");
+const outputButtonsDiv = document.getElementById("outputButtons");
 
 //const statusDetails = document.getElementById("statusdetails");
 //const statusSummary = document.getElementById("statussummary");
@@ -510,3 +511,16 @@ aboutOKButton.addEventListener("click", e => {
 */
 
 optionsAdministrivia(new CustomEvent("CustomEvent"));
+
+/*
+ * set #outputButtons height manually because absolutely positioned elements
+ * (its only children) are removed from flow
+*/
+outputButtonsDiv.style.height = Math.max(
+  parseInt(
+    getComputedStyle(document.getElementById("outputButtonsLeft")).height
+  ),
+  parseInt(
+    getComputedStyle(document.getElementById("outputButtonsRight")).height
+  )
+) + "px";
