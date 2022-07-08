@@ -48,6 +48,8 @@ legend {
 }
 
 #output {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
   box-sizing: border-box;
   display: block;
   margin-top: 15px;
