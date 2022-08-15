@@ -96,6 +96,7 @@ ul.nav li a {
   text-align: center;
   padding: 10px;
   text-decoration: none;
+  transition-duration: 1s;
 }
 
 ul.nav li a:hover {
@@ -137,6 +138,7 @@ ul.nav li:first-child a {
   max-width: 1140px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 10px;
   border-radius: 10px;
 }
 
@@ -165,7 +167,7 @@ ul.nav li:first-child a {
 
 #eff-blue-ribbon {
   text-align: center;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .license-icon {
