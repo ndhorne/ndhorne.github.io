@@ -1,0 +1,243 @@
+html {
+  height:100%;
+}
+
+body {
+  font-family:Arial,Helvetica,sans-serif;
+  color:black;
+  font-size:16px;
+}
+
+#titleHeader {
+  text-align:center;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+#main {
+  position:relative;
+  display:flex;
+  flex-direction:row;
+  height:200px;
+  width:621.25px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#main1 {
+  width:250px;
+}
+
+#main2 {
+  width:371.25px;
+}
+
+#insideFlowInputDivContainer {
+  position:relative;
+  width:240px;
+  height:81px;
+  margin-bottom:5px;
+}
+
+#unitsDiv {
+  width:225px;
+}
+
+#unitsTable td:first-child {
+  text-align:right;
+  width:56px;
+}
+
+#unitsTable ul li:first-child input {
+  margin-left:0;
+}
+
+/*
+#unitsTable ul li:nth-child(2) input {
+  margin-left:3px;
+}
+*/
+
+#unitsList {
+  margin-top:0;
+  margin-bottom:0;
+  padding-left:0;
+  list-style-type:none;
+}
+
+#unitsList li {
+  display:inline-block;
+}
+
+#imperialDiv {
+  position:absolute;
+  top:0;
+  left:0;
+  visibility:visible;
+}
+
+#metricDiv {
+  position:absolute;
+  top:0;
+  left:0;
+  visibility:hidden;
+}
+
+#ft {
+  width:60px;
+}
+
+#in {
+  width:60px;
+}
+
+#lb {
+  width:60px;
+}
+
+#cm {
+  width:60px;
+}
+
+#kg {
+  width:60px;
+}
+
+#resultsDiv {
+  position:relative;
+  visibility:hidden;
+  width:220px;
+}
+
+#resultsTable {
+  width:220px;
+}
+
+#closeResults {
+  position:absolute;
+  top:-10px;
+  right:-10px;
+  color:dimgray;
+  font-size:28px;
+  font-weight:bold;
+  z-index:1;
+}
+
+#closeResults:hover, #closeResults:focus {
+  color:black;
+  text-decoration:none;
+  cursor:pointer;
+  /*
+  transition-duration:0.75s;
+  transform:rotate(180deg);
+  */
+}
+
+#resultsTable td:first-child {
+  text-align:right;
+  width:90px;
+}
+
+#categoriesTable {
+  font-size:18px;
+  border:1px solid gray;
+  border-collapse:collapse;
+}
+
+#categoriesTable tr:nth-child(even) {
+  background-color:gainsboro;
+}
+
+#categoriesTable th {
+  text-align:left;
+}
+
+#categoriesTable th, #categoriesTable td {
+  padding:2.5px 5px;
+}
+
+.inputTable {
+  margin-bottom:5px;
+}
+
+.inputTable td:first-child {
+  text-align:right;
+  width:56px;
+}
+
+#convertImperialToMetricDiv {
+  width:330px;
+}
+
+#convertMetricToImperialDiv {
+  width:330px;
+}
+
+#convertCentimetersToMetersDiv {
+  width:290px;
+}
+
+#convertMetersToCentimetersDiv {
+  width:320px;
+}
+
+.conversionDiv {
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  top:-60px;
+  border:2px solid black;
+  border-radius:10px;
+  text-align:center;
+  padding:5px;
+  z-index:1;
+  transition-duration:0.4s;
+  background-color:white;
+}
+
+.conversionDiv p {
+  margin:5px;
+  display:inline-block;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+.conversionDivButtons {
+  display:inline-block;
+}
+
+.conversionDivDisplayed {
+  top:46px !important;
+}
+
+@media (max-width:658px) {
+  #main {
+    flex-direction:column;
+    width:370px;
+    height:initial;
+  }
+  #main1 {
+    margin-bottom:3px;
+  }
+  #resultsTable{
+    display:none;
+  }
+  #closeResults {
+    display:none;
+  }
+}
+
+@media (max-width:406px) {
+  #categoriesTable {
+    font-size:16px;
+  }
+  #main {
+    width:335px;
+  }
+  #main2 {
+    width:335px;
+  }
+  #container {
+    padding-left:5px;
+    padding-right:5px;
+  }
+}
