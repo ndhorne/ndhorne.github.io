@@ -44,6 +44,10 @@ const bmiResultsCell = document.getElementById("bmiResultsCell");
 const classResultsCell = document.getElementById("classResultsCell");
 const riskResultsCell = document.getElementById("riskResultsCell");
 
+const mobileResultsCell = document.getElementById("mobileResultsCell");
+const mobileClassCell = document.getElementById("mobileClassCell");
+const mobileRiskCell = document.getElementById("mobileRiskCell");
+
 const categoriesTable = document.getElementById("categoriesTable");
 
 const insideFlowInputDivContainer =
@@ -102,8 +106,7 @@ function getClass(bmi) {
 }
 
 function getRisk(bmi) {
-  if (bmi < 18.5) return "Minimal";
-  else if (bmi < 25) return "Minimal";
+  if (bmi < 25) return "Minimal";
   else if (bmi < 30) return "Increased";
   else if (bmi < 35) return "High";
   else if (bmi < 40) return "Very High";
@@ -145,9 +148,9 @@ function resetCategoriesTable() {
 function setResults(bmi) {
   resetCategoriesTable();
   
-  bmiResultsCell.innerHTML = bmi.toFixed(2);
-  classResultsCell.innerHTML = getClass(bmi);
-  riskResultsCell.innerHTML = getRisk(bmi);
+  bmiResultsCell.innerHTML = mobileResultsCell.innerHTML = bmi.toFixed(2);
+  classResultsCell.innerHTML = mobileClassCell.innerHTML = getClass(bmi);
+  riskResultsCell.innerHTML = mobileRiskCell.innerHTML = getRisk(bmi);
   
   highlightCategoryRow(bmi);
   
@@ -157,11 +160,49 @@ function setResults(bmi) {
 imperialRadio.addEventListener("click", function(e) {
   metricDiv.style.visibility = "hidden";
   imperialDiv.style.visibility = "visible";
+  
+  dismissConvertImperialToMetric();
+  dismissConvertCentimetersToMeters();
+  dismissConvertMetersToCentimeters();
+  
+  if (ftInput.value == "") {
+    ftInput.focus();
+  } else if (inInput.value == "") {
+    inInput.focus();
+  } else if (lbInput.value == "") {
+    lbInput.focus();
+  } else {
+    calculateImperial.focus();
+  }
+  
+  if (
+    (cmInput.value != "" && kgInput.value != "")
+    && (ftInput.value == "" && inInput.value == "" && lbInput.value == "")
+  ) {
+    displayConvertMetricToImperial();
+  }
 }, false);
 
 metricRadio.addEventListener("click", function(e) {
   imperialDiv.style.visibility = "hidden";
   metricDiv.style.visibility = "visible";
+  
+  dismissConvertMetricToImperial();
+  
+  if (cmInput.value == "") {
+    cmInput.focus();
+  } else if (kgInput.value == "") {
+    kgInput.focus();
+  } else {
+    calculateMetric.focus();
+  }
+  
+  if (
+    (ftInput.value != "" && lbInput.value != "")
+    && (cmInput.value == "" && kgInput.value == "")
+  ) {
+    displayConvertImperialToMetric();
+  }
 }, false);
 
 calculateImperial.addEventListener("click", function(e) {
@@ -335,38 +376,9 @@ metricHeightUnit.addEventListener("change", function(e) {
   if (cmInput.value != "" && metricHeightUnit.value == "cm") {
     displayConvertMetersToCentimeters();
   }
-  if (height) {
-    
-  }
   
   if (cmInput.value == "") {
     cmInput.focus();
-  }
-}, false);
-
-imperialRadio.addEventListener("click", function(e) {
-  dismissConvertImperialToMetric();
-  dismissConvertCentimetersToMeters();
-  dismissConvertMetersToCentimeters();
-  ftInput.focus();
-  
-  if (
-    (cmInput.value != "" && kgInput.value != "")
-    && (ftInput.value == "" && inInput.value == "" && lbInput.value == "")
-  ) {
-    displayConvertMetricToImperial();
-  }
-}, false);
-
-metricRadio.addEventListener("click", function(e) {
-  dismissConvertMetricToImperial();
-  cmInput.focus();
-  
-  if (
-    (ftInput.value != "" && lbInput.value != "")
-    && (cmInput.value == "" && kgInput.value == "")
-  ) {
-    displayConvertImperialToMetric();
   }
 }, false);
 

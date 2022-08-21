@@ -25,6 +25,8 @@ body {
 }
 
 #main1 {
+  display:flex;
+  flex-direction:column;
   width:250px;
 }
 
@@ -113,10 +115,22 @@ body {
   width:220px;
 }
 
+#mobileResultsTable {
+  display:none;
+  width:171px;
+  margin-left:5px;
+}
+
+.resultsTable {
+  border:1px outset black;
+  border-top-left-radius:10px;
+  border-bottom-right-radius:10px;
+}
+
 #closeResults {
   position:absolute;
-  top:-10px;
-  right:-10px;
+  top:-6px;
+  right:2px;
   color:dimgray;
   font-size:28px;
   font-weight:bold;
@@ -134,8 +148,15 @@ body {
 }
 
 #resultsTable td:first-child {
-  text-align:right;
   width:90px;
+}
+
+#mobileResultsTable td:first-child {
+  width:45px;
+}
+
+.resultsTable td:first-child {
+  text-align:right;
 }
 
 #categoriesTable {
@@ -205,6 +226,10 @@ body {
   display:inline-block;
 }
 
+.conversionDivButtons button {
+  width:38px;
+}
+
 .conversionDivDisplayed {
   top:46px !important;
 }
@@ -216,13 +241,17 @@ body {
     height:initial;
   }
   #main1 {
+    flex-direction:row;
     margin-bottom:3px;
   }
   #resultsTable{
     display:none;
   }
-  #closeResults {
-    display:none;
+  #resultsDiv {
+    width:171px;
+  }
+  #mobileResultsTable {
+    display:block;
   }
 }
 
@@ -235,6 +264,15 @@ body {
   }
   #main2 {
     width:335px;
+  }
+  #mobileResultsTable {
+    display:none;
+  }
+  #closeResults {
+    display:none;
+  }
+  #resultsDiv {
+    display:none;
   }
   #container {
     padding-left:5px;
