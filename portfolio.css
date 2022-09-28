@@ -3,12 +3,16 @@
   transition-duration: 0.75s;
 }
 
-#portfolio ul.nav a:hover {
+#portfolio h3 {
+  margin: 10px 0;
+}
+
+#portfolio ul.nav a {
   text-decoration: none;
 }
 
-#portfolio h3 {
-  margin: 10px 0;
+#portfolio ul.nav a:hover {
+  text-decoration: none;
 }
 
 #portfolio ul.nav a:active {
@@ -16,7 +20,8 @@
 }
 
 #portfolio a {
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-style: dotted;
 }
 
 #portfolio a:hover {
@@ -28,6 +33,13 @@
   border-radius: 3px;
 }
 
+#portfolio dl dt a {
+  color: black;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+/*
 #portfolio dl dt a:first-child {
   vertical-align: baseline;
 }
@@ -50,6 +62,7 @@
 #portfolio dl dt a:last-child:active {
   text-decoration: underline;
 }
+*/
 
 #portfolio dl dd ul {
   list-style: none inside url("icons8-source-code-16.png");
