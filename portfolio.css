@@ -20,8 +20,8 @@
 }
 
 #portfolio a {
-  text-decoration: underline;
-  text-decoration-style: dotted;
+  text-decoration: none;
+  /*text-decoration-style: dotted;*/
 }
 
 #portfolio a:hover {
@@ -33,13 +33,13 @@
   border-radius: 3px;
 }
 
+/*
 #portfolio dl dt a {
   color: black;
   text-decoration: underline;
   text-decoration-style: dotted;
 }
 
-/*
 #portfolio dl dt a:first-child {
   vertical-align: baseline;
 }
@@ -65,10 +65,17 @@
 */
 
 #portfolio dl dd ul {
-  list-style: none inside url("icons8-source-code-16.png");
   margin-top: 0;
   padding-left: 0;
   font-family: 'Share Tech Mono', Arial, Helvetica, sans-serif;
+}
+
+#portfolio dl dd ul .demo-list-item {
+  list-style: none inside url('icons8-joystick-16.png');
+}
+
+#portfolio dl dd ul .source-list-item {
+  list-style: none inside url("icons8-source-code-16.png");
 }
 
 #portfolio dl dd ul a {

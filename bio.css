@@ -4,8 +4,8 @@
 }
 
 #bio a {
-  text-decoration: underline;
-  text-decoration-style: dotted;
+  text-decoration: none;
+  /*text-decoration-style: dotted;*/
 }
 
 #bio a:hover {
