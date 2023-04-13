@@ -45,9 +45,9 @@
     "quote": "Out of intense complexities, intense simplicities emerge.",
     "author": {
       "name": {
-        "prefix": null,
+        "prefix": "Sir",
         "first": "Winston",
-        "middle": null,
+        "middle": ["Leonard", "Spencer"],
         "last": "Churchill",
         "suffix": null
       }
@@ -75,6 +75,55 @@
       }
     },
     "note": "Clarke's 3rd Law"
+  },
+  {
+    "quote": "Generally, the craft of programming is the factoring of a set of requirements into a a set of functions and data structures.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Douglas",
+        "middle": null,
+        "last": "Crockford",
+        "suffix": null
+      }
+    },
+    "source": null,
+    "note": null
+  },
+  {
+    "quote": "In JavaScript, there is a beautiful, elegant, highly expressive language that is buried under a steaming pile of good intentions and blunders.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Douglas",
+        "middle": null,
+        "last": "Crockford",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "JavaScript: The Good Parts",
+      "date": {
+        "year": "2008",
+        "month": "May",
+        "day": null
+      }
+    },
+    "note": null
+  },
+  {
+    "quote": "JavaScript is the only language that I'm aware of that people feel they don't need to learn before they start using it.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Douglas",
+        "middle": null,
+        "last": "Crockford",
+        "suffix": null
+      }
+    },
+    "source": null,
+    "note": null
   },
   {
     "quote": "If you don't know anything about computers, just remember that they are machines that do exactly what you tell them but often surprise you in the result.",
@@ -504,6 +553,20 @@
         "first": "Doug",
         "middle": null,
         "last": "Linder",
+        "suffix": null
+      }
+    },
+    "source": null,
+    "note": null
+  },
+  {
+    "quote": "There's only two things you can start without a plan: a riot and a family, for everything else you need a plan.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Groucho",
+        "middle": null,
+        "last": "Marx",
         "suffix": null
       }
     },
