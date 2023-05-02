@@ -33,63 +33,49 @@
   border-radius: 3px;
 }
 
-/*
-#portfolio dl dt a {
-  color: black;
-  text-decoration: underline;
-  text-decoration-style: dotted;
+#portfolio .projectDesc p {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-#portfolio dl dt a:first-child {
-  vertical-align: baseline;
-}
-
-#portfolio dl dt a:first-child:hover {
-  background-color: unset;
-  border-radius: unset;
-}
-
-#portfolio dl dt a:last-child {
-  font-size: 14px;
-  vertical-align: top;
-  text-decoration: none;
-}
-
-#portfolio dl dt a:last-child:hover {
-  text-decoration: underline;
-}
-
-#portfolio dl dt a:last-child:active {
-  text-decoration: underline;
-}
-*/
-
-#portfolio dl dd ul {
+#portfolio .projectDesc ul {
   margin-top: 0;
+  margin-bottom: 0;
   padding-left: 0;
   font-family: 'Share Tech Mono', Arial, Helvetica, sans-serif;
 }
 
-#portfolio dl dd ul .demo-list-item {
+#portfolio .projectDesc ul .demo-list-item {
   list-style: none inside url('icons8-joystick-16.png');
 }
 
-#portfolio dl dd ul .source-list-item {
+#portfolio .projectDesc ul .source-list-item {
   list-style: none inside url("icons8-source-code-16.png");
 }
 
-#portfolio dl dd ul a {
+#portfolio .projectDesc ul a {
   font-family: 'Syne Mono', Arial, Helvetica, sans-serif;
 }
 
-#portfolio dl dd ul li ul {
+#portfolio .projectDesc ul li ul {
   list-style: disc outside none;
   padding-left: 40px;
   font-size: 14px;
   font-family: 'Work Sans', Arial, Helvetica, sans-serif;
 }
 
-#portfolio dl dd ul li ul li a:hover {
+#portfolio .projectDesc ul li ul li a:hover {
   background-color: unset;
   border-radius: unset;
+}
+
+.projectTitle {
+  font-family: 'Noto Sans SC', Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
+
+.projectDesc {
+  margin-left: 40px;
 }

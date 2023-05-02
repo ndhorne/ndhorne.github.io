@@ -17,35 +17,57 @@
   border-radius: 3px;
 }
 
-#bio dl ul {
-  margin-top: 0;
+#bio .aboutContent p {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-#bio dl #education ul {
+#bio ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#bio #education ul {
   list-style: disc inside none;
   padding-left: 0;
 }
 
-#bio dl #education ul li ul {
+#bio #education ul li ul {
   list-style: circle outside none;
   padding-left: 40px;
 }
 
-#bio dl #education ul li ul li ul {
+#bio #education ul li ul li ul {
   list-style: square outside none;
 }
 
-#bio dl #honor-societies ul {
+#bio #honor-societies ul {
   list-style-position: inside;
   padding-left: 0;
 }
 
-#bio dl #github ul {
+#bio #certificates ul {
   list-style: disc inside none;
   padding-left: 0;
 }
 
-#bio dl #contact ul {
+#bio #github ul {
   list-style: disc inside none;
   padding-left: 0;
+}
+
+#bio #contact ul {
+  list-style: disc inside none;
+  padding-left: 0;
+}
+
+.aboutHeading {
+  font-family: 'Noto Sans SC', Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
+
+.aboutContent {
+  margin-left: 40px;
 }
