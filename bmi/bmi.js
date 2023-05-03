@@ -1,5 +1,5 @@
 /*
-Copyright 2022, 2023 Nicholas D. Horne
+Copyright 2022 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -547,29 +547,3 @@ if (
     getComputedStyle(document.getElementById("metricInputTable").rows[0]).height
   ;
 }
-
-//switch units to metric based on geolocation data
-(async function() {
-  const response = await fetch("https://ip-api.com/json/", { method: "cors" });
-  
-  if (response.ok) {
-    const result = await response.json();
-    
-    if (
-      result.countryCode !== "US"
-      && result.countryCode !== "LR"
-      && result.countryCode !== "MM"
-    ) {
-      if (
-        imperialRadio.checked
-        && ftInput.value === ""
-        && inInput.value === ""
-        && lbInput.value === ""
-      ) {
-        metricRadio.click();
-      }
-    }
-  } else {
-    console.error("Error fetching geolocation data from IP Geolocation API");
-  }
-})();
