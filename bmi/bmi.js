@@ -550,7 +550,7 @@ if (
 
 //switch units to metric based on geolocation data
 (async function() {
-  const response = await fetch("https://ip-api.com/json/");
+  const response = await fetch("https://ip-api.com/json/", { method: "cors" });
   
   if (response.ok) {
     const result = await response.json();
