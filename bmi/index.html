@@ -250,6 +250,10 @@
             <td>Extremely High</td>
           </tr>
         </table> <!-- #categoriesTable -->
+        
+        <p style="text-align: right; margin-top: 0;">
+          <a href="" onclick="about(event)" id="aboutAnchor">About</a>
+        </p>
       </div> <!-- #main2 -->
     </div> <!-- #main -->
   </div> <!-- #container -->
@@ -285,6 +289,46 @@
       <button id="convertMetersToCentimetersNo" disabled>No</button>
     </div>
   </div>
+  
+  <!-- About Modal -->
+  <div id="aboutModal" class="modal">
+    
+    <!-- Modal content -->
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <span id="closeAbout" class="close">&times;</span>
+        
+        <h2>About</h2>
+      </div>
+      
+      <div class="modal-body">
+        <p>
+          Body Mass Index (BMI) Calculator
+        </p>
+        
+        <p>
+          An imperial/metric body mass index (BMI) calculator
+        </p>
+        
+        <p>
+          Calculate your body mass index (BMI) easily using this simple body mass index calculator for adults featuring support for both imperial and metric units, use it in good health.
+        </p>
+        
+        <p>
+          By Nicholas D. Horne
+        </p>
+        
+        <p>
+          GNU GPLv3 licensed source code available at <a href="https://github.com/ndhorne/body-mass-index-calculator-js" target="_blank">https://github.com/ndhorne/body-mass-index-calculator-js</a>
+        </p>
+      </div> <!-- .modal-body -->
+      
+      <div class="modal-footer"></div>
+      
+    </div> <!-- .modal-content -->
+    
+  </div> <!-- #aboutModal -->
   
   <script src="bmi.js"></script>
 </body>

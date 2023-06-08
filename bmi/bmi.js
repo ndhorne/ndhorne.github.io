@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Nicholas D. Horne
+Copyright 2022, 2023 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -92,6 +92,9 @@ const convertMetersToCentimetersYes =
 const convertMetersToCentimetersNo =
   document.getElementById("convertMetersToCentimetersNo")
 ;
+
+const aboutModal = document.getElementById("aboutModal");
+const closeAbout = document.getElementById("closeAbout");
 
 let height, weight, bmi;
 
@@ -512,6 +515,22 @@ convertMetersToCentimetersNo.addEventListener("click", function(e) {
   dismissConvertMetersToCentimeters();
 }, false);
 
+function about(event) {
+  event.preventDefault();
+  
+  aboutModal.style.display = "block";
+}
+
+window.addEventListener("click", event => {
+  if (event.target == aboutModal) {
+    aboutModal.style.display = "none";
+  }
+}, false);
+
+closeAbout.addEventListener("click", event => {
+  aboutModal.style.display = "none";
+}, false);
+
 //(re)initialize widget states
 dismissConvertImperialToMetric();
 dismissConvertMetricToImperial();
@@ -547,3 +566,30 @@ if (
     getComputedStyle(document.getElementById("metricInputTable").rows[0]).height
   ;
 }
+
+/*switch units to metric based on geolocation data (wip)
+(async function() {
+  const response = await fetch("http://ip-api.com/json/");
+  
+  if (response.ok) {
+    const result = await response.json();
+    
+    if (
+      result.countryCode !== "US"
+      && result.countryCode !== "LR"
+      && result.countryCode !== "MM"
+    ) {
+      if (
+        imperialRadio.checked
+        && ftInput.value === ""
+        && inInput.value === ""
+        && lbInput.value === ""
+      ) {
+        metricRadio.click();
+      }
+    }
+  } else {
+    console.error("Error fetching geolocation data from IP Geolocation API");
+  }
+})();
+*/
