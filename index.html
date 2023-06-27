@@ -288,7 +288,10 @@
             <div class="projectDesc">
               <p id="randomQuotesDesc">This script asynchronously fetches and parses a JSON-serialized array of quote objects from which a random element is then chosen for its properties to be subsequently parsed, formatted, and displayed. A timeout with a recursive function is then set to select, parse, format, and display a new, previously programmatically unselected, random element every 15 seconds. In the case of quote exhaustion previously selected indexes will be discarded and random element selection will begin anew. Quotes may be scrolled through bidirectionally  in their array index order of appearance with the mouse wheel.</p>
               <ul>
-                <li class="source-list-item">Source code available at <a
+                <li
+                  id="randomQuotesSourceCodeListItem"
+                  class="source-list-item"
+                >Source code available at <a
                   href="https://github.com/ndhorne/ndhorne.github.io/blob/master/randomquote.js"
                   target="_blank"
                 >https://github.com/ndhorne/ndhorne.github.io/blob/master/randomquote.js</a>
@@ -312,7 +315,10 @@
             <div class="projectDesc">
               <p id="bouncingBallDesc">An interactive HTML5 Canvas/JavaScript animation of a ball bouncing between the borders of an HTML5 canvas element. Users can pause/resume the animation, randomize ball properties in whole, or individually set desired ball speed, size, and color through the accompanying input element controls. A click event positioned within the current trigonometrically-calculated ball boundaries on the canvas element itself also fires a complete ball randomization.</p>
               <ul>
-                <li class="source-list-item">Source code available at <a
+                <li
+                  id="bouncingBallSourceCodeListItem"
+                  class="source-list-item"
+                >Source code available at <a
                   href="https://github.com/ndhorne/ndhorne.github.io/blob/master/bouncingball.js"
                   target="_blank"
                 >https://github.com/ndhorne/ndhorne.github.io/blob/master/bouncingball.js</a>
@@ -438,7 +444,22 @@
   <script src="./bouncingball.js"></script>
   <script src="./randomquote.js"></script>
   <script>
+    /*
+    function demoAtBottomListItemFactory() {
+      const listItem = document.createElement("li");
+      
+      listItem.classList.add("demo-list-item");
+      listItem.innerHTML =
+        "Interactive demonstration available at the bottom of this page"
+      ;
+      
+      return listItem;
+    }
+    */
+    
     const container = document.getElementById("container");
+    
+    /*
     const randomQuotesText = document.getElementById("randomQuotesDesc");
     const bouncingBallText = document.getElementById("bouncingBallDesc");
     
@@ -452,6 +473,59 @@
     
     if (container.getBoundingClientRect().width >= 440) {
       bouncingBallText.textContent += demoAtBottomStr;
+    }
+    */
+    
+    if (container.getBoundingClientRect().width >= 1145) {
+      const sourceCodeListItem =
+        document.getElementById("randomQuotesSourceCodeListItem")
+      ;
+      
+      const demoAtBottomListItem = document.createElement("li");
+      const randomQuotesDemoListItemAnchor = document.createElement("a");
+      
+      randomQuotesDemoListItemAnchor.href = "#quote";
+      randomQuotesDemoListItemAnchor.text = "the bottom of this page";
+      
+      demoAtBottomListItem.classList.add("demo-list-item");
+      demoAtBottomListItem.innerHTML =
+        "Interactive demonstration available at "
+      ;
+      demoAtBottomListItem.appendChild(
+        randomQuotesDemoListItemAnchor
+      );
+      
+      sourceCodeListItem.parentNode.insertBefore(
+        //demoAtBottomListItemFactory(),
+        demoAtBottomListItem,
+        sourceCodeListItem
+      );
+    }
+    
+    if (container.getBoundingClientRect().width >= 440) {
+      const sourceCodeListItem =
+        document.getElementById("bouncingBallSourceCodeListItem")
+      ;
+      
+      const demoAtBottomListItem = document.createElement("li");
+      const bouncingBallDemoListItemAnchor = document.createElement("a");
+      
+      bouncingBallDemoListItemAnchor.href = "#ball";
+      bouncingBallDemoListItemAnchor.text = "the bottom of this page";
+      
+      demoAtBottomListItem.classList.add("demo-list-item");
+      demoAtBottomListItem.innerHTML =
+        "Interactive demonstration available at "
+      ;
+      demoAtBottomListItem.appendChild(
+        bouncingBallDemoListItemAnchor
+      );
+      
+      sourceCodeListItem.parentNode.insertBefore(
+        //demoAtBottomListItemFactory(),
+        demoAtBottomListItem,
+        sourceCodeListItem
+      );
     }
     
     document.getElementById("portfolio").style.opacity = 1;
