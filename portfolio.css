@@ -79,3 +79,9 @@
 .projectDesc {
   margin-left: 40px;
 }
+
+@media (max-width:799px) {
+  .projectDesc {
+    margin-left: 20px;
+  }
+}
