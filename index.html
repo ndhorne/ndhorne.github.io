@@ -444,18 +444,28 @@
   <script src="./bouncingball.js"></script>
   <script src="./randomquote.js"></script>
   <script>
-    /*
-    function demoAtBottomListItemFactory() {
+    function demoAtBottomListItemFactory(href) {
       const listItem = document.createElement("li");
       
       listItem.classList.add("demo-list-item");
-      listItem.innerHTML =
-        "Interactive demonstration available at the bottom of this page"
-      ;
+      
+      if (!href) {
+        listItem.innerHTML =
+          "Interactive demonstration available at the bottom of this page"
+        ;
+      } else {
+        listItem.innerHTML = "Interactive demonstration available at ";
+        
+        const demoListItemAnchor = document.createElement("a");
+        
+        demoListItemAnchor.href = href;
+        demoListItemAnchor.text = "the bottom of this page";
+        
+        listItem.appendChild(demoListItemAnchor);
+      }
       
       return listItem;
     }
-    */
     
     const container = document.getElementById("container");
     
@@ -481,23 +491,8 @@
         document.getElementById("randomQuotesSourceCodeListItem")
       ;
       
-      const demoAtBottomListItem = document.createElement("li");
-      const randomQuotesDemoListItemAnchor = document.createElement("a");
-      
-      randomQuotesDemoListItemAnchor.href = "#quote";
-      randomQuotesDemoListItemAnchor.text = "the bottom of this page";
-      
-      demoAtBottomListItem.classList.add("demo-list-item");
-      demoAtBottomListItem.innerHTML =
-        "Interactive demonstration available at "
-      ;
-      demoAtBottomListItem.appendChild(
-        randomQuotesDemoListItemAnchor
-      );
-      
       sourceCodeListItem.parentNode.insertBefore(
-        //demoAtBottomListItemFactory(),
-        demoAtBottomListItem,
+        demoAtBottomListItemFactory("#quote"),
         sourceCodeListItem
       );
     }
@@ -507,23 +502,8 @@
         document.getElementById("bouncingBallSourceCodeListItem")
       ;
       
-      const demoAtBottomListItem = document.createElement("li");
-      const bouncingBallDemoListItemAnchor = document.createElement("a");
-      
-      bouncingBallDemoListItemAnchor.href = "#ball";
-      bouncingBallDemoListItemAnchor.text = "the bottom of this page";
-      
-      demoAtBottomListItem.classList.add("demo-list-item");
-      demoAtBottomListItem.innerHTML =
-        "Interactive demonstration available at "
-      ;
-      demoAtBottomListItem.appendChild(
-        bouncingBallDemoListItemAnchor
-      );
-      
       sourceCodeListItem.parentNode.insertBefore(
-        //demoAtBottomListItemFactory(),
-        demoAtBottomListItem,
+        demoAtBottomListItemFactory("#ball"),
         sourceCodeListItem
       );
     }
