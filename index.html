@@ -509,6 +509,24 @@
       );
     }
     
+    const lastVisit = JSON.parse(localStorage.getItem('lastVisit'));
+    
+    if (lastVisit) {
+      /*
+      const headline = document.getElementById('headline');
+      const str = headline.textContent;
+      
+      headline.textContent = `${str.slice(0, 7)} back ${str.slice(8)}`;
+      */
+      
+      console.log('Welcome back!');
+      console.log(`Last visit: ${new Date(lastVisit).toString()}`);
+    } else {
+      console.log('Welcome!');
+    }
+    
+    localStorage.setItem('lastVisit', JSON.stringify(new Date()));
+    
     document.getElementById("portfolio").style.opacity = 1;
   </script>
 </body>
