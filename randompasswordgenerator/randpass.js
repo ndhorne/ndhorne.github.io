@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Nicholas D. Horne
+Copyright 2022, 2023 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,7 +23,8 @@ const specialCharsCheckbox = document.getElementById("special");
 const lengthField = document.getElementById("length");
 const quantityField = document.getElementById("quantity");
 const exclusionsField = document.getElementById("exclusions");
-const outputTextarea = document.getElementById("output");
+//const outputTextarea = document.getElementById("output");
+const outputPre = document.getElementById("output");
 const genButton = document.getElementById("generate");
 const copyButton = document.getElementById("copy");
 const clearButton = document.getElementById("clear");
@@ -438,20 +439,25 @@ function getPass(e) {
   }
   
   //clear previous passwords
-  outputTextarea.value = "";
+  //outputTextarea.value = "";
+  outputPre.textContent = "";
   
   //exhaust iterator from generator
   for (let pass of genPass(config)) {
-    outputTextarea.value += pass;
+    //outputTextarea.value += pass;
+    outputPre.textContent += pass;
   }
 }
 
 function copyToClipboard(e) {
-  navigator.clipboard.writeText(outputTextarea.value);
+  navigator.clipboard.writeText(outputPre.textContent).catch(
+    err => console.error(`Clipboard write operation failed: ${err}`)
+  );
 }
 
 function clearOutput(e) {
-  outputTextarea.value = "";
+  //outputTextarea.value = "";
+  outputPre.textContent = "";
 }
 
 function about(e) {

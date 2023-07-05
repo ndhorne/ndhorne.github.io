@@ -209,7 +209,9 @@
           <button id="generate" title="Generate password(s)">Generate</button>
         </form>
         
-        <textarea id="output" rows="10" wrap="off" readonly></textarea>
+        <!-- <textarea id="output" rows="10" wrap="off" readonly></textarea> -->
+        
+        <pre id="output"></pre>
         
         <div id="outputButtons">
           <div id="outputButtonsLeft">
@@ -263,7 +265,7 @@
         </p>
         
         <p>
-          Leverage crypto.getRandomValues() to create random passwords comprising your choice of lowercase letters, uppercase letters, numbers, and special characters. Options to set password length, number of passwords to generate, excluded characters, and algorithm allow for further customization.
+          Leverage crypto.getRandomValues() to create random passwords comprising your choice of lowercase letters, uppercase letters, numbers, and special characters. Options to set password length, number of passwords to generate, excluded characters, and algorithm allow for further customization. Passwords are generated 100% client-side.
         </p>
         
         <p>

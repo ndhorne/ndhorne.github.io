@@ -47,6 +47,8 @@ legend {
   /*padding: 10px;*/
 }
 
+/* <textarea id="output"> */
+/*
 #output {
   font-family: "Courier New", Courier, monospace;
   font-size: 14px;
@@ -58,6 +60,22 @@ legend {
   margin-right: auto;
   width: 100%;
   resize: none;
+}
+*/
+
+/* <pre id="output"> */
+#output {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2px;
+  width: 100%;
+  height: 174px;
+  border: 1px solid #8f8f9d;
 }
 
 #outputButtons {
