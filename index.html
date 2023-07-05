@@ -68,7 +68,7 @@
       <li>Home</li>
     </ul>
     
-    <p style="width:95%;margin-bottom:8px;">Welcome to my humble GitHub Pages site, below you can learn a bit about me and my various programming pursuits.</p>
+    <p id="headline" style="width:95%;margin-bottom:8px;">Welcome to my humble GitHub Pages site, below you can learn a bit about me and my various programming pursuits.</p>
     
     <ul class="nav">
       <li><a href="./">Portfolio</a></li>
@@ -467,44 +467,45 @@
       return listItem;
     }
     
+    function insertBeforeElementId(element, existingElementId) {
+      const existingElement = document.getElementById(existingElementId);
+      
+      existingElement.parentNode.insertBefore(element, existingElement);
+    }
+    
     const container = document.getElementById("container");
     
     /*
-    const randomQuotesText = document.getElementById("randomQuotesDesc");
-    const bouncingBallText = document.getElementById("bouncingBallDesc");
+    function appendToDesc(descId, str) {
+      const desc = document.getElementById(descId);
+      
+      desc.textContent += str;
+    }
     
     const demoAtBottomStr =
       " See the bottom of this page for an interactive demonstration."
     ;
     
     if (container.getBoundingClientRect().width >= 1145) {
-      randomQuotesText.textContent += demoAtBottomStr;
+      appendToDesc("randomQuotesDesc", demoAtBottomStr);
     }
     
     if (container.getBoundingClientRect().width >= 440) {
-      bouncingBallText.textContent += demoAtBottomStr;
+      appendToDesc("bouncingBallDesc", demoAtBottomStr);
     }
     */
     
     if (container.getBoundingClientRect().width >= 1145) {
-      const sourceCodeListItem =
-        document.getElementById("randomQuotesSourceCodeListItem")
-      ;
-      
-      sourceCodeListItem.parentNode.insertBefore(
+      insertBeforeElementId(
         demoAtBottomListItemFactory("#quote"),
-        sourceCodeListItem
+        "randomQuotesSourceCodeListItem"
       );
     }
     
     if (container.getBoundingClientRect().width >= 440) {
-      const sourceCodeListItem =
-        document.getElementById("bouncingBallSourceCodeListItem")
-      ;
-      
-      sourceCodeListItem.parentNode.insertBefore(
+      insertBeforeElementId(
         demoAtBottomListItemFactory("#ball"),
-        sourceCodeListItem
+        "bouncingBallSourceCodeListItem"
       );
     }
     
