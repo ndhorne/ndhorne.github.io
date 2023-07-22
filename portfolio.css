@@ -33,55 +33,63 @@
   border-radius: 3px;
 }
 
-#portfolio .projectDesc p {
-  margin: 0;
+#portfolio #nav-portfolio {
+  background-color: #555555;
+}
+
+#portfolio #nav-portfolio li a:hover {
+  background-color: #444444;
+}
+
+#portfolio .project-info .project-desc {
+  margin: 3px 0;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-#portfolio .projectDesc ul {
+#portfolio .project-info ul.project-info-list {
   margin-top: 0;
   margin-bottom: 0;
   padding-left: 0;
   font-family: 'Share Tech Mono', Arial, Helvetica, sans-serif;
 }
 
-#portfolio .projectDesc ul .demo-list-item {
+#portfolio .project-info ul.project-info-list .demo-list-item {
   list-style: none inside url('icons8-joystick-16.png');
 }
 
-#portfolio .projectDesc ul .source-list-item {
+#portfolio .project-info ul.project-info-list .source-list-item {
   list-style: none inside url("icons8-source-code-16.png");
 }
 
-#portfolio .projectDesc ul a {
+#portfolio .project-info ul.project-info-list a {
   font-family: 'Syne Mono', Arial, Helvetica, sans-serif;
 }
 
-#portfolio .projectDesc ul li ul {
+#portfolio .project-info ul.project-info-list li ul {
   list-style: disc outside none;
   padding-left: 40px;
   font-size: 14px;
   font-family: 'Work Sans', Arial, Helvetica, sans-serif;
 }
 
-#portfolio .projectDesc ul li ul li a:hover {
+#portfolio .project-info ul.project-info-list li ul li a:hover {
   background-color: unset;
   border-radius: unset;
 }
 
-.projectTitle {
+.project-title {
   font-family: 'Noto Sans SC', Arial, Helvetica, sans-serif;
   font-weight: 700;
   margin-top: 0.5em;
   margin-bottom: 0;
 }
 
-.projectDesc {
+.project-info {
   margin-left: 40px;
 }
 
 @media (max-width:799px) {
-  .projectDesc {
+  .project-info {
     margin-left: 20px;
   }
 }
