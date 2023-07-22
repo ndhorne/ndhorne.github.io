@@ -385,12 +385,26 @@
     "note": null
   },
   {
+    "quote": "Vision without execution is daydreaming.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Bill",
+        "middle": null,
+        "last": "Gates",
+        "suffix": null
+      }
+    },
+    "source": null,
+    "note": null
+  },
+  {
     "quote": "Great things are not done by impulse, but by a series of small things brought together.",
     "author": {
       "name": {
         "prefix": null,
         "first": "Vincent",
-        "middle": "Van",
+        "middle": "van",
         "last": "Gogh",
         "suffix": null
       }
@@ -406,6 +420,48 @@
         "first": "Charles",
         "middle": ["Antony", "Richard"],
         "last": "Hoare",
+        "suffix": null
+      }
+    },
+    "source": null,
+    "note": null
+  },
+  {
+    "quote": "Do not try to do everything. Do one thing well.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Steve",
+        "middle": null,
+        "last": "Jobs",
+        "suffix": null
+      }
+    },
+    "source": null,
+    "note": null
+  },
+  {
+    "quote": "If you define the problem correctly, you almost have the solution.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Steve",
+        "middle": null,
+        "last": "Jobs",
+        "suffix": null
+      }
+    },
+    "source": null,
+    "note": null
+  },
+  {
+    "quote": "It takes a lot of hard work to make something simple.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Steve",
+        "middle": null,
+        "last": "Jobs",
         "suffix": null
       }
     },
