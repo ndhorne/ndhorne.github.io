@@ -1,4 +1,10 @@
 User-agent: *
-Disallow:
+Disallow: /assets/
+Disallow: /*.js$
+Disallow: /*.css$
+Disallow: /*.json$
+Disallow: /*.xml$
+Disallow: /*.txt$
+Disallow: /*.md$
 
 Sitemap: https://ndhorne.github.io/sitemap.xml
