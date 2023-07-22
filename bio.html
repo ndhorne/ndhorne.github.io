@@ -31,6 +31,18 @@
   <link rel="stylesheet" href="gh-fork-ribbon.css">
   <link href="styles.css" rel="stylesheet" type="text/css">
   <link href="bio.css" rel="stylesheet" type="text/css">
+  
+  <!-- Font Awesome -->
+  <link
+    href="./assets/fontawesome-free-6.4.0-web/css/fontawesome.css"
+    rel="stylesheet"
+    type="text/css"
+  >
+  <link
+    href="./assets/fontawesome-free-6.4.0-web/css/solid.css"
+    rel="stylesheet"
+    type="text/css"
+  >
   <style>
     h1 {
       width: 90%;
@@ -49,7 +61,7 @@
     }
   </style>
 </head>
-  
+
 <body>
   <div id="container">
     <a
@@ -69,9 +81,9 @@
       <li>Bio</li>
     </ul>
     
-    <p style="width:95%;margin-bottom:8px;">Below you can learn a bit about me, my education, my awards and honors, and my various ventures in IT certification.</p>
+    <p id="headline" style="width:95%;margin-bottom:8px;">Below you can learn a bit about me, my education, my awards and honors, and my various ventures in IT certification.</p>
     
-    <ul class="nav">
+    <ul id="nav-main" class="nav">
       <li><a href="./">Portfolio</a></li>
       <li><a href="bio.html">Bio</a></li>
       <li><a href="contact.html">Contact</a></li>
@@ -184,7 +196,12 @@
   </div>
   -->
   
+  <a href="#top" class="top-link" title="Top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </a>
+  
   <script src="./randomquote.js"></script>
+  <script src="./app.js"></script>
   <script>
     if (
       document.getElementById("container").getBoundingClientRect().width < 1145

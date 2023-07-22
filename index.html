@@ -28,12 +28,29 @@
   
   <title>Nicholas D. Horne Source Code Showcase & Portfolio</title>
   
+  <!-- Font Awesome -->
+  <link
+    href="./assets/fontawesome-free-6.4.0-web/css/fontawesome.css"
+    rel="stylesheet"
+    type="text/css"
+  >
+  <link
+    href="./assets/fontawesome-free-6.4.0-web/css/solid.css"
+    rel="stylesheet"
+    type="text/css"
+  >
+  
   <link rel="stylesheet" href="gh-fork-ribbon.css">
   <link href="styles.css" rel="stylesheet" type="text/css">
   <link href="portfolio.css" rel="stylesheet" type="text/css">
+  
   <style>
     h1 {
       width: 90%;
+    }
+    
+    #container {
+      margin-bottom: 0;
     }
     
     @media (max-width:819px) {
@@ -49,7 +66,7 @@
     }
   </style>
 </head>
-  
+
 <body>
   <div id="container">
     <a
@@ -70,7 +87,7 @@
     
     <p id="headline" style="width:95%;margin-bottom:8px;">Welcome to my humble GitHub Pages site, below you can learn a bit about me and my various programming pursuits.</p>
     
-    <ul class="nav">
+    <ul id="nav-main" class="nav">
       <li><a href="./">Portfolio</a></li>
       <li><a href="bio.html">Bio</a></li>
       <li><a href="contact.html">Contact</a></li>
@@ -80,7 +97,7 @@
       <div class="section" id="portfolio">
         <h2 style="margin-bottom:8px;">Portfolio:</h2>
         
-        <ul class="nav">
+        <ul id="nav-portfolio" class="nav">
           <li><a href="#games">Games</a></li>
           <li><a href="#utilities">Utilities</a></li>
           <li><a href="#misc">Misc</a></li>
@@ -90,11 +107,12 @@
           
           <h3 id="games">Games:</h3>
           
-          <div class="project">
-            <p class="projectTitle">Congo Skulls</p>
-            <div class="projectDesc">
-              <p>A remake of Toggle Booleans' 1993 Windows 3.1 freeware classic Amazon Skulls in JavaScript with some new features/amenities including local multiplayer, custom grid size, keyboard controls, next move indicators, and undo (ctrl+z). Each piece played (with the exception of the first piece) must border the last piece played and border that piece only. The first player to play a piece bordering more than one piece (the last piece) loses the game. Make the last valid move to win! Play the original Amazon Skulls at <a href="https://archive.org/details/win3_AmazonSk" target="_blank">archive.org</a>.</p>
-              <ul>
+          <!-- Congo Skulls -->
+          <div class="project-container">
+            <p class="project-title">Congo Skulls</p>
+            <div class="project-info">
+              <p class="project-desc">A remake of Toggle Booleans' 1993 Windows 3.1 freeware classic Amazon Skulls in JavaScript with some new features/amenities including local multiplayer, custom grid size, keyboard controls, next move indicators, and undo (ctrl+z). Each piece played (with the exception of the first piece) must border the last piece played and border that piece only. The first player to play a piece bordering more than one piece (the last piece) loses the game. Make the last valid move to win! Play the original Amazon Skulls at <a href="https://archive.org/details/win3_AmazonSk" target="_blank">archive.org</a>.</p>
+              <ul class="project-info-list">
                 <li
                   class="demo-list-item"
                 >Interactive demonstration available at <a
@@ -116,14 +134,15 @@
                   ></a></li>
                 </ul></li>
               </ul>
-            </div> <!-- .projectDesc -->
-          </div> <!-- .project -->
+            </div> <!-- .project-info -->
+          </div> <!-- .project-container -->
           
-          <div class="project">
-            <p class="projectTitle">Random Acts of ASCII</p>
-            <div class="projectDesc">
-              <p>Unscramble common but obfuscated colloquial phrases, sayings, expressions, and idioms of the English language. The scope of randomization does not extend beyond the limits defined by the various commonly accepted linguistic word boundaries (spaces, hyphens, etc.) of the phrases provided. Hints and revelations are available to be revealed at the player's own discretion; reserve them for particularly cryptic challenges or "reserve" them for any challenges.</p>
-              <ul>
+          <!-- Random Acts of ASCII -->
+          <div class="project-container">
+            <p class="project-title">Random Acts of ASCII</p>
+            <div class="project-info">
+              <p class="project-desc">Unscramble common but obfuscated colloquial phrases, sayings, expressions, and idioms of the English language. The scope of randomization does not extend beyond the limits defined by the various commonly accepted linguistic word boundaries (spaces, hyphens, etc.) of the phrases provided. Hints and revelations are available to be revealed at the player's own discretion; reserve them for particularly cryptic challenges or "reserve" them for any challenges.</p>
+              <ul class="project-info-list">
                 <li
                   class="demo-list-item"
                 >Interactive demonstration available at <a
@@ -145,14 +164,15 @@
                   ></a></li>
                 </ul></li>
               </ul>
-            </div> <!-- .projectDesc -->
-          </div> <!-- .project -->
+            </div> <!-- .project-info -->
+          </div> <!-- .project-container -->
           
-          <div class="project">
-            <p class="projectTitle">Access Granted JS</p>
-            <div class="projectDesc">
-              <p>Can you actually crack a four-digit PIN on your first attempt as seen in the movies on a telltale worn keypad? The "worn" keys contained in the PIN have been highlighted on the keypad. PINs are four digits in length. Digits may be repeated resulting in PINs with less than four keys being highlighted. PINs may begin with zero. Input is accepted by way of both mouse primary button and keyboard number keys. Now featuring three different game modes, varying levels of difficulty, an incremental hint system, and auto-solve.</p>
-              <ul>
+          <!-- Access Granted JS -->
+          <div class="project-container">
+            <p class="project-title">Access Granted JS</p>
+            <div class="project-info">
+              <p class="project-desc">Can you actually crack a four-digit PIN on your first attempt as seen in the movies on a telltale worn keypad? The "worn" keys contained in the PIN have been highlighted on the keypad. PINs are four digits in length. Digits may be repeated resulting in PINs with less than four keys being highlighted. PINs may begin with zero. Input is accepted by way of both mouse primary button and keyboard number keys. Now featuring three different game modes, varying levels of difficulty, an incremental hint system, and auto-solve.</p>
+              <ul class="project-info-list">
                 <li class="demo-list-item"
                 >Interactive demonstration available at <a
                   href="./accessgranted/"
@@ -173,14 +193,15 @@
                   ></a></li>
                 </ul></li>
               </ul>
-            </div> <!-- .projectDesc -->
-          </div> <!-- .project -->
+            </div> <!-- .project-info -->
+          </div> <!-- .project-container -->
           
-          <div class="project">
-            <p class="projectTitle">Access Granted Scratch Edition</p>
-            <div class="projectDesc">
-              <p>A reimplementation of Access Granted in Scratch 3.0, an event-driven block-based visual programming language from MIT Media Lab's Lifelong Kindergarten Group.</p>
-              <ul>
+          <!-- Access Granted Scratch Edition -->
+          <div class="project-container">
+            <p class="project-title">Access Granted Scratch Edition</p>
+            <div class="project-info">
+              <p class="project-desc">A reimplementation of Access Granted in Scratch 3.0, an event-driven block-based visual programming language from MIT Media Lab's Lifelong Kindergarten Group.</p>
+              <ul class="project-info-list">
                 <li
                   class="demo-list-item"
                 >Interactive demonstration available at <a
@@ -203,16 +224,17 @@
                   ></a></li>
                 </ul></li>
               </ul>
-            </div> <!-- .projectDesc -->
-          </div> <!-- .project -->
+            </div> <!-- .project-info -->
+          </div> <!-- .project-container -->
           
           <h3 id="utilities">Utilities:</h3>
           
-          <div class="project">
-            <p class="projectTitle">Body Mass Index (BMI) Calculator</p>
-            <div class="projectDesc">
-              <p>Calculate your body mass index (BMI) easily using this simple body mass index calculator for adults featuring support for both imperial and metric units, use it in good health.</p>
-              <ul>
+          <!-- Body Mass Index (BMI) Calculator -->
+          <div class="project-container">
+            <p class="project-title">Body Mass Index (BMI) Calculator</p>
+            <div class="project-info">
+              <p class="project-desc">Calculate your body mass index (BMI) easily using this simple body mass index calculator for adults featuring support for both imperial and metric units, use it in good health.</p>
+              <ul class="project-info-list">
                 <li
                   class="demo-list-item"
                 >Interactive demonstration available at <a
@@ -234,14 +256,15 @@
                   ></a></li>
                 </ul></li>
               </ul>
-            </div> <!-- .projectDesc -->
-          </div> <!-- .project -->
+            </div> <!-- .project-info -->
+          </div> <!-- .project-container -->
           
-          <div class="project">
-            <p class="projectTitle">Random Password Generator</p>
-            <div class="projectDesc">
-              <p>Leverage crypto.getRandomValues() to create random passwords comprising your choice of lowercase letters, uppercase letters, numbers, and special characters. Options to set password length, number of passwords to generate, excluded characters, and algorithm allow for further customization.</p>
-              <ul>
+          <!-- Random Password Generator -->
+          <div class="project-container">
+            <p class="project-title">Random Password Generator</p>
+            <div class="project-info">
+              <p class="project-desc">Leverage crypto.getRandomValues() to create random passwords comprising your choice of lowercase letters, uppercase letters, numbers, and special characters. Options to set password length, number of passwords to generate, excluded characters, and algorithm allow for further customization.</p>
+              <ul class="project-info-list">
                 <li
                   class="demo-list-item"
                 >Interactive demonstration available at <a
@@ -263,16 +286,17 @@
                   ></a></li>
                 </ul></li>
               </ul>
-            </div> <!-- .projectDesc -->
-          </div> <!-- .project -->
+            </div> <!-- .project-info -->
+          </div> <!-- .project-container -->
           
           <h3 id="misc">Miscellaneous:</h3>
           
-          <div class="project">
-            <p class="projectTitle">Radix Discord Bot</p>
-            <div class="projectDesc">
-              <p>A general-purpose Discord bot powered by JavaScript, Node.js, and the Eris Node.js Discord library featuring chat roomified renditions of familiar games such as Connect 4, Hangman, Tic Tac Toe, (Definitely Not) Wordle, and Nim (the matchstick game), alongside some likely unfamiliar originals such as Random Acts of ASCII; browsable galleries featuring the catalogs of The Metropolitan Museum of Art and long-running well-known web comics such as Bob the Angry Flower, Pokey the Penguin, and xkcd; and of course many of the standard amenities that discerning chat bot connoisseurs have come to expect a chat bot to provide such as dungeons and dragons dice, horoscopes, magic 8 ball, and currency converter. <span style="background-color:silver">$rdx help</span> to get started</p>
-              <ul>
+          <!-- Radix Discord Bot -->
+          <div class="project-container">
+            <p class="project-title">Radix Discord Bot</p>
+            <div class="project-info">
+              <p class="project-desc">A general-purpose Discord bot powered by JavaScript, Node.js, and the Eris Node.js Discord library featuring chat roomified renditions of familiar games such as Connect 4, Hangman, Tic Tac Toe, (Definitely Not) Wordle, and Nim (the matchstick game), alongside some likely unfamiliar originals such as Random Acts of ASCII; browsable galleries featuring the catalogs of The Metropolitan Museum of Art and long-running well-known web comics such as Bob the Angry Flower, Pokey the Penguin, and xkcd; and of course many of the standard amenities that discerning chat bot connoisseurs have come to expect a chat bot to provide such as dungeons and dragons dice, horoscopes, fortunes, magic 8 ball, and currency converter. <span style="background-color:silver">$rdx help</span> to get started</p>
+              <ul class="project-info-list">
                 <li
                   class="demo-list-item"
                 >Interactive demonstration available at <a
@@ -280,16 +304,17 @@
                   target="_blank"
                 >Radix Discord Community</a></li>
               </ul>
-            </div> <!-- .projectDesc -->
-          </div> <!-- .project -->
+            </div> <!-- .project-info -->
+          </div> <!-- .project-container -->
           
-          <div class="project">
-            <p class="projectTitle">Ephemeral Random Quotes Script</p>
-            <div class="projectDesc">
-              <p id="randomQuotesDesc">This script asynchronously fetches and parses a JSON-serialized array of quote objects from which a random element is then chosen for its properties to be subsequently parsed, formatted, and displayed. A timeout with a recursive function is then set to select, parse, format, and display a new, previously programmatically unselected, random element every 15 seconds. In the case of quote exhaustion previously selected indexes will be discarded and random element selection will begin anew. Quotes may be scrolled through bidirectionally  in their array index order of appearance with the mouse wheel.</p>
-              <ul>
+          <!-- Ephemeral Random Quotes Script -->
+          <div class="project-container">
+            <p class="project-title">Ephemeral Random Quotes Script</p>
+            <div class="project-info">
+              <p id="random-quotes-desc" class="project-desc">This script asynchronously fetches and parses a JSON-serialized array of quote objects from which a random element is then chosen for its properties to be subsequently parsed, formatted, and displayed. A timeout with a recursive function is then set to select, parse, format, and display a new, previously programmatically unselected, random element every 15 seconds. In the case of quote exhaustion previously selected indexes will be discarded and random element selection will begin anew. Quotes may be scrolled through bidirectionally  in their array index order of appearance with the mouse wheel.</p>
+              <ul class="project-info-list">
                 <li
-                  id="randomQuotesSourceCodeListItem"
+                  id="random-quotes-source-code-list-item"
                   class="source-list-item"
                 >Source code available at <a
                   href="https://github.com/ndhorne/ndhorne.github.io/blob/master/randomquote.js"
@@ -307,16 +332,17 @@
                   ></a></li>
                 </ul></li>
               </ul>
-            </div> <!-- .projectDesc -->
-          </div> <!-- .project -->
+            </div> <!-- .project-info -->
+          </div> <!-- .project-container -->
           
-          <div class="project">
-            <p class="projectTitle">Bouncing Ball HTML5 Canvas/JavaScript Animation</p>
-            <div class="projectDesc">
-              <p id="bouncingBallDesc">An interactive HTML5 Canvas/JavaScript animation of a ball bouncing between the borders of an HTML5 canvas element. Users can pause/resume the animation, randomize ball properties in whole, or individually set desired ball speed, size, and color through the accompanying input element controls. A click event positioned within the current trigonometrically-calculated ball boundaries on the canvas element itself also fires a complete ball randomization.</p>
-              <ul>
+          <!-- Bouncing Ball HTML5 Canvas/JavaScript Animation -->
+          <div class="project-container">
+            <p class="project-title">Bouncing Ball HTML5 Canvas/JavaScript Animation</p>
+            <div class="project-info">
+              <p id="bouncing-ball-desc" class="project-desc">An interactive HTML5 Canvas/JavaScript animation of a ball bouncing between the borders of an HTML5 canvas element. Users can pause/resume the animation, randomize ball properties in whole, or individually set desired ball speed, size, and color through the accompanying input element controls. A click event positioned within the current trigonometrically-calculated ball boundaries on the canvas element itself also fires a complete ball randomization.</p>
+              <ul class="project-info-list">
                 <li
-                  id="bouncingBallSourceCodeListItem"
+                  id="bouncing-ball-source-code-list-item"
                   class="source-list-item"
                 >Source code available at <a
                   href="https://github.com/ndhorne/ndhorne.github.io/blob/master/bouncingball.js"
@@ -334,14 +360,15 @@
                   ></a></li>
                 </ul></li>
               </ul>
-            </div> <!-- .projectDesc -->
-          </div> <!-- .project -->
+            </div> <!-- .project-info -->
+          </div> <!-- .project-container -->
           
-          <div class="project">
-            <p class="projectTitle">Access Granted JS "Classified"</p>
-            <div class="projectDesc">
-              <p>This new but not necessarily improved implementation of Access Granted JS leverages ECMAScript 6 classes to encapsulate associated data and behaviors together inside a single self-contained unit more often referred to as an instance in a bid to manage complexity through the constructs afforded by object oriented programming.</p>
-              <ul>
+          <!-- Access Granted JS "Classified" -->
+          <div class="project-container">
+            <p class="project-title">Access Granted JS "Classified"</p>
+            <div class="project-info">
+              <p class="project-desc">This new but not necessarily improved implementation of Access Granted JS leverages ECMAScript 6 classes to encapsulate associated data and behaviors together inside a single self-contained unit more often referred to as an instance in a bid to manage complexity through the constructs afforded by object oriented programming.</p>
+              <ul class="project-info-list">
                 <li class="source-list-item">Source code available at <a
                   href="https://github.com/ndhorne/access-granted-js-oop-classes"
                   target="_blank"
@@ -359,14 +386,15 @@
                   ></a></li>
                 </ul></li>
               </ul>
-            </div> <!-- .projectDesc -->
-          </div> <!-- .project -->
+            </div> <!-- .project-info -->
+          </div> <!-- .project-container -->
           
-          <div class="project">
-            <p class="projectTitle">Access Granted JS Prototypal</p>
-            <div class="projectDesc">
-              <p>This new but not necessarily improved implementation of Access Granted JS leverages prototypal inheritance to encapsulate related data and behaviors together inside of a single self-contained unit more commonly known as an instance in a bid to manage complexity through the constructs afforded by object oriented programming.</p>
-              <ul>
+          <!-- Access Granted JS Prototypal -->
+          <div class="project-container">
+            <p class="project-title">Access Granted JS Prototypal</p>
+            <div class="project-info">
+              <p class="project-desc">This new but not necessarily improved implementation of Access Granted JS leverages prototypal inheritance to encapsulate related data and behaviors together inside of a single self-contained unit more commonly known as an instance in a bid to manage complexity through the constructs afforded by object oriented programming.</p>
+              <ul class="project-info-list">
                 <li class="source-list-item">Source code available at <a
                   href="https://github.com/ndhorne/access-granted-js-oop-prototypal"
                   target="_blank"
@@ -384,8 +412,8 @@
                   ></a></li>
                 </ul></li>
               </ul>
-            </div> <!-- .projectDesc -->
-          </div> <!-- .project -->
+            </div> <!-- .project-info -->
+          </div> <!-- .project-container -->
           
         </div> <!-- #projects -->
         
@@ -441,8 +469,13 @@
     <p>Icons by <a href="http://icons8.com" target="_blank">Icons8</a></p>
   </div>
   
+  <a href="#top" class="scroll-link top-link" title="Top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </a>
+  
   <script src="./bouncingball.js"></script>
   <script src="./randomquote.js"></script>
+  <script src="./app.js"></script>
   <script>
     function demoAtBottomListItemFactory(href) {
       const listItem = document.createElement("li");
@@ -487,25 +520,25 @@
     ;
     
     if (container.getBoundingClientRect().width >= 1145) {
-      appendToDesc("randomQuotesDesc", demoAtBottomStr);
+      appendToDesc("random-quotes-desc", demoAtBottomStr);
     }
     
     if (container.getBoundingClientRect().width >= 440) {
-      appendToDesc("bouncingBallDesc", demoAtBottomStr);
+      appendToDesc("bouncing-ball-desc", demoAtBottomStr);
     }
     */
     
     if (container.getBoundingClientRect().width >= 1145) {
       insertBeforeElementId(
         demoAtBottomListItemFactory("#quote"),
-        "randomQuotesSourceCodeListItem"
+        "random-quotes-source-code-list-item"
       );
     }
     
     if (container.getBoundingClientRect().width >= 440) {
       insertBeforeElementId(
         demoAtBottomListItemFactory("#ball"),
-        "bouncingBallSourceCodeListItem"
+        "bouncing-ball-source-code-list-item"
       );
     }
     

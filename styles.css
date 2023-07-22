@@ -2,9 +2,11 @@
 
 html {
   height: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
+  margin: 0;
   background-color: dimgray;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
@@ -126,6 +128,7 @@ ul.nav li:first-child a {
 
 #container {
   background-color: white;
+  margin: 8px;
   padding: 10px;
   position: relative;
   max-width: 1140px;
@@ -142,10 +145,10 @@ ul.nav li:first-child a {
 }
 
 #ballControls {
-  width: 364px;
+  width: 360px;
   margin: 0 auto;
   text-align: left;
-  padding: 5px;
+  padding: 10px;
   background-color: linen;
   border-radius: 5px;
 }
@@ -181,6 +184,36 @@ ul.nav li:first-child a {
 
 .github-fork-ribbon.right-top:before {
   background-color: #333;
+}
+
+.top-link {
+  font-size: 1.75rem;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  color: cornflowerblue;
+  animation: bounce 2s ease-in-out infinite;
+  text-decoration: none;
+  
+  visibility: hidden;
+  z-index: -100;
+}
+
+.show-link {
+  visibility: visible;
+  z-index: 100;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /*

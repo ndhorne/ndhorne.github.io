@@ -27,6 +27,18 @@
   <link rel="stylesheet" href="gh-fork-ribbon.css">
   <link href="styles.css" rel="stylesheet" type="text/css">
   <link href="contact.css" rel="stylesheet" type="text/css">
+  
+  <!-- Font Awesome -->
+  <link
+    href="./assets/fontawesome-free-6.4.0-web/css/fontawesome.css"
+    rel="stylesheet"
+    type="text/css"
+  >
+  <link
+    href="./assets/fontawesome-free-6.4.0-web/css/solid.css"
+    rel="stylesheet"
+    type="text/css"
+  >
   <style>
     h1 {
       width: 90%;
@@ -77,9 +89,9 @@
       <li>Contact</li>
     </ul>
     
-    <p style="width:95%;margin-bottom:8px;">Feel free to reach out with inquiries, salutations, and correspondence of any other nature via the contact form below.</p>
+    <p id="headline" style="width:95%;margin-bottom:8px;">Feel free to reach out with inquiries, salutations, and correspondence of any other nature via the contact form below.</p>
     
-    <ul class="nav">
+    <ul id="nav-main" class="nav">
       <li><a href="./">Portfolio</a></li>
       <li><a href="bio.html">Bio</a></li>
       <li><a href="contact.html">Contact</a></li>
@@ -122,8 +134,13 @@
   </div>
   -->
   
+  <a href="#top" class="top-link" title="Top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </a>
+  
   <script src="./contact.js"></script>
   <script src="./randomquote.js"></script>
+  <script src="./app.js"></script>
   <script>
     if (
       document.getElementById("container").getBoundingClientRect().width < 1145
