@@ -3,7 +3,7 @@ Disallow: /assets/
 Disallow: /*.js$
 Disallow: /*.css$
 Disallow: /*.json$
-Disallow: /*.xml$
+#Disallow: /*.xml$
 Disallow: /*.txt$
 Disallow: /*.md$
 
