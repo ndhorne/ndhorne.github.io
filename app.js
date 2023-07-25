@@ -1,7 +1,7 @@
 const topLink = document.querySelector('.top-link');
 const scrollLinks = document.querySelectorAll('.scroll-link');
 
-window.addEventListener('scroll', function () {
+window.addEventListener('scroll', function (e) {
   const scrollHeight = window.pageYOffset;
   
   if (scrollHeight > 275) {
@@ -16,7 +16,7 @@ scrollLinks.forEach(function (link) {
     e.preventDefault();
     
     const id = e.currentTarget.getAttribute('href').slice(1);
-    let top;
+    let top = window.pageYOffset, left = window.pageXOffset;
     
     if (id === 'top') {
       top = 0;
@@ -24,7 +24,7 @@ scrollLinks.forEach(function (link) {
     
     window.scrollTo({
       top,
-      left: 0
+      left
     });
   });
 });
