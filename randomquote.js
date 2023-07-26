@@ -1,5 +1,5 @@
 /*
-Copyright 2020, 2021, 2022 Nicholas D. Horne
+Copyright 2020, 2021, 2022, 2023 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -337,13 +337,13 @@ async function initQuotes(timeout = 15000, isEphemeral = true) {
   }
 }
 
-initQuotes().then(function(quoteAPI) {
-  const boundScrollQuote = quoteAPI.scrollQuote.bind(quoteAPI);
-  quoteElement.addEventListener("wheel", boundScrollQuote, false);
-  
-  if (containerElement.getBoundingClientRect().width < 1145) {
+if (containerElement.getBoundingClientRect().width < 1145) {
     quoteElement.remove();
-  } else {
+} else {
+  initQuotes().then(function(quoteAPI) {
+    const boundScrollQuote = quoteAPI.scrollQuote.bind(quoteAPI);
+    quoteElement.addEventListener("wheel", boundScrollQuote, false);
+    
     window.addEventListener("blur", e => {
       windowIsBlurred = true;
       quoteAPI.clearQuoteTimeout();
@@ -358,5 +358,5 @@ initQuotes().then(function(quoteAPI) {
     
     quoteAPI.setQuote();
     quoteAPI.setQuoteTimeout();
-  }
-});
+  });
+}
