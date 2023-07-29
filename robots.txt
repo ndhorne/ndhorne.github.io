@@ -4,7 +4,7 @@ Disallow: /*.js$
 Disallow: /*.css$
 Disallow: /*.json$
 #Disallow: /*.xml$
-Disallow: /*.txt$
+#Disallow: /*.txt$
 Disallow: /*.md$
 
 Sitemap: https://ndhorne.github.io/sitemap.xml
