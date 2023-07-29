@@ -144,7 +144,7 @@ ul.nav li:first-child a {
   text-align: center;
 }
 
-#ballControls {
+#ball-controls {
   width: 360px;
   margin: 0 auto;
   text-align: left;
@@ -153,11 +153,23 @@ ul.nav li:first-child a {
   border-radius: 5px;
 }
 
-#randomBall {
+#ball-controls-inputs {
+  margin: 16px 0;
+}
+
+#ball-controls-inputs label, #ball-controls-inputs input {
+  display: block;
+}
+
+#ball-controls-inputs input, #ball-controls-inputs details {
+  margin-left: 20px;
+}
+
+#random-ball {
   width: 88px;
 }
 
-#pauseBall {
+#pause-ball {
   width: 88px;
 }
 
@@ -213,6 +225,12 @@ ul.nav li:first-child a {
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@media (max-width:799px) {
+  #ball-controls-inputs input, #ball-controls-inputs details {
+    margin-left: 10px;
   }
 }
 

@@ -28,6 +28,8 @@
   
   <title>Nicholas D. Horne Source Code Showcase & Portfolio</title>
   
+  <link rel="icon" type="image/x-icon" href="./icons8-source-code-16.png">
+  
   <!-- Font Awesome -->
   <link
     href="./assets/fontawesome-free-6.4.0-web/css/fontawesome.css"
@@ -421,30 +423,28 @@
     </main>
     
     <div id="ball">
-      <canvas></canvas>
+      <canvas id="bouncing-ball-canvas"></canvas>
       
-      <div id="ballControls">
-        <details id="ballControlsDetails">
-          <summary id="ballControlsSummary">Controls</summary>
-          <dl>
-            <dt><label for="ballSpeedX">Speed X:</label></dt>
-            <dd><input type="range" id="ballSpeedX" min="1" max="200"></dd>
-            <dt><label for="ballSpeedY">Speed Y:</label></dt>
-            <dd><input type="range" id="ballSpeedY" min="1" max="200"></dd>
-            <dt><label for="ballSize">Size:</label></dt>
-            <dd><input type="range" id="ballSize" min="30" max="100"></dd>
-            <dt><label for="ballColor">Color:</label></dt>
-            <dd>
-              <input type="range" id="ballColor">
-              <details id="ballCustomColorDetails">
-                <summary style="font-size:14px;">Custom</summary>
-                <input type="color" id="ballCustomColor">
-              </details>
-            </dd>
-          </dl>
+      <div id="ball-controls">
+        <details id="ball-controls-details">
+          <summary id="ball-controls-summary">Controls</summary>
+          <div id="ball-controls-inputs">
+            <label for="ball-speed-x">Speed X:</label>
+            <input type="range" id="ball-speed-x" min="1" max="200">
+            <label for="ball-speed-y">Speed Y:</label>
+            <input type="range" id="ball-speed-y" min="1" max="200">
+            <label for="ball-size">Size:</label>
+            <input type="range" id="ball-size" min="30" max="100">
+            <label for="ball-color">Color:</label>
+            <input type="range" id="ball-color">
+            <details id="ball-custom-color-details">
+              <summary style="font-size:14px;">Custom</summary>
+              <input type="color" id="ball-custom-color" style="margin-left:0">
+            </details>
+          </div>
           <div style="margin-top:10px;margin-bottom:2px;text-align:center;">
-            <button type="button" id="randomBall">Randomize</button>
-            <button type="button" id="pauseBall">Pause</button>
+            <button type="button" id="random-ball">Randomize</button>
+            <button type="button" id="pause-ball">Pause</button>
           </div>
         </details>
       </div>
@@ -506,9 +506,9 @@
       existingElement.parentNode.insertBefore(element, existingElement);
     }
     
+    /*
     const container = document.getElementById("container");
     
-    /*
     function appendToDesc(descId, str) {
       const desc = document.getElementById(descId);
       
@@ -528,40 +528,25 @@
     }
     */
     
-    if (container.getBoundingClientRect().width >= 1145) {
+    if (document.getElementById("quote")) {
       insertBeforeElementId(
         demoAtBottomListItemFactory("#quote"),
         "random-quotes-source-code-list-item"
       );
     }
     
-    if (container.getBoundingClientRect().width >= 440) {
+    if (document.getElementById("ball")) {
       insertBeforeElementId(
         demoAtBottomListItemFactory("#ball"),
         "bouncing-ball-source-code-list-item"
       );
     }
     
-    const ballControlsDetails = document.getElementById("ballControlsDetails");
-    
-    ballControlsDetails.addEventListener('toggle', function(e) {
-      if (
-        (window.pageYOffset + window.innerHeight)
-        < (window.pageYOffset + e.currentTarget.getBoundingClientRect().bottom)
-      ) {
-        if (e.currentTarget.open) {
-          window.scrollTo({
-            top:
-              window.pageYOffset
-              + e.currentTarget.getBoundingClientRect().height
-            ,
-            left: window.pageXOffset
-          });
-        }
-      }
-    });
-    
     const lastVisit = JSON.parse(localStorage.getItem('lastVisit'));
+    
+    let totalVisits = +JSON.parse(localStorage.getItem('totalVisits'));
+    
+    totalVisits++;
     
     if (lastVisit) {
       /*
@@ -575,9 +560,22 @@
       console.log(`Last visit: ${new Date(lastVisit).toString()}`);
     } else {
       console.log('Welcome!');
+      localStorage.setItem('firstVisit', JSON.stringify(new Date()));
     }
     
-    localStorage.setItem('lastVisit', JSON.stringify(new Date()));
+    const firstVisit = JSON.parse(localStorage.getItem('firstVisit'));
+    
+    console.log(
+      `Visits since ${new Date(firstVisit).toString()}: ${totalVisits}`
+    );
+    
+    if (totalVisits === 1) {
+      localStorage.setItem('lastVisit', JSON.stringify(firstVisit));
+    } else {
+      localStorage.setItem('lastVisit', JSON.stringify(new Date()));
+    }
+    
+    localStorage.setItem('totalVisits', JSON.stringify(totalVisits));
     
     document.getElementById("portfolio").style.opacity = 1;
   </script>

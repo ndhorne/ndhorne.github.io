@@ -1,5 +1,5 @@
 /*
-Copyright 2019, 2020, 2021, 2022 Nicholas D. Horne
+Copyright 2019, 2020, 2021, 2022, 2023 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -39,14 +39,29 @@ class Vec {
   }
 }
 
-let canvas = document.querySelector("canvas");
-let cx = canvas.getContext("2d");
+const ballDiv = document.getElementById("ball");
+const ballDivContainer = document.getElementById("container");
 
-let canvasWidth = 400;
-let canvasHeight = 400;
+const ballControlsDiv = document.getElementById("ball-controls");
+const ballControlsDetails = document.getElementById("ball-controls-details");
 
-let boxPos = new Vec(10, 10);
-let boxDimensions = new Vec(canvasWidth - 20, canvasHeight - 20);
+const speedControlX = document.getElementById("ball-speed-x");
+const speedControlY = document.getElementById("ball-speed-y");
+const sizeControl = document.getElementById("ball-size");
+const colorControl = document.getElementById("ball-color");
+const customColorControl = document.getElementById("ball-custom-color");
+
+const pauseBallButton = document.getElementById("pause-ball");
+const randomBallButton = document.getElementById("random-ball");
+
+const canvas = document.querySelector("#bouncing-ball-canvas");
+const cx = canvas.getContext("2d");
+
+const canvasWidth = 400;
+const canvasHeight = 400;
+
+const boxPos = new Vec(10, 10);
+const boxDimensions = new Vec(canvasWidth - 20, canvasHeight - 20);
 
 let speed = randomSpeed();
 let radius = randomRadius();
@@ -61,7 +76,7 @@ let ballPos = new Vec(
 
 let lastTime = null;
 
-let colors = [
+const colors = [
   "blue", "mediumblue", "darkblue", "midnightblue", "royalblue", "slateblue",
   "darkslateblue", "steelblue", "darkcyan", "green", "darkgreen", "grey",
   "dimgrey", "slategrey", "lightslategray", "darkslategrey", "purple",
@@ -71,14 +86,6 @@ let colors = [
 let color = randomColor();
 
 let rafID, ballPaused, autoNewBallInterval;
-
-let speedControlX = document.getElementById("ballSpeedX");
-let speedControlY = document.getElementById("ballSpeedY");
-let sizeControl = document.getElementById("ballSize");
-let colorControl = document.getElementById("ballColor");
-let customColorControl = document.getElementById("ballCustomColor");
-let pauseButton = document.getElementById("pauseBall");
-let randomBallButton = document.getElementById("randomBall");
 
 function randomInt(min, max, randomSign) {
   let randInt = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -246,15 +253,15 @@ customColorControl.addEventListener("change", function(e) {
   }
 }, false);
 
-pauseButton.addEventListener("click", function(e) {
+pauseBallButton.addEventListener("click", function(e) {
   if (ballPaused) {
     rafID = requestAnimationFrame(frame);
     ballPaused = false;
-    pauseButton.innerHTML = "Pause";
+    pauseBallButton.innerHTML = "Pause";
   } else {
     cancelAnimationFrame(rafID);
     ballPaused = true;
-    pauseButton.innerHTML = "Resume";
+    pauseBallButton.innerHTML = "Resume";
   }
 }, false);
 
@@ -264,6 +271,22 @@ randomBallButton.addEventListener("click", function(e) {
 
 colorControl.max = colors.length - 1;
 updateControls();
+
+ballControlsDetails.addEventListener('toggle', function(e) {
+  if (window.innerHeight < ballControlsDiv.getBoundingClientRect().bottom) {
+    if (e.currentTarget.open) {
+      window.scrollTo({
+        top:
+          window.pageYOffset
+          + (
+            ballControlsDiv.getBoundingClientRect().bottom - window.innerHeight
+          )
+        ,
+        left: window.pageXOffset
+      });
+    }
+  }
+}, true);
 
 canvas.addEventListener("pointerdown", clickHandler, false);
 
@@ -281,13 +304,11 @@ canvas.style.height = canvasHeight + "px";
 cx.strokeStyle = "black";
 cx.fillStyle = color;
 
-//new ball every 15 seconds
-//autoNewBallInterval = setInterval(() => newBall(), 15000);
-
-if (
-  document.getElementById("container").getBoundingClientRect().width < 440
-) {
-  document.getElementById("ball").remove();
+if (ballDivContainer.getBoundingClientRect().width < 440) {
+  ballDiv.remove();
 } else {
+  //new ball every 15 seconds
+  //autoNewBallInterval = setInterval(() => newBall(), 15000);
+  
   rafID = requestAnimationFrame(frame);
 }
