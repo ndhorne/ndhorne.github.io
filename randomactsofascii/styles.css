@@ -21,6 +21,10 @@ button {
   color: royalblue;
 }
 
+#container {
+  min-height: 92vh;
+}
+
 #challenge {
   font-size: 18px;
 }

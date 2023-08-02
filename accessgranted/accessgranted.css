@@ -12,6 +12,10 @@ h1 {
   font-size: 32px;
 }
 
+#container {
+  min-height: 92vh;
+}
+
 #keypadContainer {
   width: 142px;
   height: 170px;

@@ -83,6 +83,10 @@ button:hover {
   transform: rotate(-360deg);
 }
 
+#container {
+  min-height: 92vh;
+}
+
 #board td {
   width: 59px;
   height: 59px;
