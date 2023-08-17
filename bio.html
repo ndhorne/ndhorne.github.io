@@ -208,11 +208,15 @@
   <script src="./randomquote.js"></script>
   <script src="./app.js"></script>
   <script>
+    /* moved to randomquote.js
     if (
       document.getElementById("container").getBoundingClientRect().width < 1145
     ) {
-      document.getElementById("quote").remove();
+      if (document.getElementById("quote")) {
+        document.getElementById("quote").remove();
+      }
     }
+    */
     
     document.getElementById("bio").style.opacity = 1;
   </script>
