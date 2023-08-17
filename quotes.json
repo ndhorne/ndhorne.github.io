@@ -483,6 +483,27 @@
     "note": null
   },
   {
+    "quote": "To ask the right question is already half the solution of a problem.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Carl",
+        "middle": null,
+        "last": "Jung",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "The Archetypes and the Collective Unconscious",
+      "date": {
+        "year": "1981",
+        "month": null,
+        "day": null
+      }
+    },
+    "note": null
+  },
+  {
     "quote": "There are only two hard things in computer science: cache invalidation and naming things.",
     "author": {
       "name": {
@@ -893,6 +914,20 @@
         "day": null
       }
     },
+    "note": null
+  },
+  {
+    "quote": "If you don't have time to do it right, when will you have time to do it over?",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "John",
+        "middle": null,
+        "last": "Wooden",
+        "suffix": null
+      }
+    },
+    "source": null,
     "note": null
   },
   {
