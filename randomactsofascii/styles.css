@@ -22,8 +22,10 @@ button {
 }
 
 #container {
-  min-height: 92vh;
+  padding-bottom: 20px;
+  /* min-height: 92vh; /*
 }
+*/
 
 #challenge {
   font-size: 18px;

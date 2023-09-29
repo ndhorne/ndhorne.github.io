@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <!--
   <script
     async src="https://www.googletagmanager.com/gtag/js?id=G-7LMPTT5Z97"
   ></script>
@@ -14,7 +13,6 @@
     gtag('js', new Date());
     gtag('config', 'G-7LMPTT5Z97');
   </script>
-  -->
   
   <meta charset="utf-8">
   <meta
@@ -44,9 +42,11 @@
   <link href="accessgranted.css" rel="stylesheet" type="text/css">
   
   <style>
+    /*
     .top-link {
       right: 50vw;
     }
+    */
     
     .github-corner:hover
     .octo-arm {
@@ -211,13 +211,91 @@
           log_
         </p>
         <div id="log"></div>
-        <p style="text-align: right; margin-top: 0;">
+        <p style="text-align: right; margin: 0;">
           <a href="" onclick="about(event)" id="aboutAnchor">About</a>
         </p>
       </div>
     </main>
   
-  </div>
+  </div> <!-- #container -->
+  
+  <footer id="document-footer">
+    <section>
+      <div class="footer-column">
+        <p class="footer-column-header">Site Map</p>
+        <ul>
+          <li><a href="../">Portfolio</a></li>
+          <li><a href="../bio.html">Bio</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-header">Legal</p>
+        <ul>
+          <li><a href="../policies/privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-header">Powered By</p>
+        <ul>
+          <li><a
+            href="https://pages.github.com/"
+            target="_blank"
+          >GitHub Pages</a></li>
+          <li><a
+            href="https://fontawesome.com/"
+            target="_blank"
+          >Font Awesome</a></li>
+          <li><a
+            href="https://icons8.com/"
+            target="_blank"
+          >Icons8</a></li>
+        </ul>
+      </div>
+    </section>
+    
+    <section>
+      <p id="copyright-notice">&copy; 2020-2023 Nicholas D. Horne</p>
+      
+      <!--
+      <a
+        rel="license noopener noreferrer"
+        target="_blank"
+        href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+      ><img
+        alt="Creative Commons License"
+        title="Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)"
+        style="border-width:0"
+        src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"
+      ></a>
+      -->
+      
+      <p
+        xmlns:cc="http://creativecommons.org/ns#"
+        title="Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)"
+        style="margin:0;display:inline-block"
+      ><a
+        href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1"
+        target="_blank"
+        rel="license noopener noreferrer"
+        style="display:inline-block;"
+      ><img
+        style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+        src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"
+      ><img
+        style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+        src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"
+      ><img
+        style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+        src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"
+      ><img
+        style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+        src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"
+      ></a></p>
+    </section>
+  </footer>
   
   <!-- Play Again Modal -->
   <div id="playAgainModal" class="modal">
