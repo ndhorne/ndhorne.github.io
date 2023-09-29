@@ -1,5 +1,5 @@
 /*
-Copyright 2018-2022 Nicholas D. Horne
+Copyright 2018-2023 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -735,6 +735,8 @@ function verifyEntry(entryArg) {
       clearHintTimeout();
     }
     
+    newGameElement.blur();
+    
     lcdElement.textContent = "Access Granted";
     lcdElement.style.backgroundColor = "green";
     
@@ -782,7 +784,6 @@ function verifyEntry(entryArg) {
     
     hintElement.disabled = true;
     autoSolveElement.disabled = true;
-    newGameButtonBorderBlinkHighlight(500);
     
     if (pin == "0451") {
       newGameElement.disabled = true;
@@ -1318,6 +1319,8 @@ window.addEventListener("click", event => {
 
 closePlayAgainModal.addEventListener("click", event => {
   playAgainModal.style.display = "none";
+  newGameButtonBorderBlinkHighlight(500);
+  newGameElement.focus();
 }, false);
 
 closeAbout.addEventListener("click", event => {
@@ -1330,6 +1333,8 @@ closeErrorModal.addEventListener("click", event => {
 
 playAgainNoButton.addEventListener("click", event => {
   playAgainModal.style.display = "none";
+  newGameButtonBorderBlinkHighlight(500);
+  newGameElement.focus();
 }, false);
 
 playAgainYesButton.addEventListener("click", event => {
