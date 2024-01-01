@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&family=Outfit&family=Roboto&display=swap');
+
+body {
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+
+h1 {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-family: 'Quicksand', Arial, Helvetica, sans-serif;
+}
+
+table {
+  margin: 0 auto;
+}
+
+td {
+  cursor: default;
+}
+
+button {
+  margin: 6px auto;
+  font-family: 'Outfit', Arial, Helvetica, sans-serif;
+  font-weight: 700;
+}
+
+#container {
+  background-color: white;
+  color: black;
+  margin: 8px auto;
+  padding: 10px;
+  position: relative;
+  max-width: 1140px;
+  border-radius: 10px;
+}
+
+#grid {
+  font-size: 20px;
+  margin: 20px auto;
+}
+
+#auto {
+  width: 55px;
+}
+
+#next, #prev {
+  width: 51px;
+}
+
+#interval {
+  width: 100px;
+}
+
+#start-new-game {
+  width: 100px; 
+}
+
+#inputs {
+  text-align: center;
+  margin: 10px auto;
+}
+
+#markers {
+  display: inline-block;
+  text-align: left;
+  margin: 10px;
+}
+
+#marker-size-input {
+  width: 40px;
+}
+
+#marker-size-input-label {
+  font-size: 14px;
+}
+
+#marker-size-units {
+  font-size: 14px;
+}
+
+#square-marker-colors {
+  margin: 0;
+}
+
+.square-marker-colors-hidden {
+  visibility: hidden;
+}
+
+.square-marker-colors-visible {
+  visibility: visible;
+}
+
+#square-marker-color-label {
+  font-size: 14px;
+}
+
+#custom-dimensions-div {
+  display: inline-block;
+  text-align: left;
+}
+
+#error-message {
+  font-family: "Courier New", Courier, monospace;
+}
+
+.dimension-label {
+  display: inline-block;
+  width: 61px;
+}
+
+.dimension-input {
+  width: 40px;
+}
+
+#new-game-modal {
+  text-align: center;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+}
