@@ -110,9 +110,7 @@ const errorModal = document.getElementById("error-modal");
 const errorMessage = document.getElementById("error-message");
 
 let width = 30, height = 15;
-let auto, intervalId, markerSize, tableElement;
-let markers = markerGroups["blackSquares"];
-let grid, gridHistory;
+let grid, gridHistory, auto, intervalId, markers, markerSize, tableElement;
 
 function newGrid(width, height) {
   return new Matrix(width, height, (x, y) => Math.random() > .5 ? true : false);
@@ -232,6 +230,7 @@ function updateGeneration() {
   
   const nextGrid = nextGen(grid);
   
+  // if next grid matches current grid cease further generation
   if (nextGrid.content.every((status, i) => status === grid.content[i])) {
     if (auto) autoGenerationButton.click();
     
@@ -264,11 +263,40 @@ function startNewGame() {
   
   width = +widthInput.value;
   height = +heightInput.value;
-  markerSize = markerSizeInput.value;
+  markerSize = +markerSizeInput.value;
   
   try {
     switch(markersSelect.selectedIndex) {
       case 0:
+        switch(squareMarkerColorSelect.selectedIndex) {
+          case 0:
+            markers = markerGroups["blackSquares"];
+            break;
+          case 1:
+            markers = markerGroups["redSquares"];
+            break;
+          case 2:
+            markers = markerGroups["blueSquares"];
+            break;
+          case 3:
+            markers = markerGroups["orangeSquares"];
+            break;
+          case 4:
+            markers = markerGroups["yellowSquares"];
+            break;
+          case 5:
+            markers = markerGroups["greenSquares"];
+            break;
+          case 6:
+            markers = markerGroups["purpleSquares"];
+            break;
+          case 7:
+            markers = markerGroups["brownSquares"];
+            break;
+          default:
+            throw new Error("Invalid square marker color selected");
+          // end cases
+        }
         break;
       case 1:
         markers = markerGroups["flowers"];
@@ -279,38 +307,6 @@ function startNewGame() {
       default:
         throw new Error("Invalid markers group selected");
       // end cases
-    }
-    
-    if (markersSelect.selectedIndex === 0) {
-      switch(squareMarkerColorSelect.selectedIndex) {
-        case 0:
-          markers = markerGroups["blackSquares"];
-          break;
-        case 1:
-          markers = markerGroups["redSquares"];
-          break;
-        case 2:
-          markers = markerGroups["blueSquares"];
-          break;
-        case 3:
-          markers = markerGroups["orangeSquares"];
-          break;
-        case 4:
-          markers = markerGroups["yellowSquares"];
-          break;
-        case 5:
-          markers = markerGroups["greenSquares"];
-          break;
-        case 6:
-          markers = markerGroups["purpleSquares"];
-          break;
-        case 7:
-          markers = markerGroups["brownSquares"];
-          break;
-        default:
-          throw new Error("Invalid square marker color selected");
-        // end cases
-      }
     }
   } catch (e) {
     showErrorModal(e);
@@ -442,10 +438,12 @@ squareMarkerColorSelect.addEventListener("input", () => {
   }
 }, false);
 
+// game doesn't play well on a small grid, decrease glyph size instead
 if (parseFloat(getComputedStyle(container).width) < 1140) {
   markerSize = Math.floor(parseFloat(getComputedStyle(container).width) / 57);
   gridElement.style.fontSize = markerSize + "px";
   
+  // minimum font size fix (for android chrome via facebook messenger)
   if (markerSize < parseFloat(getComputedStyle(gridElement).fontSize)) {
     let i = parseFloat(getComputedStyle(gridElement).fontSize) - markerSize;
     
