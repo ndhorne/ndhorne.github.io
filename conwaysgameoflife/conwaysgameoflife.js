@@ -104,9 +104,10 @@ const newGameModal = document.getElementById("new-game-modal");
 const closeNewGameModal = document.getElementById("close-new-game-modal");
 
 const aboutModal = document.getElementById("about-modal");
-const closeAboutModal = document.getElementById("close-about");
+const closeAboutModal = document.getElementById("close-about-modal");
 
 const errorModal = document.getElementById("error-modal");
+const closeErrorModal = document.getElementById("close-error-modal");
 const errorMessage = document.getElementById("error-message");
 
 let width = 30, height = 15;
@@ -253,19 +254,22 @@ function showErrorModal(e) {
 }
 
 function startNewGame() {
-  if (auto) autoGenerationButton.click();
-  
-  gridHistory = [];
-  
-  autoGenerationButton.disabled = false;
-  nextGenerationButton.disabled = false;
-  prevGenerationButton.disabled = true;
-  
   width = +widthInput.value;
   height = +heightInput.value;
   markerSize = +markerSizeInput.value;
   
   try {
+    [width, height, markerSize].forEach(value => {
+      if (
+        typeof value === "number" && (value <= 0 || Number.isNaN(value))
+        || typeof value !== "number"
+      ) {
+        throw new Error(
+          "Erroneous input encountered: number values > 0 expected"
+        );
+      }
+    });
+    
     switch(markersSelect.selectedIndex) {
       case 0:
         switch(squareMarkerColorSelect.selectedIndex) {
@@ -312,6 +316,14 @@ function startNewGame() {
     showErrorModal(e);
     return;
   }
+  
+  if (auto) autoGenerationButton.click();
+  
+  gridHistory = [];
+  
+  autoGenerationButton.disabled = false;
+  nextGenerationButton.disabled = false;
+  prevGenerationButton.disabled = true;
   
   gridElement.style.fontSize = markerSize + "px";
   
@@ -385,10 +397,16 @@ closeAboutModal.addEventListener("click", () => {
   aboutModal.style.display = "none";
 }, false);
 
+closeErrorModal.addEventListener("click", () => {
+  errorModal.style.display = "none";
+}, false);
+
 window.addEventListener("click", (e) => {
   if (e.target === newGameModal) newGameModal.style.display = "none";
   
   if (e.target === aboutModal) aboutModal.style.display = "none";
+  
+  if (e.target === errorModal) errorModal.style.display = "none";
 }, false);
 
 markersSelect.addEventListener("input", () => {
