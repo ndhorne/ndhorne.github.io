@@ -253,6 +253,18 @@ function showErrorModal(e) {
   errorModal.style.display = "block";
 }
 
+function hideNewGameModal() {
+  newGameModal.style.display = "none";
+}
+
+function hideAboutModal() {
+  aboutModal.style.display = "none";
+}
+
+function hideErrorModal() {
+  errorModal.style.display = "none";
+}
+
 function startNewGame() {
   width = +widthInput.value;
   height = +heightInput.value;
@@ -261,8 +273,7 @@ function startNewGame() {
   try {
     [width, height, markerSize].forEach(value => {
       if (
-        typeof value === "number" && (value <= 0 || Number.isNaN(value))
-        || typeof value !== "number"
+        typeof value !== "number" || (value <= 0 || Number.isNaN(value))
       ) {
         throw new Error(
           "Erroneous input encountered: number values > 0 expected"
@@ -330,7 +341,7 @@ function startNewGame() {
   grid = newGrid(width, height);
   updateTable();
   
-  newGameModal.style.display = "none";
+  hideNewGameModal();
 }
 
 autoGenerationButton.addEventListener("click", () => {
@@ -385,7 +396,7 @@ startNewGameButton.addEventListener("click", () => {
 }, false);
 
 closeNewGameModal.addEventListener("click", () => {
-  newGameModal.style.display = "none";
+  hideNewGameModal();
 }, false);
 
 aboutButton.addEventListener("click", () => {
@@ -394,19 +405,19 @@ aboutButton.addEventListener("click", () => {
 }, false);
 
 closeAboutModal.addEventListener("click", () => {
-  aboutModal.style.display = "none";
+  hideAboutModal();
 }, false);
 
 closeErrorModal.addEventListener("click", () => {
-  errorModal.style.display = "none";
+  hideErrorModal();
 }, false);
 
 window.addEventListener("click", (e) => {
-  if (e.target === newGameModal) newGameModal.style.display = "none";
+  if (e.target === newGameModal) hideNewGameModal();
   
-  if (e.target === aboutModal) aboutModal.style.display = "none";
+  if (e.target === aboutModal) hideAboutModal();
   
-  if (e.target === errorModal) errorModal.style.display = "none";
+  if (e.target === errorModal) hideErrorModal();
 }, false);
 
 markersSelect.addEventListener("input", () => {
@@ -455,6 +466,12 @@ squareMarkerColorSelect.addEventListener("input", () => {
     return;
   }
 }, false);
+
+for (let element of [widthInput, heightInput, markerSizeInput]) {
+  element.addEventListener("keyup", e => {
+    if (e.key === "Enter") startNewGame();
+  }, false);
+}
 
 // game doesn't play well on a small grid, decrease glyph size instead
 if (parseFloat(getComputedStyle(container).width) < 1140) {
