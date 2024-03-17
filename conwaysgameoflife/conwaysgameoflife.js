@@ -110,7 +110,7 @@ const errorModal = document.getElementById("error-modal");
 const closeErrorModal = document.getElementById("close-error-modal");
 const errorMessage = document.getElementById("error-message");
 
-let width = 30, height = 15;
+let width = 30, height = 15, cellWidth, cellHeight;
 let grid, gridHistory, auto, intervalId, markers, markerSize, tableElement;
 
 function newGrid(width, height) {
@@ -166,7 +166,7 @@ function newTable(grid) {
   const height = grid.height;
   
   const tableElement = document.createElement("table");
-
+  
   for (let y = 0; y < height; y++) {
     const row = document.createElement("tr");
     
@@ -189,6 +189,11 @@ function newTable(grid) {
     
     tableElement.appendChild(row);
   }
+  
+  Array.from(tableElement.querySelectorAll("td")).forEach(cell => {
+    cell.style.width = cellWidth + "px";
+    cell.style.height = cellHeight + "px";
+  });
   
   Array.from(tableElement.querySelectorAll("td")).forEach(
     cell => cell.addEventListener(
@@ -215,8 +220,10 @@ function newTable(grid) {
 }
 
 function updateTable() {
+  const nextTable = newTable(grid);
+  
   if (tableElement) tableElement.remove();
-  tableElement = newTable(grid);
+  tableElement = nextTable;
   gridElement.appendChild(tableElement);
 }
 
@@ -263,6 +270,40 @@ function hideAboutModal() {
 
 function hideErrorModal() {
   errorModal.style.display = "none";
+}
+
+function getOptimalCellDimensions() {
+  const stagingTable = document.createElement("table");
+  stagingTable.style.position = "absolute";
+  stagingTable.style.left = "-100px";
+  stagingTable.style.fontSize = markerSize + "px";
+  
+  const stagingRow = document.createElement("tr");
+  const liveStagingCell = document.createElement("td");
+  const deadStagingCell = document.createElement("td");
+  
+  stagingTable.appendChild(stagingRow);
+  stagingRow.appendChild(liveStagingCell);
+  stagingRow.appendChild(deadStagingCell);
+  
+  liveStagingCell.appendChild(document.createTextNode(markers.live));
+  deadStagingCell.appendChild(document.createTextNode(markers.dead));
+  
+  document.body.appendChild(stagingTable);
+  
+  const cellWidth = Math.max(
+    parseFloat(getComputedStyle(liveStagingCell).width),
+    parseFloat(getComputedStyle(deadStagingCell).width)
+  );
+  
+  const cellHeight = Math.max(
+    parseFloat(getComputedStyle(liveStagingCell).height),
+    parseFloat(getComputedStyle(deadStagingCell).height)
+  );
+  
+  stagingTable.remove();
+  
+  return { cellWidth, cellHeight };
 }
 
 function startNewGame() {
@@ -337,6 +378,8 @@ function startNewGame() {
   prevGenerationButton.disabled = true;
   
   gridElement.style.fontSize = markerSize + "px";
+  
+  ({ cellWidth, cellHeight } = getOptimalCellDimensions());
   
   grid = newGrid(width, height);
   updateTable();
