@@ -42,6 +42,20 @@
     "note": null
   },
   {
+    "quote": "It is not that uncommon for the cost of an abstraction to outweigh the benefit it delivers. Kill one today!",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "John",
+        "middle": null,
+        "last": "Carmack",
+        "suffix": null
+      }
+    },
+    "source": null,
+    "note": null
+  },
+  {
     "quote": "Out of intense complexities, intense simplicities emerge.",
     "author": {
       "name": {
@@ -644,6 +658,20 @@
         "first": "Groucho",
         "middle": null,
         "last": "Marx",
+        "suffix": null
+      }
+    },
+    "source": null,
+    "note": null
+  },
+  {
+    "quote": "Almost all programming can be viewed as an exercise in caching.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Terje",
+        "middle": null,
+        "last": "Mathisen",
         "suffix": null
       }
     },
