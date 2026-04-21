@@ -1,8 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
+/* without bullets
 #policies-list {
   list-style-type: none;
   margin: 10px auto;
   padding: 0;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+}
+*/
+
+#policies-list {
+  margin: 10px auto;
+  padding: 0;
+  list-style-position: inside;
   font-family: Poppins, Arial, Helvetica, sans-serif;
 }
