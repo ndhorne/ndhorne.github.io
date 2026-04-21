@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Open+Sans&family=Montserrat&family=Noto+Sans+SC&family=Share+Tech+Mono&family=Syne+Mono&family=Work+Sans&family=Spartan&family=Sora&family=Overlock+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Open+Sans&family=Montserrat&family=Noto+Sans+SC&family=Share+Tech+Mono&family=Syne+Mono&family=Work+Sans&family=Spartan&family=Sora&family=Overlock+SC&family=Chakra+Petch&display=swap');
 
 html {
   /* height: 100%; */
@@ -130,7 +130,8 @@ ul.nav li:first-child a {
 .footer-column {
   float: left;
   width: 33.33%;
-  font-size: 12px;
+  font-size: 13px;
+  line-height: 18px;
 }
 
 .footer-column ul {
@@ -156,15 +157,16 @@ ul.nav li:first-child a {
 
 .footer-column-header {
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: bold;
   font-family: 'Overlock SC', Arial, Helvetica, sans-serif;
 }
 
 #copyright-notice {
-  font-size: 14px;
+  font-size: 14.8px;
   margin-top: 0;
   margin-bottom: 5px;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
 @media (max-width:399px) {
@@ -230,6 +232,11 @@ ul.nav li:first-child a {
   padding: 10px;
   background-color: linen;
   border-radius: 5px;
+  font-family: 'Chakra Petch', Arial, Helvetica, sans-serif;
+}
+
+#ball-controls-summary {
+  font-weight: bold;
 }
 
 #ball-controls-inputs {
@@ -277,6 +284,7 @@ ul.nav li:first-child a {
   background-color: #333;
 }
 
+/* fa-arrow-up
 .top-link {
   font-size: 1.75rem;
   position: fixed;
@@ -285,6 +293,16 @@ ul.nav li:first-child a {
   color: cornflowerblue;
   animation: bounce 2s ease-in-out infinite;
   text-decoration: none;
+  
+  visibility: hidden;
+  z-index: -100;
+}
+*/
+
+.top-link {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
   
   visibility: hidden;
   z-index: -100;
