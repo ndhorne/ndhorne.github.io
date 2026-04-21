@@ -74,6 +74,7 @@ h1 {
   display: inline;
   padding-left: 4px;
   font-size: 14px;
+  display: none;
 }
 
 #log {
@@ -204,8 +205,8 @@ h1 {
   }
   
   #lcd {
-    height: 40px;
-    font-size: 26px;
+    height: 38px;
+    font-size: 30px;
     line-height: 40px;
   }
   
