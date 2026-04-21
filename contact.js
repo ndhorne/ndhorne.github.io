@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Nicholas D. Horne
+Copyright 2020, 2026 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,10 +16,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 "use strict";
 
-let labels = document.getElementsByTagName("label");
-labels = Array.from(labels);
+const labels = Array.from(document.getElementsByTagName("label"));
 
-let labelWidth = labels.reduce(function(maxWidth, label) {
+const labelWidth = labels.reduce(function(maxWidth, label) {
   return Math.max(maxWidth, label.getBoundingClientRect().width);
 }, 0);
 
@@ -28,6 +27,6 @@ labels.forEach(function(label) {
 });
 
 window.addEventListener("unload", function(event) {
-  let resetButton = document.getElementById("reset");
+  const resetButton = document.getElementById("reset");
   resetButton.click();
 });

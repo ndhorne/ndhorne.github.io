@@ -1,5 +1,5 @@
 /*
-Copyright 2022, 2023 Nicholas D. Horne
+Copyright 2022, 2023, 2026 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -92,6 +92,7 @@ if (!Array.prototype.distinct) {
 
 function* genPass(config) {
   const charsets = [];
+  const chars = [];
   
   if (config.lowerAlpha) {
     charsets.push(0);
@@ -106,9 +107,7 @@ function* genPass(config) {
     charsets.push(3);
   }
   
-  if (config.method == 1 || config.method == 2) {
-    var chars = [];
-    
+  if (config.method === 1 || config.method === 2) {
     //build array of character sets
     for (let i = 0; i < charsets.length; i++) {
       switch (charsets[i]) {
@@ -133,7 +132,7 @@ function* genPass(config) {
       } //end switch (charsets[i])
     } //end for
     
-    if (config.method == 2) {
+    if (config.method === 2) {
       shuffleArray(chars);
     }
   }
@@ -200,7 +199,7 @@ function* genPass(config) {
         continue;
       } else if (
         config.beginWithLetter
-        && pass.length == 0
+        && pass.length === 0
         && !sets.lowerAlpha.includes(char)
         && !sets.upperAlpha.includes(char)
       ) {
@@ -208,14 +207,14 @@ function* genPass(config) {
       } else if (
         config.excludeSequential
         && (
-          (pass.charCodeAt(pass.length - 1) + 1) == char.charCodeAt(0)
+          (pass.charCodeAt(pass.length - 1) + 1) === char.charCodeAt(0)
           || (
             sets.lowerAlpha.includes(pass[pass.length - 1])
             && (
               sets.upperAlpha[
                 sets.lowerAlpha.indexOf(pass[pass.length - 1])
               ].charCodeAt(0)
-              == (char.charCodeAt(0) - 1)
+              === (char.charCodeAt(0) - 1)
             )
           )
           || (
@@ -224,7 +223,7 @@ function* genPass(config) {
               sets.lowerAlpha[
                 sets.upperAlpha.indexOf(pass[pass.length - 1])
               ].charCodeAt(0)
-              == (char.charCodeAt(0) - 1)
+              === (char.charCodeAt(0) - 1)
             )
           )
         )
@@ -233,7 +232,7 @@ function* genPass(config) {
       } else {
         pass += char;
       }
-      if (pass.length == config.length) {
+      if (pass.length === config.length) {
         charsets.forEach(charset => {
           switch (charset) {
             case 0:
@@ -297,14 +296,14 @@ function optionsAdministrivia(e) {
   let special = specialCharsCheckbox.checked;
   
   let excludeSimilar = excludeSimilarCheckbox.checked;
-  let excludeDuplicates = excludeDuplicatesCheckbox.checked;
-  let exclusions = excludeSimilar
+  const excludeDuplicates = excludeDuplicatesCheckbox.checked;
+  const exclusions = excludeSimilar
     ? exclusionsField.value.split("").concat(similars).distinct()
     : exclusionsField.value.split("").distinct()
   ;
   
-  let length = +lengthField.value;
-  let quantity = +quantityField.value;
+  const length = +lengthField.value;
+  const quantity = +quantityField.value;
   
   if (!lowerAlpha && !upperAlpha) {
     if (beginWithLetterCheckbox.checked) {
@@ -383,7 +382,7 @@ function optionsAdministrivia(e) {
     statusLog.style.color = "red";
     statusDiv.style.bottom = 0;
     
-    let errorText = [];
+    const errorText = [];
     
     if (!lowerAlpha && !upperAlpha && !numeric && !special) {
       errorText.push("No set selected");
@@ -443,7 +442,7 @@ function getPass(e) {
   outputPre.textContent = "";
   
   //exhaust iterator from generator
-  for (let pass of genPass(config)) {
+  for (const pass of genPass(config)) {
     //outputTextarea.value += pass;
     outputPre.textContent += pass;
   }
@@ -484,7 +483,7 @@ function about(e) {
 }
 
 window.addEventListener("click", event => {
-  if (event.target == aboutModal) {
+  if (event.target === aboutModal) {
     aboutModal.style.display = "none";
   }
 }, false);

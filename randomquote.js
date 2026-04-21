@@ -1,5 +1,5 @@
 /*
-Copyright 2020, 2021, 2022, 2023 Nicholas D. Horne
+Copyright 2020, 2021, 2022, 2023, 2026 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 "use strict";
 
-const containerElement = document.getElementById("container");
+const quoteElementContainer = document.getElementById("container");
 const quoteElement = document.getElementById("quote");
 const quoteInnerContainer = document.createElement("div");
 const qElement = document.createElement("q");
@@ -40,7 +40,7 @@ quoteElement.style.transitionDuration = "0.75s";
 quoteElement.style.backgroundColor = "whitesmoke";
 quoteElement.style.fontFamily = "Arial, Helvetica, sans-serif";
 quoteElement.style.maxWidth =
-  containerElement.getBoundingClientRect().width * 0.95 + "px"
+  quoteElementContainer.getBoundingClientRect().width * 0.95 + "px"
 ;
 
 //for chrome
@@ -57,7 +57,7 @@ quoteInnerContainer.style.textAlign = "left";
 footerElement.style.display = "inline";
 
 function isCharAtEnd(str, char) {
-  if (typeof(str) != "string" || typeof(char) != "string") {
+  if (typeof(str) !== "string" || typeof(char) !== "string") {
     console.error(
       "One or more arguments invalid,",
       "strings expected at both parameters, returning false."
@@ -95,14 +95,14 @@ function buildName(nameObj) {
   }
   
   if (nameObj.middle) {
-    if (typeof nameObj.middle == "string") {
+    if (typeof nameObj.middle === "string") {
       if (nameStr) {
         nameStr += isCharAtEnd(nameStr, " ") ? "" : " ";
       }
       
       nameStr +=  nameObj.middle;
-    } else if (typeof nameObj.middle == "object") {
-      for (let middleName of nameObj.middle) {
+    } else if (typeof nameObj.middle === "object") {
+      for (const middleName of nameObj.middle) {
         if (nameStr) {
           nameStr += isCharAtEnd(nameStr, " ") ? "" : " ";
         }
@@ -238,11 +238,11 @@ async function initQuotes(timeout = 15000, isEphemeral = true) {
     return {
       setQuote: function(indexArg) {
         if (
-          typeof indexArg != "number"
+          typeof indexArg !== "number"
           || indexArg < 0
           || indexArg >= quotes.length
         ) {
-          if (previousIndices.length == quotes.length) {
+          if (previousIndices.length === quotes.length) {
             previousIndices = [];
           }
           
@@ -337,8 +337,8 @@ async function initQuotes(timeout = 15000, isEphemeral = true) {
   }
 }
 
-if (containerElement.getBoundingClientRect().width < 1145) {
-    quoteElement.remove();
+if (quoteElementContainer.getBoundingClientRect().width < 1145) {
+  if (quoteElement) quoteElement.remove();
 } else {
   initQuotes().then(function(quoteAPI) {
     const boundScrollQuote = quoteAPI.scrollQuote.bind(quoteAPI);

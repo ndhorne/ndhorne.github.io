@@ -1,5 +1,5 @@
 /*
-Copyright 2019, 2020, 2021, 2022, 2023 Nicholas D. Horne
+Copyright 2019, 2020, 2021, 2022, 2023, 2026 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -121,7 +121,7 @@ function setBorders(left, right, top, bottom) {
 }
 
 function frame(time) {
-  if (lastTime != null) {
+  if (lastTime !== null) {
     updateAnimation(Math.min(100, time - lastTime) / 1000);
   }
   lastTime = time;
@@ -137,32 +137,32 @@ function updateAnimation(step) {
   
   ballPos = ballPos.plus(speed.times(step));
   if (
-    ballPos.x < borderLeft && Math.sign(speed.x) == -1
-    || ballPos.x > borderRight && Math.sign(speed.x) == 1
+    ballPos.x < borderLeft && Math.sign(speed.x) === -1
+    || ballPos.x > borderRight && Math.sign(speed.x) === 1
   ) {
     speed.x = -speed.x;
   }
   if (
-    ballPos.y < borderTop && Math.sign(speed.y) == -1
-    || ballPos.y > borderBottom && Math.sign(speed.y) == 1
+    ballPos.y < borderTop && Math.sign(speed.y) === -1
+    || ballPos.y > borderBottom && Math.sign(speed.y) === 1
   ) {
     speed.y = -speed.y;
   }
 }
 
 function newSize(radiusArg) {
-  let leftSpace = ballPos.x - (boxPos.x + cx.lineWidth);
-  let rightSpace = (boxPos.x + boxDimensions.x) - (ballPos.x + cx.lineWidth);
-  let topSpace = ballPos.y - (boxPos.y + cx.lineWidth);
-  let bottomSpace = (boxPos.y + boxDimensions.y) - (ballPos.y + cx.lineWidth);
-  let minSpace = Math.min(leftSpace, rightSpace, topSpace, bottomSpace);
+  const leftSpace = ballPos.x - (boxPos.x + cx.lineWidth);
+  const rightSpace = (boxPos.x + boxDimensions.x) - (ballPos.x + cx.lineWidth);
+  const topSpace = ballPos.y - (boxPos.y + cx.lineWidth);
+  const bottomSpace = (boxPos.y + boxDimensions.y) - (ballPos.y + cx.lineWidth);
+  const minSpace = Math.min(leftSpace, rightSpace, topSpace, bottomSpace);
   
   radius = Math.min(minSpace, radiusArg);
   setBorders();
 }
 
 function newBall() {
-  let speedVec = randomSpeed();
+  const speedVec = randomSpeed();
   
   speed = new Vec(
     Math.abs(speedVec.x) * Math.sign(speed.x),
@@ -183,22 +183,22 @@ function clickHandler(event) {
   event.preventDefault();
   
   //current ball position at time of click event
-  let currentBallPos = {
+  const currentBallPos = {
     x: ballPos.x,
     y: ballPos.y
   };
   
-  let rect = canvas.getBoundingClientRect();
-  let x = event.clientX - rect.left;
-  let y = event.clientY - rect.top;
+  const rect = canvas.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
   
   for (let degrees = 270; degrees <= 450; degrees++) {
-    let radians = degrees * Math.PI / 180;
+    const radians = degrees * Math.PI / 180;
     
-    let yTop = currentBallPos.y - radius * Math.sin(radians);
-    let yBottom = currentBallPos.y + radius * Math.sin(radians);
-    let xLeft = currentBallPos.x - radius * Math.cos(radians);
-    let xRight = currentBallPos.x + radius * Math.cos(radians);
+    const yTop = currentBallPos.y - radius * Math.sin(radians);
+    const yBottom = currentBallPos.y + radius * Math.sin(radians);
+    const xLeft = currentBallPos.x - radius * Math.cos(radians);
+    const xRight = currentBallPos.x + radius * Math.cos(radians);
     
     if (y >= yTop && y <= yBottom && x >= xLeft && x <= xRight) {
       clearInterval(autoNewBallInterval);
@@ -305,7 +305,7 @@ cx.strokeStyle = "black";
 cx.fillStyle = color;
 
 if (ballDivContainer.getBoundingClientRect().width < 440) {
-  ballDiv.remove();
+  if (ballDiv) ballDiv.remove();
 } else {
   //new ball every 15 seconds
   //autoNewBallInterval = setInterval(() => newBall(), 15000);
