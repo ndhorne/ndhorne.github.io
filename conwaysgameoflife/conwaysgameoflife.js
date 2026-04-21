@@ -1,5 +1,5 @@
 /*
-Copyright 2019, 2023, 2024 Nicholas D. Horne
+Copyright 2019, 2023, 2024, 2026 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -250,7 +250,7 @@ function updateGeneration() {
 function startAutoGeneration() {
   intervalId = setInterval(
     () => updateGeneration(),
-    Number(intervalRange.value)
+    Number(2000 - intervalRange.value)
   );
 }
 
@@ -518,7 +518,9 @@ for (let element of [widthInput, heightInput, markerSizeInput]) {
 
 // game doesn't play well on a small grid, decrease glyph size instead
 if (parseFloat(getComputedStyle(container).width) < 1140) {
-  markerSize = Math.floor(parseFloat(getComputedStyle(container).width) / 57);
+  markerSize = (
+    Math.floor(parseFloat(getComputedStyle(container).width) / 57) || 5
+  );
   gridElement.style.fontSize = markerSize + "px";
   
   // minimum font size fix (for android chrome via facebook messenger)
