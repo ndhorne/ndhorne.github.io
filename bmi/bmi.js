@@ -1,5 +1,5 @@
 /*
-Copyright 2022, 2023, 2024 Nicholas D. Horne
+Copyright 2022, 2023, 2024, 2026 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -96,6 +96,8 @@ const convertMetersToCentimetersNo =
 const aboutModal = document.getElementById("aboutModal");
 const closeAbout = document.getElementById("closeAbout");
 
+const aboutAnchor = document.getElementById("aboutAnchor");
+
 let height, weight, bmi;
 
 function getClass(bmi) {
@@ -167,19 +169,19 @@ imperialRadio.addEventListener("click", function(e) {
   dismissConvertCentimetersToMeters();
   dismissConvertMetersToCentimeters();
   
-  if (ftInput.value == "") {
+  if (ftInput.value === "") {
     ftInput.focus();
-  } else if (inInput.value == "") {
+  } else if (inInput.value === "") {
     inInput.focus();
-  } else if (lbInput.value == "") {
+  } else if (lbInput.value === "") {
     lbInput.focus();
   } else {
     calculateImperial.focus();
   }
   
   if (
-    (cmInput.value != "" && kgInput.value != "")
-    && (ftInput.value == "" && inInput.value == "" && lbInput.value == "")
+    (cmInput.value !== "" && kgInput.value !== "")
+    && (ftInput.value === "" && inInput.value === "" && lbInput.value === "")
   ) {
     displayConvertMetricToImperial();
   }
@@ -191,17 +193,17 @@ metricRadio.addEventListener("click", function(e) {
   
   dismissConvertMetricToImperial();
   
-  if (cmInput.value == "") {
+  if (cmInput.value === "") {
     cmInput.focus();
-  } else if (kgInput.value == "") {
+  } else if (kgInput.value === "") {
     kgInput.focus();
   } else {
     calculateMetric.focus();
   }
   
   if (
-    (ftInput.value != "" && lbInput.value != "")
-    && (cmInput.value == "" && kgInput.value == "")
+    (ftInput.value !== "" && lbInput.value !== "")
+    && (cmInput.value === "" && kgInput.value === "")
   ) {
     displayConvertImperialToMetric();
   }
@@ -221,7 +223,7 @@ calculateMetric.addEventListener("click", function(e) {
   dismissConvertMetersToCentimeters();
   
   height =
-    metricHeightUnit.value == "cm"
+    metricHeightUnit.value === "cm"
     ? +cmInput.value / 100 //convert to meters
     : +cmInput.value //already in meters
   ;
@@ -253,7 +255,7 @@ function enableCalculateMetric() {
 }
 
 function enableClearImperial() {
-  if (ftInput.value != "" || inInput.value != "" || lbInput.value != "") {
+  if (ftInput.value !== "" || inInput.value !== "" || lbInput.value !== "") {
     clearImperial.disabled = false;
   } else {
     clearImperial.disabled = true;
@@ -261,7 +263,7 @@ function enableClearImperial() {
 }
 
 function enableClearMetric() {
-  if (cmInput.value != "" || kgInput.value != "") {
+  if (cmInput.value !== "" || kgInput.value !== "") {
     clearMetric.disabled = false;
   } else {
     clearMetric.disabled = true;
@@ -372,14 +374,14 @@ metricHeightUnit.addEventListener("change", function(e) {
   dismissConvertCentimetersToMeters();
   dismissConvertMetersToCentimeters();
   
-  if (cmInput.value != "" && metricHeightUnit.value == "m") {
+  if (cmInput.value !== "" && metricHeightUnit.value === "m") {
     displayConvertCentimetersToMeters();
   }
-  if (cmInput.value != "" && metricHeightUnit.value == "cm") {
+  if (cmInput.value !== "" && metricHeightUnit.value === "cm") {
     displayConvertMetersToCentimeters();
   }
   
-  if (cmInput.value == "") {
+  if (cmInput.value === "") {
     cmInput.focus();
   }
 }, false);
@@ -441,15 +443,15 @@ function dismissConvertMetersToCentimeters() {
 }
 
 convertImperialToMetricYes.addEventListener("click", function(e) {
-  let cm = ((+ftInput.value * 12) + +inInput.value) * 2.54;
-  let kg = +lbInput.value * 0.4536;
+  const cm = ((+ftInput.value * 12) + +inInput.value) * 2.54;
+  const kg = +lbInput.value * 0.4536;
   
-  metricHeightUnit.value == "cm"
-    ? cmInput.value = cm % 1 == 0 ? cm : cm.toFixed(2)
-    : cmInput.value = (cm / 100) % 1 == 0 ? cm / 100 : (cm / 100).toFixed(2)
+  metricHeightUnit.value === "cm"
+    ? cmInput.value = cm % 1 === 0 ? cm : cm.toFixed(2)
+    : cmInput.value = (cm / 100) % 1 === 0 ? cm / 100 : (cm / 100).toFixed(2)
   ;
   
-  kgInput.value = kg % 1 == 0 ? kg : kg.toFixed(2);
+  kgInput.value = kg % 1 === 0 ? kg : kg.toFixed(2);
   
   calculateMetric.disabled = false;
   clearMetric.disabled = false;
@@ -466,17 +468,17 @@ convertImperialToMetricNo.addEventListener("click", function(e) {
 convertMetricToImperialYes.addEventListener("click", function(e) {
   let cm;
   
-  metricHeightUnit.value == "cm"
+  metricHeightUnit.value === "cm"
     ? cm = +cmInput.value
     : cm = +cmInput.value * 100
   ;
   
   ftInput.value = Math.floor((cm / 2.54) / 12);
-  inInput.value = ((cm / 2.54) % 12) % 1 == 0
+  inInput.value = ((cm / 2.54) % 12) % 1 === 0
     ? (cm / 2.54) % 12
     : ((cm / 2.54) % 12).toFixed(2)
   ;
-  lbInput.value = (+kgInput.value / 0.4536) % 1 == 0
+  lbInput.value = (+kgInput.value / 0.4536) % 1 === 0
     ? +kgInput.value / 0.4536
     : (+kgInput.value / 0.4536).toFixed(2)
   ;
@@ -494,8 +496,8 @@ convertMetricToImperialNo.addEventListener("click", function(e) {
 }, false);
 
 convertCentimetersToMetersYes.addEventListener("click", function(e) {
-  let m = +cmInput.value / 100;
-  cmInput.value = m % 1 != 0 ? m.toFixed(2) : m
+  const m = +cmInput.value / 100;
+  cmInput.value = m % 1 !== 0 ? m.toFixed(2) : m
   
   dismissConvertCentimetersToMeters();
 }, false);
@@ -505,8 +507,8 @@ convertCentimetersToMetersNo.addEventListener("click", function(e) {
 }, false);
 
 convertMetersToCentimetersYes.addEventListener("click", function(e) {
-  let cm = +cmInput.value * 100;
-  cmInput.value = cm % 1 != 0 ? cm.toFixed(2) : cm
+  const cm = +cmInput.value * 100;
+  cmInput.value = cm % 1 !== 0 ? cm.toFixed(2) : cm
   
   dismissConvertMetersToCentimeters();
 }, false);
@@ -515,20 +517,24 @@ convertMetersToCentimetersNo.addEventListener("click", function(e) {
   dismissConvertMetersToCentimeters();
 }, false);
 
-function about(event) {
-  event.preventDefault();
-  
+function about() {
   aboutModal.style.display = "block";
 }
 
 window.addEventListener("click", event => {
-  if (event.target == aboutModal) {
+  if (event.target === aboutModal) {
     aboutModal.style.display = "none";
   }
 }, false);
 
 closeAbout.addEventListener("click", event => {
   aboutModal.style.display = "none";
+}, false);
+
+aboutAnchor.addEventListener("click", event => {
+  event.preventDefault();
+  
+  about();
 }, false);
 
 //(re)initialize widget states

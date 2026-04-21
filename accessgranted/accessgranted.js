@@ -1,5 +1,5 @@
 /*
-Copyright 2018-2023 Nicholas D. Horne
+Copyright 2018-2023, 2026 Nicholas D. Horne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,24 +17,26 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 "use strict";
 
 //element bindings
-let lcdElement = document.getElementById("lcd");
-let optionsElement = document.getElementById("options");
-let modeElement = document.getElementById("mode");
-let logLabelElement = document.getElementById("logLabel");
-let logElement = document.getElementById("log");
-let newGameElement = document.getElementById("newGameButton");
-let autoSolveElement = document.getElementById("autoSolveButton");
-let hintElement = document.getElementById("hintButton");
+const lcdElement = document.getElementById("lcd");
+const optionsElement = document.getElementById("options");
+const modeElement = document.getElementById("mode");
+const logLabelElement = document.getElementById("logLabel");
+const logElement = document.getElementById("log");
+const newGameElement = document.getElementById("newGameButton");
+const autoSolveElement = document.getElementById("autoSolveButton");
+const hintElement = document.getElementById("hintButton");
+const aboutAnchorElement = document.getElementById("aboutAnchor");
 let modeOptionsElement, modeOptionsLabel;
-//let autoNewGameElement = document.getElementById("autoNew");
+//const autoNewGameElement = document.getElementById("autoNew");
 
 let pin, entry, entries, state, gameMode, timeLeft, maxAttempts, startTime;
 let silent, solved, locked, autoSolve, optionIndex; //autoNew;
 let hintsGiven, keysRevealed, mode1CustomValue, mode2CustomValue;
 let verifyTimeout, timeLeftTimeout, resetDisplayTimeout, hintTimeout;
 let playAgainTimeout, newGameButtonBorderBlinkTimeout;
-let buttons = [];
-let aboutText = [
+
+const buttons = [];
+const aboutText = [
   "Access Granted JS",
   "A pointless diversion by Nicholas D. Horne",
   "Crack a PIN knowing the digits that the PIN comprises",
@@ -51,28 +53,28 @@ let aboutText = [
   + "https://github.com/ndhorne/access-granted-js"
 ];
 
-let playAgainModal = document.getElementById("playAgainModal");
-let playAgainModalHeader = document.getElementById("playAgainModalHeader");
-let playAgainModalText = document.getElementById("playAgainModalText");
-let playAgainYesButton = document.getElementById("playAgainYes");
-let playAgainNoButton = document.getElementById("playAgainNo");
-let closePlayAgainModal = document.getElementById("closePlayAgainModal");
-//let playAgainOKButton = document.getElementById("playAgainOK");
+const playAgainModal = document.getElementById("playAgainModal");
+const playAgainModalHeader = document.getElementById("playAgainModalHeader");
+const playAgainModalText = document.getElementById("playAgainModalText");
+const playAgainYesButton = document.getElementById("playAgainYes");
+const playAgainNoButton = document.getElementById("playAgainNo");
+const closePlayAgainModal = document.getElementById("closePlayAgainModal");
+//const playAgainOKButton = document.getElementById("playAgainOK");
 
-let aboutModal = document.getElementById("aboutModal");
-let closeAbout = document.getElementById("closeAbout");
-//let aboutOKButton = document.getElementById("aboutOK");
+const aboutModal = document.getElementById("aboutModal");
+const closeAbout = document.getElementById("closeAbout");
+//const aboutOKButton = document.getElementById("aboutOK");
 
-let errorModal = document.getElementById("errorModal");
-let errorModalHeader = document.getElementById("errorModalHeader");
-let errorModalText = document.getElementById("errorModalText");
-let closeErrorModal = document.getElementById("closeErrorModal");
-//let errorModalOKButton = document.getElementById("errorModalOK");
+const errorModal = document.getElementById("errorModal");
+const errorModalHeader = document.getElementById("errorModalHeader");
+const errorModalText = document.getElementById("errorModalText");
+const closeErrorModal = document.getElementById("closeErrorModal");
+//const errorModalOKButton = document.getElementById("errorModalOK");
 
 let customInput, customText, customInputHasFocus;
-let mode1CustomInput = document.createElement("input");
-let mode2CustomInput = document.createElement("input");
-let mode2CustomInputText = document.createTextNode("\"");
+const mode1CustomInput = document.createElement("input");
+const mode2CustomInput = document.createElement("input");
+const mode2CustomInputText = document.createTextNode("\"");
 
 mode1CustomInput.style.width = "26px";
 mode1CustomInput.style.margin = "0 2px";
@@ -82,7 +84,7 @@ mode2CustomInput.style.margin = "0 2px";
 
 //append individual option element to select element
 function appendSelectOption(selectElement, optionText, optionValue) {
-  let option = document.createElement("option");
+  const option = document.createElement("option");
   option.text = optionText;
   option.value = optionValue;
   selectElement.add(option);
@@ -91,7 +93,7 @@ function appendSelectOption(selectElement, optionText, optionValue) {
 //append option elements to select element
 function appendSelectOptions(select, ...options) {
   for (let i = 0; i < options.length; i++) {
-    let option = document.createElement("option");
+    const option = document.createElement("option");
     option.text = options[i];
     option.value = options[i];
     select.add(option);
@@ -99,10 +101,10 @@ function appendSelectOptions(select, ...options) {
 }
 
 //lockout game mode option elements
-let mode1OptionsElement = document.createElement("select");
+const mode1OptionsElement = document.createElement("select");
 mode1OptionsElement.id = "mode1Options";
 
-let mode1OptionsLabel = document.createElement("label");
+const mode1OptionsLabel = document.createElement("label");
 mode1OptionsLabel.innerHTML = "Attempts:";
 mode1OptionsLabel.htmlFor = "mode1Options";
 
@@ -113,18 +115,18 @@ appendSelectOptions(
 );
 
 //beat the clock game mode option elements
-let mode2OptionsElement = document.createElement("select");
+const mode2OptionsElement = document.createElement("select");
 mode2OptionsElement.id = "mode2Options";
 
-let mode2OptionsLabel = document.createElement("label");
+const mode2OptionsLabel = document.createElement("label");
 mode2OptionsLabel.innerHTML = "Time:";
 mode2OptionsLabel.htmlFor = "mode2Options";
 
 //beat the clock options
 [
-  { text: "2'", value: 120 }, { text: "1'", value: 60 },
-  { text: "45\"", value: 45 }, { text: "30\"", value: 30 },
-  { text: "15\"", value: 15 }, { text: "Custom", value: "Custom" }
+  { text: "2'", value: "120" }, { text: "1'", value: "60" },
+  { text: "45\"", value: "45" }, { text: "30\"", value: "30" },
+  { text: "15\"", value: "15" }, { text: "Custom", value: "Custom" }
 ].forEach(function(optionObj) {
   appendSelectOption(
     mode2OptionsElement, optionObj.text, optionObj.value
@@ -175,7 +177,7 @@ function newGameButtonBorderBlinkHighlight(timeout) {
 }
 
 mode1OptionsElement.addEventListener("change", event => {
-  if (event.target.value == "Custom") {
+  if (event.target.value === "Custom") {
     customInput = optionsElement.insertBefore(
       mode1CustomInput,
       newGameElement
@@ -192,7 +194,7 @@ mode1OptionsElement.addEventListener("change", event => {
 }, false);
 
 mode2OptionsElement.addEventListener("change", event => {
-  if (event.target.value == "Custom") {
+  if (event.target.value === "Custom") {
     customInput = optionsElement.insertBefore(
       mode2CustomInput,
       newGameElement
@@ -218,7 +220,7 @@ modeElement.addEventListener("change", event => {
   function newModeSelectedAdministrivia() {
     if (
       !solved && !locked
-      || !solved && locked && customInputHasFocus && state != 3
+      || !solved && locked && customInputHasFocus && state !== 3
     ) {
       clearTimeout(newGameButtonBorderBlinkTimeout);
       newGameElement.style.removeProperty("border");
@@ -230,14 +232,14 @@ modeElement.addEventListener("change", event => {
   function currentModeSelectedAdministrivia() {
     if (
       !solved && !locked
-      || !solved && locked && customInputHasFocus && state != 3
+      || !solved && locked && customInputHasFocus && state !== 3
     ) {
       clearTimeout(newGameButtonBorderBlinkTimeout);
       newGameElement.style.removeProperty("border");
     }
   }
   
-  if (logElement.innerHTML.slice(-8) != "<br><br>") {
+  if (logElement.innerHTML.slice(-8) !== "<br><br>") {
     logElement.appendChild(document.createElement("br"));
   }
   
@@ -264,7 +266,7 @@ modeElement.addEventListener("change", event => {
         modeOptionsLabel.remove();
       }
       
-      if (gameMode != event.target.selectedIndex) {
+      if (gameMode !== event.target.selectedIndex) {
         newModeSelectedAdministrivia();
       } else {
         currentModeSelectedAdministrivia();
@@ -292,7 +294,7 @@ modeElement.addEventListener("change", event => {
         mode1OptionsElement, newGameElement
       );
       
-      if (mode1OptionsElement.value == "Custom") {
+      if (mode1OptionsElement.value === "Custom") {
         customInput = optionsElement.insertBefore(
           mode1CustomInput,
           newGameElement
@@ -303,10 +305,10 @@ modeElement.addEventListener("change", event => {
       
       setModeOptionEvents();
       
-      if (gameMode != event.target.selectedIndex) {
+      if (gameMode !== event.target.selectedIndex) {
         newModeSelectedAdministrivia();
       } else {
-        if (optionIndex != modeOptionsElement.selectedIndex) {
+        if (optionIndex !== modeOptionsElement.selectedIndex) {
           newModeSelectedAdministrivia();
         } else {
           currentModeSelectedAdministrivia();
@@ -335,7 +337,7 @@ modeElement.addEventListener("change", event => {
         mode2OptionsElement, newGameElement
       );
       
-      if (mode2OptionsElement.value == "Custom") {
+      if (mode2OptionsElement.value === "Custom") {
         customInput = optionsElement.insertBefore(
           mode2CustomInput,
           newGameElement
@@ -351,10 +353,10 @@ modeElement.addEventListener("change", event => {
       
       setModeOptionEvents();
       
-      if (gameMode != event.target.selectedIndex) {
+      if (gameMode !== event.target.selectedIndex) {
         newModeSelectedAdministrivia();
       } else {
-        if (optionIndex != modeOptionsElement.selectedIndex) {
+        if (optionIndex !== modeOptionsElement.selectedIndex) {
           newModeSelectedAdministrivia();
         } else {
           currentModeSelectedAdministrivia();
@@ -374,7 +376,7 @@ function setModeOptionEvents() {
     function newModeOptionSelectedAdministrivia() {
       if (
         !solved && !locked
-        || !solved && locked && customInputHasFocus && state != 3
+        || !solved && locked && customInputHasFocus && state !== 3
       ) {
         clearTimeout(newGameButtonBorderBlinkTimeout);
         newGameElement.style.removeProperty("border");
@@ -386,17 +388,17 @@ function setModeOptionEvents() {
     function currentModeOptionSelectedAdministrivia() { 
       if (
         !solved && !locked
-        || !solved && locked && customInputHasFocus && state != 3
+        || !solved && locked && customInputHasFocus && state !== 3
       ) {
         clearTimeout(newGameButtonBorderBlinkTimeout);
         newGameElement.style.removeProperty("border");
       }
     }
     
-    if (optionIndex != event.target.selectedIndex) {
+    if (optionIndex !== event.target.selectedIndex) {
       newModeOptionSelectedAdministrivia();
     } else {
-      if (gameMode != modeElement.selectedIndex) {
+      if (gameMode !== modeElement.selectedIndex) {
         newModeOptionSelectedAdministrivia();
       } else {
         currentModeOptionSelectedAdministrivia();
@@ -406,28 +408,28 @@ function setModeOptionEvents() {
 }
 
 mode1CustomInput.addEventListener("focus", event => {
-  if (state != 3) {
+  if (state !== 3) {
     locked = true;
   }
   customInputHasFocus = true;
 }, false);
 
 mode1CustomInput.addEventListener("blur", event => {
-  if (state != 3) {
+  if (state !== 3) {
     locked = false;
   }
   customInputHasFocus = false;
 }, false);
 
 mode2CustomInput.addEventListener("focus", event => {
-  if (state != 3) {
+  if (state !== 3) {
     locked = true;
   }
   customInputHasFocus = true;
 }, false);
 
 mode2CustomInput.addEventListener("blur", event => {
-  if (state != 3) {
+  if (state !== 3) {
     locked = false;
   }
   customInputHasFocus = false;
@@ -486,13 +488,13 @@ function clearHintTimeout() {
 //entry after half-second timeout
 function keyIn() {
   clearTimeout(resetDisplayTimeout);
-  if (gameMode == 0) {
+  if (gameMode === 0) {
     clearHintTimeout();
   }
   state = 0;
   
   updateDisplay();
-  if (entry.length == 4) {
+  if (entry.length === 4) {
     verifyTimeout = setTimeout(() => verifyEntry(), 500);
   }
 }
@@ -502,8 +504,8 @@ function highlightKeys() {
   buttons.forEach(button => {
     button.style.backgroundColor = "";
   });
-  for (let key of pin) {
-    let button = document.getElementById("button" + key);
+  for (const key of pin) {
+    const button = document.getElementById("button" + key);
     button.style.backgroundColor = "orange";
   }
 }
@@ -562,9 +564,9 @@ function timeLeftString() {
 function humanReadableTimeString(time) {
   let hours, minutes, seconds, result = "";
   
-  hours = Math.floor(time / 3600);
-  minutes = Math.floor(time % 3600 / 60);
-  seconds = Math.floor(time % 3600 % 60);
+  hours = Math.floor(Number(time) / 3600);
+  minutes = Math.floor(Number(time) % 3600 / 60);
+  seconds = Math.floor(Number(time) % 3600 % 60);
   
   if (hours > 0) {
     result += hours + " hour";
@@ -572,7 +574,7 @@ function humanReadableTimeString(time) {
   }
   if (minutes > 0) {
     result += result ? ", " : "";
-    if (seconds == 0 && hours > 0) result += "and ";
+    if (seconds === 0 && hours > 0) result += "and ";
     result += minutes + " minute";
     if (minutes > 1) result += "s";
   }
@@ -596,7 +598,7 @@ function initGame(pinArg) {
       
       break;
     case 1:
-      if (modeOptionsElement.value == "Custom") {
+      if (modeOptionsElement.value === "Custom") {
         /*
         mode1CustomValue = prompt("Desired number of attempts:");
         if (mode1CustomValue == null) {
@@ -608,7 +610,7 @@ function initGame(pinArg) {
         
         if (
           !Number.isInteger(Number(mode1CustomValue))
-          || mode1CustomValue <= 0
+          || Number(mode1CustomValue) <= 0
         ) {
           //alert("Please enter a whole number greater than zero.");
           
@@ -619,13 +621,13 @@ function initGame(pinArg) {
           errorModal.style.display = "block";
           return;
         } else {
-          maxAttempts = mode1CustomValue;
+          maxAttempts = Number(mode1CustomValue);
           updateLog(
             "Number of entry attempts set to custom value " + mode1CustomValue
           );
         }
       } else {
-        maxAttempts = modeOptionsElement.value;
+        maxAttempts = Number(modeOptionsElement.value);
       }
       
       gameMode = 1;
@@ -634,7 +636,7 @@ function initGame(pinArg) {
       
       break;
     case 2:
-      if (modeOptionsElement.value == "Custom") {
+      if (modeOptionsElement.value === "Custom") {
         /*
         mode2CustomValue = prompt(
           "Desired length of time (in seconds):"
@@ -648,7 +650,7 @@ function initGame(pinArg) {
         
         if (
           !Number.isInteger(Number(mode2CustomValue))
-          || mode2CustomValue <= 0
+          || Number(mode2CustomValue) <= 0
         ) {
           //alert("Please enter a whole number greater than zero.");
           
@@ -659,8 +661,8 @@ function initGame(pinArg) {
           errorModal.style.display = "block";
           return;
         } else {
-          if (mode2CustomValue <= 360000) {
-            timeLeft = mode2CustomValue * 1000;
+          if (Number(mode2CustomValue) <= 360000) {
+            timeLeft = Number(mode2CustomValue) * 1000;
             updateLog(
               "Time length allotted to solve within set to custom"
               + " value " + humanReadableTimeString(mode2CustomValue)
@@ -675,7 +677,7 @@ function initGame(pinArg) {
           
         }
       } else {
-        timeLeft = modeOptionsElement.value * 1000;
+        timeLeft = Number(modeOptionsElement.value) * 1000;
       }
       
       gameMode = 2;
@@ -704,7 +706,7 @@ function initGame(pinArg) {
   hintsGiven = 0;
   keysRevealed = 0;
   
-  if (gameMode != 0) {
+  if (gameMode !== 0) {
     optionIndex = modeOptionsElement.selectedIndex;
   }
   
@@ -726,7 +728,7 @@ function verifyEntry(entryArg) {
     entry = entryArg;
   }
   
-  if (entry == pin) {
+  if (entry === pin) {
     clearTimeout(timeLeftTimeout);
     solved = true;
     state = 1;
@@ -745,7 +747,7 @@ function verifyEntry(entryArg) {
     let status = "PIN " + pin + " cracked in " + entries.length
       + " attempt" + (entries.length > 1 ? "s" : "")
       + (
-        gameMode != 2 && !autoSolve
+        gameMode !== 2 && !autoSolve
         ? " over " + humanReadableTimeString((Date.now() - startTime) / 1000)
         : ""
       )
@@ -760,13 +762,13 @@ function verifyEntry(entryArg) {
         + " revealed")
       ;
     }
-    if (gameMode == 2) {
+    if (gameMode === 2) {
       status += " with "
         + humanReadableTimeString(timeLeft / 1000)
         + " remaining"
       ;
     }
-    if (pin == "0451") {
+    if (pin === "0451") {
       status = status.replace(/0451/, "0451 (long live Looking Glass!)");
     }
     status += ".";
@@ -785,7 +787,7 @@ function verifyEntry(entryArg) {
     hintElement.disabled = true;
     autoSolveElement.disabled = true;
     
-    if (pin == "0451") {
+    if (pin === "0451") {
       newGameElement.disabled = true;
       setTimeout(function() {
         lcdElement.style.backgroundColor = "darkcyan";
@@ -825,7 +827,7 @@ function verifyEntry(entryArg) {
         state = 0;
         updateDisplay();
         
-        if (gameMode == 2 && entry == "" && !locked) {
+        if (gameMode === 2 && entry === "" && !locked) {
           lcdElement.textContent = timeLeftString();
         }
       }, 1500);
@@ -834,7 +836,7 @@ function verifyEntry(entryArg) {
     updateEntries();
     entry = "";
     
-    if (gameMode == 1 && entries.length < maxAttempts) {
+    if (gameMode === 1 && entries.length < maxAttempts) {
       updateLog(
         "Entry rejected, "
         + (maxAttempts - entries.length)
@@ -844,18 +846,19 @@ function verifyEntry(entryArg) {
       );
     }
     
-    if (gameMode == 1 && entries.length == maxAttempts) {
+    if (gameMode === 1 && entries.length === maxAttempts) {
       clearTimeout(resetDisplayTimeout);
       locked = true;
       state = 3;
       
-      if (modeOptionsElement.value == "Custom") {
+      if (modeOptionsElement.value === "Custom") {
         newGameElement.disabled = true;
       }
       
       resetDisplayTimeout = setTimeout(() => {
         updateDisplay();
-        newGameButtonBorderBlinkHighlight(500);
+        //moved to play again modal listener
+        //newGameButtonBorderBlinkHighlight(500);
         newGameElement.disabled = false;
         updateLog(
           "LOCKED! Allotted number of entry attempts exhausted"
@@ -879,7 +882,7 @@ function verifyEntry(entryArg) {
       }, 1500);
     }
     
-    if (gameMode == 2 && entries.length == 1) {
+    if (gameMode === 2 && entries.length === 1) {
       updateLog(
         "Entry rejected, enter correct PIN within "
         + humanReadableTimeString(timeLeft / 1000)
@@ -889,7 +892,7 @@ function verifyEntry(entryArg) {
         timeLeftTimeout = setTimeout(() => {
           timeLeft -= 10;
           if (timeLeft > 0) {
-            if (state == 0 && entry == "") {
+            if (state === 0 && entry === "") {
               lcdElement.textContent = timeLeftString();
             }
             
@@ -900,7 +903,8 @@ function verifyEntry(entryArg) {
             state = 3;
             
             updateDisplay();
-            newGameButtonBorderBlinkHighlight(500);
+            //moved to play again modal listener
+            //newGameButtonBorderBlinkHighlight(500);
             updateLog(
               "LOCKED! Time length allotted to enter correct PIN within"
               + " expired"
@@ -930,7 +934,7 @@ function verifyEntry(entryArg) {
 }
 
 //initializes user invoked new game
-function newGame(event) {
+function newGame() {
   clearTimeout(resetDisplayTimeout);
   clearTimeout(playAgainTimeout);
   initGame();
@@ -942,26 +946,21 @@ function newGame(event) {
       }
     );
   }
-  
-  event.preventDefault();
 }
 
 //displays about dialog
-function aboutAlert(event) {
+function aboutAlert() {
   alert(
     aboutText.join("\n\n")
   );
-  event.preventDefault();
 }
 
-function about(event) {
-  event.preventDefault();
-  
+function about() {
   aboutModal.style.display = "block";
 }
 
 //flash incremental number of keys in pin upon hint request
-function hint(event) {
+function hint() {
   hintElement.disabled = true;
   
   let keysToFlash = keysRevealed < 4 ? keysRevealed + 1 : keysRevealed;
@@ -972,7 +971,7 @@ function hint(event) {
     hintTimeout = setTimeout(() => {
       hintTimeout = setTimeout(() => {
         button.style.backgroundColor = "";
-        if (keysToFlash == 1 && keysRevealed < 4 && !logUpdated) {
+        if (keysToFlash === 1 && keysRevealed < 4 && !logUpdated) {
           keysRevealed++;
           updateLog(
             keysRevealed
@@ -1012,7 +1011,7 @@ function hint(event) {
 
 //returns array of unique PIN digits
 function getUniqueDigits() {
-  let uniqueDigits = [];
+  const uniqueDigits = [];
   
   for (let i = 0; i < 10; i++) {
     if (pin.includes(i) && !uniqueDigits.includes(i)) {
@@ -1025,16 +1024,16 @@ function getUniqueDigits() {
 
 //returns array of all possible combinations of unique PIN digits
 function inferAbsentDigits() {
-  let uniqueDigits = getUniqueDigits();
-  let inferences = [];
+  const uniqueDigits = getUniqueDigits();
+  const inferences = [];
   
-  if (uniqueDigits.length == 4) {
+  if (uniqueDigits.length === 4) {
     inferences.push(uniqueDigits.join(""));
-  } else if (uniqueDigits.length == 3) {
+  } else if (uniqueDigits.length === 3) {
     for (let i = 0; i < 3; i++) {
       inferences.push(uniqueDigits.join("") + uniqueDigits[i]);
     }
-  } else if (uniqueDigits.length == 2) {
+  } else if (uniqueDigits.length === 2) {
     for (let i = 0; i < 2; i++) {
       inferences.push(
         uniqueDigits.join("") + uniqueDigits[i] + uniqueDigits[i]
@@ -1043,7 +1042,7 @@ function inferAbsentDigits() {
     inferences.push(
       uniqueDigits.join("") + uniqueDigits[0] + uniqueDigits[1]
     );
-  } else if (uniqueDigits.length == 1) {
+  } else if (uniqueDigits.length === 1) {
     inferences.push(
       uniqueDigits.join("")
       + uniqueDigits[0] + uniqueDigits[0] + uniqueDigits[0]
@@ -1059,13 +1058,13 @@ function inferAbsentDigits() {
 function shiftBase(base, pass) {
   let current;
   
-  if (pass == 0) {
+  if (pass === 0) {
     current = base;
-  } else if (pass == 1) {
+  } else if (pass === 1) {
     current = base[1] + base[0] + base[2] + base[3];
-  } else if (pass == 2) {
+  } else if (pass === 2) {
     current = base[2] + base[0] + base[1] + base[3];
-  } else if (pass == 3) {
+  } else if (pass === 3) {
     current = base[3] + base[0] + base[1] + base[2];
   } else {
     console.error("Erroneous pass value");
@@ -1076,12 +1075,12 @@ function shiftBase(base, pass) {
 
 //sequentially attempts all possible permutations of each combination
 //until solved
-function autoSolveSequential(event) {
-  let inferences = inferAbsentDigits();
+function autoSolveSequential() {
+  const inferences = inferAbsentDigits();
   
   autoSolve = true;
   
-  for (let inference of inferences) {
+  for (const inference of inferences) {
     
     for (let i = 0; i < 4; i++) {
       let current;
@@ -1098,7 +1097,7 @@ function autoSolveSequential(event) {
         } else {
           break;
         }
-        if (j == 2) {
+        if (j === 2) {
           break;
         }
         if (!solved) {
@@ -1118,19 +1117,17 @@ function autoSolveSequential(event) {
       break;
     }
   }
-  
-  event.preventDefault();
 }
 
 //sequentially creates array of all possible permutations of each
 //combination and then attempts each permutation until solved
-function autoSolveSequential2(event) {
-  let inferences = inferAbsentDigits();
-  let permutations = [];
+function autoSolveSequential2() {
+  const inferences = inferAbsentDigits();
+  const permutations = [];
   
   autoSolve = true;
   
-  for (let inference of inferences) {
+  for (const inference of inferences) {
     
     for (let i = 0; i < 4; i++) {
       let current;
@@ -1143,7 +1140,7 @@ function autoSolveSequential2(event) {
         if (!permutations.includes(current)) {
           permutations.push(current);
         }
-        if (j == 2) {
+        if (j === 2) {
           break;
         }
         current = current[0] + current[2] + current[1] + current[3];
@@ -1154,41 +1151,39 @@ function autoSolveSequential2(event) {
     }
   }
   
-  for (let permutation of permutations) {
+  for (const permutation of permutations) {
     verifyEntry(permutation);
     if (solved) {
       break;
     }
   }
-  
-  event.preventDefault();
 }
 
 //randomly generates all possible permutations of each combination
 //while immediately attempting unentered permutations until solved
-function autoSolveRandom(event) {
-  let uniqueDigits = getUniqueDigits();
-  let inferences = inferAbsentDigits();
+function autoSolveRandom() {
+  const uniqueDigits = getUniqueDigits();
+  const inferences = inferAbsentDigits();
   
   autoSolve = true;
   
   for (let i = 0; i < inferences.length; i++) {
-    let inference = inferences[i];
+    const inference = inferences[i];
     let maxPermutations;
     
-    if (uniqueDigits.length == 4) {
+    if (uniqueDigits.length === 4) {
       maxPermutations = 24;
     }
-    if (uniqueDigits.length == 3) {
+    if (uniqueDigits.length === 3) {
       maxPermutations = 12;
     }
-    if (uniqueDigits.length == 2 && i <= 1) {
+    if (uniqueDigits.length === 2 && i <= 1) {
       maxPermutations = 4;
     }
-    if (uniqueDigits.length == 2 && i == 2) {
+    if (uniqueDigits.length === 2 && i === 2) {
       maxPermutations = 6;
     }
-    if (uniqueDigits.length == 1) {
+    if (uniqueDigits.length === 1) {
       maxPermutations = 1;
     }
     
@@ -1211,14 +1206,12 @@ function autoSolveRandom(event) {
       break;
     }
   }
-  
-  event.preventDefault();
 }
 
 //randomly generates entries from unique PIN digits and immediately
 //attempts unentered entries until solved
-function autoSolveRandom2(event) {
-  let uniqueDigits = getUniqueDigits();
+function autoSolveRandom2() {
+  const uniqueDigits = getUniqueDigits();
   
   autoSolve = true;
   
@@ -1232,13 +1225,11 @@ function autoSolveRandom2(event) {
       verifyEntry();
     }
   } while (!solved);
-  
-  event.preventDefault();
 }
 
 //randomly generates entries from all digits and immediately attempts
 //unentered entries until solved
-function autoSolveRandom3(event) {
+function autoSolveRandom3() {
   autoSolve = true;
   
   do {
@@ -1251,8 +1242,6 @@ function autoSolveRandom3(event) {
       verifyEntry();
     }
   } while (!solved);
-  
-  event.preventDefault();
 }
 
 //logs to console duration of auto-solve functions in milliseconds
@@ -1261,8 +1250,8 @@ function autoSolveRandom3(event) {
 //of Windows
 function autoSolveBenchmarks() {
   let startTime, endTime;
-  let benchpin = pinGen();
-  let autoSolveFunctions = [];
+  const benchpin = pinGen();
+  const autoSolveFunctions = [];
   
   autoSolveFunctions.push(autoSolveSequential);
   autoSolveFunctions.push(autoSolveSequential2);
@@ -1276,7 +1265,7 @@ function autoSolveBenchmarks() {
   for (let i = 0; i < autoSolveFunctions.length; i++) {
     initGame(benchpin);
     startTime = Date.now();
-    autoSolveFunctions[i](new CustomEvent("CustomEvent"));
+    autoSolveFunctions[i]();
     endTime = Date.now();
     console.log(
       autoSolveFunctions[i].name
@@ -1289,30 +1278,54 @@ function autoSolveBenchmarks() {
   silent = false;
 }
 
+hintElement.addEventListener("click", event => {
+  event.preventDefault();
+  
+  hint();
+}, false);
+
+autoSolveElement.addEventListener("click", event => {
+  event.preventDefault();
+  
+  autoSolveSequential();
+}, false);
+
+newGameElement.addEventListener("click", event => {
+  event.preventDefault();
+  
+  newGame();
+}, false);
+
+aboutAnchorElement.addEventListener("click", event => {
+  event.preventDefault();
+  
+  about();
+}, false);
+
 mode1CustomInput.addEventListener("keyup", event => {
   if (event.keyCode === 13) {
       mode1CustomInput.blur();
-      newGame(new CustomEvent("CustomEvent"));
+      newGame();
     }
 }, false);
 
 mode2CustomInput.addEventListener("keyup", event => {
   if (event.keyCode === 13) {
       mode2CustomInput.blur();
-      newGame(new CustomEvent("CustomEvent"));
+      newGame();
     }
 }, false);
 
 window.addEventListener("click", event => {
-  if (event.target == aboutModal) {
+  if (event.target === aboutModal) {
     aboutModal.style.display = "none";
   }
   
-  if (event.target == playAgainModal) {
+  if (event.target === playAgainModal) {
     playAgainModal.style.display = "none";
   }
   
-  if (event.target == errorModal) {
+  if (event.target === errorModal) {
     errorModal.style.display = "none";
   }
 }, false);
@@ -1339,7 +1352,7 @@ playAgainNoButton.addEventListener("click", event => {
 
 playAgainYesButton.addEventListener("click", event => {
   playAgainModal.style.display = "none";
-  newGame(new CustomEvent("CustomEvent"));
+  newGame();
 }, false);
 
 /*
