@@ -44,6 +44,7 @@
 #portfolio .project-info .project-desc {
   margin: 3px 0;
   font-family: Arial, Helvetica, sans-serif;
+  line-height: 20px;
 }
 
 #portfolio .project-info ul.project-desc-list {
