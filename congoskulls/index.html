@@ -27,6 +27,7 @@
   <link rel="icon" type="image/x-icon" href="../icons8-source-code-16.png">
   
   <!-- Font Awesome -->
+  <!--
   <link
     href="../assets/fontawesome-free-6.4.0-web/css/fontawesome.css"
     rel="stylesheet"
@@ -37,6 +38,7 @@
     rel="stylesheet"
     type="text/css"
   >
+  -->
   
   <link href="../styles.css" rel="stylesheet" type="text/css">
   <link href="styles.css" rel="stylesheet" type="text/css">
@@ -263,7 +265,7 @@
           </p>
           
           <h3>Keyboard Controls</h3>
-          <table>
+          <table class="controls-table">
             <tr>
               <td>
                 Move cursor
@@ -283,7 +285,7 @@
           </table>
           
           <h3>Mouse Controls</h3>
-          <table>
+          <table class="controls-table">
             <tr>
               <td>
                 Finalize move
@@ -294,7 +296,7 @@
             </tr>
           </table>
           
-          <table>
+          <table class="controls-table">
             <tr>
               <td>
                 Undo
@@ -444,6 +446,7 @@
       <div class="footer-column">
         <p class="footer-column-header">Legal</p>
         <ul>
+          <li><a href="../policies/tos.html">Terms of Service</a></li>
           <li><a href="../policies/privacy.html">Privacy Policy</a></li>
         </ul>
       </div>
@@ -456,9 +459,15 @@
             target="_blank"
           >GitHub Pages</a></li>
           <li><a
+            href="https://formspree.io/"
+            target="_blank"
+          >Formspree</a></li>
+          <!--
+          <li><a
             href="https://fontawesome.com/"
             target="_blank"
           >Font Awesome</a></li>
+          -->
           <li><a
             href="https://icons8.com/"
             target="_blank"
@@ -468,7 +477,7 @@
     </section>
     
     <section>
-      <p id="copyright-notice">&copy; 2020-2023 Nicholas D. Horne</p>
+      <p id="copyright-notice">&copy; 2020-2026 Nicholas D. Horne, Some rights reserved (CC BY-NC-SA 4.0)</p>
       
       <!--
       <a
@@ -508,11 +517,17 @@
     </section>
   </footer>
   
+  <!--
   <a href="#top" class="scroll-link top-link" title="Top">
     <i class="fa-solid fa-arrow-up"></i>
   </a>
+  -->
   
-  <script src="congoskulls.js"></script>
-  <script src="../app.js"></script>
+  <a href="#top" class="scroll-link top-link" title="Top">
+    <img src="../icons8-up-squared-47143-40.png">
+  </a>
+  
+  <script src="congoskulls.js" type="module"></script>
+  <script src="../app.js" type="module"></script>
 </body>
 </html>

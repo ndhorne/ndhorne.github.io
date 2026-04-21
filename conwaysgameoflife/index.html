@@ -24,6 +24,7 @@
   <link rel="icon" type="image/x-icon" href="../icons8-source-code-16.png">
   
   <!-- Font Awesome -->
+  <!--
   <link
     href="../assets/fontawesome-free-6.4.0-web/css/fontawesome.css"
     rel="stylesheet"
@@ -34,6 +35,7 @@
     rel="stylesheet"
     type="text/css"
   >
+  -->
   
   <link href="../styles.css" rel="stylesheet" type="text/css">
   <link href="modalstyles.css" rel="stylesheet" type="text/css">
@@ -115,7 +117,7 @@
     <ul class="breadcrumb">
       <li><a href="../">Home</a></li>
       <li><a href="../index.html#portfolio">Portfolio</a></li>
-      <li><a href="../index.html#misc">Miscellaneous</a></li>
+      <li><a href="../index.html#games">Games</a></li>
       <li>Conway's Game of Life</li>
     </ul>
     
@@ -135,7 +137,7 @@
           max="1750"
           value="1000"
           step="250"
-          title="Auto-generation interval (lower is faster)"
+          title="Auto-generation interval"
         ><br>
         <button id="new" title="Start new game">New Game</button><br>
         <button id="about" title="About Conway's Game of Life">About</button>
@@ -157,6 +159,7 @@
       <div class="footer-column">
         <p class="footer-column-header">Legal</p>
         <ul>
+          <li><a href="../policies/tos.html">Terms of Service</a></li>
           <li><a href="../policies/privacy.html">Privacy Policy</a></li>
         </ul>
       </div>
@@ -169,9 +172,15 @@
             target="_blank"
           >GitHub Pages</a></li>
           <li><a
+            href="https://formspree.io/"
+            target="_blank"
+          >Formspree</a></li>
+          <!--
+          <li><a
             href="https://fontawesome.com/"
             target="_blank"
           >Font Awesome</a></li>
+          -->
           <li><a
             href="https://icons8.com/"
             target="_blank"
@@ -181,7 +190,7 @@
     </section>
     
     <section>
-      <p id="copyright-notice">&copy; 2020-2023 Nicholas D. Horne</p>
+      <p id="copyright-notice">&copy; 2020-2026 Nicholas D. Horne, Some rights reserved (CC BY-NC-SA 4.0)</p>
       
       <!--
       <a
@@ -328,7 +337,7 @@
         
         <p>An implementation of Conway's Game of Life in JavaScript</p>
         
-        <p>Per Conway's Game of Life any live cell with fewer than two or more than three live neighbors dies, any live cell with two or three live neighbors lives on to the next generation, and any dead cell with exactly three live neighbors becomes a live cell. A neighbor is defined as any adjacent cell, including diagonally adjacent ones. The state of any cell can be toggled at any time with the mouse primary button. Step through each generation with next and back or choose start and watch life find a way.</p>
+        <p>Per Conway's Game of Life any live cell with fewer than two or more than three live neighbors dies, any live cell with two or three live neighbors lives on to the next generation, and any dead cell with exactly three live neighbors becomes a live cell. A neighbor is defined as any adjacent cell, including diagonally adjacent cells. The state of any cell can be toggled at any time with the mouse primary button. Step through each generation with next and back or choose start and watch life find a way.</p>
         
         <p>By Nicholas D. Horne</p>
         
@@ -365,11 +374,17 @@
     
   </div> <!-- #error-modal -->
   
+  <!--
   <a href="#top" class="scroll-link top-link" title="Top">
     <i class="fa-solid fa-arrow-up"></i>
   </a>
+  -->
   
-  <script src="conwaysgameoflife.js"></script>
-  <script src="../app.js"></script>
+  <a href="#top" class="scroll-link top-link" title="Top">
+    <img src="../icons8-up-squared-47143-40.png">
+  </a>
+  
+  <script src="conwaysgameoflife.js" type="module"></script>
+  <script src="../app.js" type="module"></script>
 </body>
 </html>

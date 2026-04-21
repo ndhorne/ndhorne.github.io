@@ -31,6 +31,7 @@
   <link rel="icon" type="image/x-icon" href="./icons8-source-code-16.png">
   
   <!-- Font Awesome -->
+  <!--
   <link
     href="./assets/fontawesome-free-6.4.0-web/css/fontawesome.css"
     rel="stylesheet"
@@ -41,6 +42,7 @@
     rel="stylesheet"
     type="text/css"
   >
+  -->
   
   <link rel="stylesheet" href="gh-fork-ribbon.css">
   <link href="styles.css" rel="stylesheet" type="text/css">
@@ -100,84 +102,13 @@
         <h2 style="margin-bottom:8px;">Portfolio:</h2>
         
         <ul id="nav-portfolio" class="nav">
-          <li><a href="#discord">Discord</a></li>
           <li><a href="#games">Games</a></li>
           <li><a href="#utilities">Utilities</a></li>
+          <li><a href="#discord">Discord</a></li>
           <li><a href="#misc">Misc</a></li>
         </ul>
         
         <div id="projects">
-          
-          <div id="discord-container">
-            <h3 id="discord">Discord:</h3>
-            
-            <!-- Radix Discord Bot -->
-            <div class="project-container">
-              <p class="project-title">Radix Discord Bot</p>
-              <div class="project-info">
-                <!--<p class="project-desc">A general-purpose Discord bot powered by JavaScript, Node.js, and the Eris Node.js Discord library featuring chat-roomified renditions of familiar games such as Connect 4, Hangman, Tic Tac Toe, (Definitely Not) Wordle, and Nim (the matchstick game), alongside some likely unfamiliar originals such as Random Acts of ASCII; Multi-User Dungeons (aka MUDs) such as MUD Maze, a MUD where you traverse a maze in real time with other players; browsable galleries featuring the catalogs of The Metropolitan Museum of Art and long-running well-known web comics such as Bob the Angry Flower, Pokey the Penguin, and xkcd; and of course many of the standard amenities that discerning chat bot connoisseurs have come to expect a chat bot to provide such as dungeons and dragons dice, horoscopes, fortunes, magic 8 ball, currency converter, and many more. <span style="background-color:silver">$rdx help</span> to get started</p>-->
-                <p class="project-desc">A general-purpose Discord bot powered by JavaScript, Node.js, and the Eris Node.js Discord library featuring:</p>
-                <ul class="project-desc-list">
-                  <li>Games</li>
-                  <ul>
-                    <li>Tic Tac Toe</li>
-                    <li>Connect 4</li>
-                    <li>Hangman</li>
-                    <li>Definitely Not Wordle</li>
-                    <li>The Matchstick Game</li>
-                    <li>Random Acts of ASCII</li>
-                  </ul>
-                  
-                  <li>Galleries</li>
-                  <ul>
-                    <li>The Metropolitan Museum of Art</li>
-                    <li>Bob the Angry Flower</li>
-                    <li>Pokey the Penguin</li>
-                    <li>xkcd</li>
-                  </ul>
-                  
-                  <li>MUDs</li>
-                  <ul>
-                    <li>MUD Maze</li>
-                  </ul>
-                  
-                  <li>Misc</li>
-                  <ul>
-                    <li>D20 Dice</li>
-                    <li>Horoscopes</li>
-                    <li>Fortunes</li>
-                    <li>Magic 8 Ball</li>
-                    <li>Currency Converter</li>
-                    <li>ROT13 encoder/decoder</li>
-                    <li>Random Password Generator</li>
-                  </ul>
-                </ul>
-                <p class="project-desc">Both prefix ($rdx) and slash commands supported, <span style="background-color:silver">$rdx help</span> to get started</p>
-                <ul class="project-info-list">
-                  <li
-                    class="demo-list-item"
-                  >Interactive demonstration available at <a
-                    href="https://discord.gg/Xx76566gww"
-                    target="_blank"
-                  >Radix Discord Community</a></li>
-                  <li class="source-list-item">Source code available at <a
-                    href="https://github.com/ndhorne/radix-discord-bot-eris-node-js"
-                    target="_blank"
-                  >https://github.com/ndhorne/radix-discord-bot-eris-node-js</a>
-                  <ul>
-                    <li>Language: JavaScript</li>
-                    <li>License: <a
-                      href="https://www.gnu.org/licenses/agpl-3.0.html"
-                      target="_blank"
-                    ><img
-                      src="./agplv3-88x31.png"
-                      class="license-icon"
-                      title="GNU AGPLv3"
-                    ></a></li>
-                </ul>
-              </div> <!-- .project-info -->
-            </div> <!-- .project-container -->
-          </div> <!-- #discord-container -->
           
           <div id="games-container">
             <h3 id="games">Games:</h3>
@@ -186,7 +117,7 @@
             <div class="project-container">
               <p class="project-title">Congo Skulls</p>
               <div class="project-info">
-                <p class="project-desc">A remake of Toggle Booleans' 1993 Windows 3.x freeware classic Amazon Skulls in JavaScript with some new features/amenities including local multiplayer, custom grid size, keyboard controls, next move indicators, and undo (ctrl+z). Each piece played (with the exception of the first piece) must border the last piece played and border that piece only. The first player to play a piece bordering more than one piece (the last piece) loses the game. Make the last valid move to win! Play the original Amazon Skulls at <a href="https://archive.org/details/win3_AmazonSk" target="_blank">archive.org</a>.</p>
+                <p class="project-desc">A remake of Toggle Booleans' 1993 Windows 3.x freeware classic Amazon Skulls in JavaScript with some new features/amenities including local multiplayer, custom grid size, keyboard controls, next move indicators, and undo. Each piece played (with the exception of the first piece) must border the last piece played and border that piece only. The first player to play a piece bordering more than one piece (the last piece) loses the game. Make the last valid move to win! Play the original Amazon Skulls at <a href="https://archive.org/details/win3_AmazonSk" target="_blank">archive.org</a>.</p>
                 <ul class="project-info-list">
                   <li
                     class="demo-list-item"
@@ -212,38 +143,8 @@
               </div> <!-- .project-info -->
             </div> <!-- .project-container -->
             
-            <!-- Random Acts of ASCII -->
-            <div class="project-container">
-              <p class="project-title">Random Acts of ASCII</p>
-              <div class="project-info">
-                <p class="project-desc">Unscramble common but obfuscated colloquial phrases, sayings, expressions, and idioms of the English language. The scope of randomization does not extend beyond the limits defined by the various commonly accepted linguistic word boundaries (spaces, hyphens, etc.) of the phrases provided. Hints and revelations are available to be revealed at the player's own discretion; reserve them for particularly cryptic challenges or "reserve" them for any challenges.</p>
-                <ul class="project-info-list">
-                  <li
-                    class="demo-list-item"
-                  >Interactive demonstration available at <a
-                    href="./randomactsofascii/"
-                  >https://ndhorne.github.io/randomactsofascii/</a></li>
-                  <li class="source-list-item">Source code available at <a
-                    href="https://github.com/ndhorne/random-acts-of-ascii"
-                    target="_blank"
-                  >https://github.com/ndhorne/random-acts-of-ascii</a>
-                  <ul>
-                    <li>Language: JavaScript</li>
-                    <li>License: <a
-                      href="https://www.gnu.org/licenses/gpl-3.0.en.html"
-                      target="_blank"
-                    ><img
-                      src="./gplv3-88x31.png"
-                      class="license-icon"
-                      title="GNU GPLv3"
-                    ></a></li>
-                  </ul></li>
-                </ul>
-              </div> <!-- .project-info -->
-            </div> <!-- .project-container -->
-            
             <!-- Access Granted JS -->
-            <div class="project-container">
+            <div class="project-container" id="access-granted-js-container">
               <p class="project-title">Access Granted JS</p>
               <div class="project-info">
                 <p class="project-desc">Can you actually crack a four-digit PIN on your first attempt as seen in the movies on a telltale worn keypad? The "worn" keys contained in the PIN have been highlighted on the keypad. PINs are four digits in length. Digits may be repeated resulting in PINs with less than four keys being highlighted. PINs may begin with zero. Input is accepted by way of both mouse primary button and keyboard number keys. Now featuring three different game modes, varying levels of difficulty, an incremental hint system, and auto-solve.</p>
@@ -271,36 +172,68 @@
               </div> <!-- .project-info -->
             </div> <!-- .project-container -->
             
-            <!-- Access Granted Scratch Edition -->
+            <!-- Random Acts of ASCII -->
             <div class="project-container">
-              <p class="project-title">Access Granted Scratch Edition</p>
+              <p class="project-title">Random Acts of ASCII</p>
               <div class="project-info">
-                <p class="project-desc">A reimplementation of Access Granted in Scratch 3.0, an event-driven block-based visual programming language from MIT Media Lab's Lifelong Kindergarten Group.</p>
+                <p class="project-desc">Unscramble common but obfuscated colloquial phrases, sayings, expressions, and idioms of the English language. The scope of randomization does not extend beyond the limits defined by the various commonly accepted linguistic word boundaries (spaces, hyphens, etc.) of the phrases provided. Hints and revelations are available to be revealed at the player's own discretion; choose to reserve them for particularly cryptic challenges or choose to "reserve" them for any challenges.</p>
                 <ul class="project-info-list">
                   <li
                     class="demo-list-item"
                   >Interactive demonstration available at <a
-                    href="https://scratch.mit.edu/projects/358823296/"
-                    target="_blank"
-                  >https://scratch.mit.edu/projects/358823296/</a></li>
+                    href="./randomactsofascii/"
+                  >https://ndhorne.github.io/randomactsofascii/</a></li>
                   <li class="source-list-item">Source code available at <a
-                    href="https://scratch.mit.edu/projects/358823296/editor/"
+                    href="https://github.com/ndhorne/random-acts-of-ascii"
                     target="_blank"
-                  >https://scratch.mit.edu/projects/358823296/editor/</a>
+                  >https://github.com/ndhorne/random-acts-of-ascii</a>
                   <ul>
-                    <li>Language: Scratch 3.0</li>
+                    <li>Language: JavaScript</li>
                     <li>License: <a
-                      href="https://creativecommons.org/licenses/by-sa/2.0/"
+                      href="https://www.gnu.org/licenses/gpl-3.0.en.html"
                       target="_blank"
                     ><img
-                      src="./cc-by-sa-88x31.png"
+                      src="./gplv3-88x31.png"
                       class="license-icon"
-                      title="CC BY-SA 2.0"
+                      title="GNU GPLv3"
                     ></a></li>
                   </ul></li>
                 </ul>
               </div> <!-- .project-info -->
             </div> <!-- .project-container -->
+            
+            <!-- Conway's Game of Life -->
+            <div class="project-container">
+              <p class="project-title">Conway's Game of Life</p>
+              <div class="project-info">
+                <p class="project-desc">Per Conway's Game of Life any live cell with fewer than two or more than three live neighbors dies, any live cell with two or three live neighbors lives on to the next generation, and any dead cell with exactly three live neighbors becomes a live cell. A neighbor is defined as any adjacent cell, including diagonally adjacent cells. The state of any cell can be toggled at any time with the mouse primary button. Step through each generation with next and back or choose start and watch life find a way.</p>
+                <ul class="project-info-list">
+                  <li
+                    class="demo-list-item"
+                  >Interactive demonstration available at <a
+                    href="./conwaysgameoflife/"
+                  >https://ndhorne.github.io/conwaysgameoflife/</a></li>
+                  <li class="source-list-item">Source code available at <a
+                    href="https://github.com/ndhorne/conways-game-of-life-js"
+                    target="_blank"
+                  >https://github.com/ndhorne/conways-game-of-life-js</a>
+                  <ul>
+                    <li>Language: JavaScript</li>
+                    <li>License: <a
+                      href="https://www.gnu.org/licenses/gpl-3.0.en.html"
+                      target="_blank"
+                    ><img
+                      src="./gplv3-88x31.png"
+                      class="license-icon"
+                      title="GNU GPLv3"
+                    ></a></li>
+                  </ul></li>
+                </ul>
+              </div> <!-- .project-info -->
+            </div> <!-- .project-container -->
+            
+            
+            
           </div> <!-- #games-container -->
           
           <div id="utils-container">
@@ -365,42 +298,82 @@
                 </ul>
               </div> <!-- .project-info -->
             </div> <!-- .project-container -->
+            
           </div> <!-- #utils-container -->
           
-          <div id="misc-container">
-            <h3 id="misc">Miscellaneous:</h3>
+          <div id="discord-container">
+            <h3 id="discord">Discord:</h3>
             
-            
-            
-            <!-- Conway's Game of Life -->
+            <!-- Radix Discord Bot -->
             <div class="project-container">
-              <p class="project-title">Conway's Game of Life</p>
+              <p class="project-title">Radix Discord Bot</p>
               <div class="project-info">
-                <p class="project-desc">Per Conway's Game of Life any live cell with fewer than two or more than three live neighbors dies, any live cell with two or three live neighbors lives on to the next generation, and any dead cell with exactly three live neighbors becomes a live cell. A neighbor is defined as any adjacent cell, including diagonally adjacent ones. The state of any cell can be toggled at any time with the mouse primary button. Step through each generation with next and back or choose start and watch life find a way.</p>
+                <!--<p class="project-desc">A general-purpose Discord bot powered by JavaScript, Node.js, and the Eris Node.js Discord library featuring chat-roomified renditions of familiar games such as Connect 4, Hangman, Tic Tac Toe, (Definitely Not) Wordle, and Nim (the matchstick game), alongside some likely unfamiliar originals such as Random Acts of ASCII; Multi-User Dungeons (aka MUDs) such as MUD Maze, a MUD where you traverse a maze in real time with other players; browsable galleries featuring the catalogs of The Metropolitan Museum of Art and long-running well-known web comics such as Bob the Angry Flower, Pokey the Penguin, and xkcd; and of course many of the standard amenities that discerning chat bot connoisseurs have come to expect a chat bot to provide such as dungeons and dragons dice, horoscopes, fortunes, magic 8 ball, currency converter, and many more. <span style="background-color:silver">$rdx help</span> to get started</p>-->
+                <p class="project-desc">A general-purpose Discord bot powered by JavaScript, Node.js, and the Eris Node.js Discord library featuring:</p>
+                <ul class="project-desc-list">
+                  <li>Games</li>
+                  <ul>
+                    <li>Tic Tac Toe</li>
+                    <li>Connect 4</li>
+                    <li>Hangman</li>
+                    <li>Definitely Not Wordle</li>
+                    <li>The Matchstick Game</li>
+                    <li>Random Acts of ASCII</li>
+                  </ul>
+                  
+                  <li>Galleries</li>
+                  <ul>
+                    <li>The Metropolitan Museum of Art</li>
+                    <li>Bob the Angry Flower</li>
+                    <li>Pokey the Penguin</li>
+                    <li>xkcd</li>
+                  </ul>
+                  
+                  <li>MUDs</li>
+                  <ul>
+                    <li>MUD Maze</li>
+                  </ul>
+                  
+                  <li>Misc</li>
+                  <ul>
+                    <li>D20 Dice</li>
+                    <li>Horoscopes</li>
+                    <li>Fortunes</li>
+                    <li>Magic 8 Ball</li>
+                    <li>Currency Converter</li>
+                    <li>ROT13 encoder/decoder</li>
+                    <li>Random Password Generator</li>
+                  </ul>
+                </ul>
+                <p class="project-desc">Both prefix ($rdx) and slash commands are supported, <span style="background-color:silver">$rdx help</span> to get started</p>
                 <ul class="project-info-list">
                   <li
                     class="demo-list-item"
                   >Interactive demonstration available at <a
-                    href="./conwaysgameoflife/"
-                  >https://ndhorne.github.io/conwaysgameoflife/</a></li>
-                  <li class="source-list-item">Source code available at <a
-                    href="https://github.com/ndhorne/conways-game-of-life-js"
+                    href="https://discord.gg/Xx76566gww"
                     target="_blank"
-                  >https://github.com/ndhorne/conways-game-of-life-js</a>
+                  >Radix Discord Community</a></li>
+                  <li class="source-list-item">Source code available at <a
+                    href="https://github.com/ndhorne/radix-discord-bot-eris-node-js"
+                    target="_blank"
+                  >https://github.com/ndhorne/radix-discord-bot-eris-node-js</a>
                   <ul>
                     <li>Language: JavaScript</li>
                     <li>License: <a
-                      href="https://www.gnu.org/licenses/gpl-3.0.en.html"
+                      href="https://www.gnu.org/licenses/agpl-3.0.html"
                       target="_blank"
                     ><img
-                      src="./gplv3-88x31.png"
+                      src="./agplv3-88x31.png"
                       class="license-icon"
-                      title="GNU GPLv3"
+                      title="GNU AGPLv3"
                     ></a></li>
-                  </ul></li>
                 </ul>
               </div> <!-- .project-info -->
             </div> <!-- .project-container -->
+          </div> <!-- #discord-container -->
+          
+          <div id="misc-container">
+            <h3 id="misc">Miscellaneous:</h3>
             
             <!-- Ephemeral Random Quotes Script -->
             <div class="project-container">
@@ -462,7 +435,7 @@
             <div class="project-container">
               <p class="project-title">Access Granted JS "Classified"</p>
               <div class="project-info">
-                <p class="project-desc">This new but not necessarily improved implementation of Access Granted JS leverages ECMAScript 6 classes to encapsulate associated data and behaviors together inside a single self-contained unit more often referred to as an instance in a bid to manage complexity through the constructs afforded by object oriented programming.</p>
+                <p class="project-desc">An object oriented implementation of <a href="#access-granted-js-container">Access Granted JS</a> leveraging ECMAScript 6 classes to logically encapsulate related data and behaviors.</p>
                 <ul class="project-info-list">
                   <li class="source-list-item">Source code available at <a
                     href="https://github.com/ndhorne/access-granted-js-oop-classes"
@@ -488,7 +461,7 @@
             <div class="project-container">
               <p class="project-title">Access Granted JS Prototypal</p>
               <div class="project-info">
-                <p class="project-desc">This new but not necessarily improved implementation of Access Granted JS leverages prototypal inheritance to encapsulate related data and behaviors together inside of a single self-contained unit more commonly known as an instance in a bid to manage complexity through the constructs afforded by object oriented programming.</p>
+                <p class="project-desc">An object oriented implementation of  <a href="#access-granted-js-container">Access Granted JS</a> leveraging prototypal inheritance to logically encapsulate related data and behaviors.</p>
                 <ul class="project-info-list">
                   <li class="source-list-item">Source code available at <a
                     href="https://github.com/ndhorne/access-granted-js-oop-prototypal"
@@ -509,6 +482,38 @@
                 </ul>
               </div> <!-- .project-info -->
             </div> <!-- .project-container -->
+            
+            <!-- Access Granted Scratch Edition -->
+            <div class="project-container">
+              <p class="project-title">Access Granted Scratch Edition</p>
+              <div class="project-info">
+                <p class="project-desc">A reimplementation of  <a href="#access-granted-js-container">Access Granted JS</a> in Scratch 3.0, an event-driven block-based visual programming language from MIT Media Lab's Lifelong Kindergarten Group.</p>
+                <ul class="project-info-list">
+                  <li
+                    class="demo-list-item"
+                  >Interactive demonstration available at <a
+                    href="https://scratch.mit.edu/projects/358823296/"
+                    target="_blank"
+                  >https://scratch.mit.edu/projects/358823296/</a></li>
+                  <li class="source-list-item">Source code available at <a
+                    href="https://scratch.mit.edu/projects/358823296/editor/"
+                    target="_blank"
+                  >https://scratch.mit.edu/projects/358823296/editor/</a>
+                  <ul>
+                    <li>Language: Scratch 3.0</li>
+                    <li>License: <a
+                      href="https://creativecommons.org/licenses/by-sa/2.0/"
+                      target="_blank"
+                    ><img
+                      src="./cc-by-sa-88x31.png"
+                      class="license-icon"
+                      title="CC BY-SA 2.0"
+                    ></a></li>
+                  </ul></li>
+                </ul>
+              </div> <!-- .project-info -->
+            </div> <!-- .project-container -->
+            
           </div> <!-- #misc-container -->
           
         </div> <!-- #projects -->
@@ -521,7 +526,7 @@
       
       <div id="ball-controls">
         <details id="ball-controls-details">
-          <summary id="ball-controls-summary">Controls</summary>
+          <summary id="ball-controls-summary">Ball Settings</summary>
           <div id="ball-controls-inputs">
             <label for="ball-speed-x">Speed X:</label>
             <input type="range" id="ball-speed-x" min="1" max="200">
@@ -561,6 +566,7 @@
       <div class="footer-column">
         <p class="footer-column-header">Legal</p>
         <ul>
+          <li><a href="./policies/tos.html">Terms of Service</a></li>
           <li><a href="./policies/privacy.html">Privacy Policy</a></li>
         </ul>
       </div>
@@ -573,9 +579,15 @@
             target="_blank"
           >GitHub Pages</a></li>
           <li><a
+            href="https://formspree.io/"
+            target="_blank"
+          >Formspree</a></li>
+          <!--
+          <li><a
             href="https://fontawesome.com/"
             target="_blank"
           >Font Awesome</a></li>
+          -->
           <li><a
             href="https://icons8.com/"
             target="_blank"
@@ -585,7 +597,7 @@
     </section>
     
     <section>
-      <p id="copyright-notice">&copy; 2020-2023 Nicholas D. Horne</p>
+      <p id="copyright-notice">&copy; 2020-2026 Nicholas D. Horne, Some rights reserved (CC BY-NC-SA 4.0)</p>
       
       <!--
       <a
@@ -644,44 +656,23 @@
   </div>
   -->
   
+  <!-- fa-arrow-up -->
+  <!--
   <a href="#top" class="scroll-link top-link" title="Top">
     <i class="fa-solid fa-arrow-up"></i>
   </a>
+  -->
   
-  <script src="./bouncingball.js"></script>
-  <script src="./randomquote.js"></script>
-  <script src="./app.js"></script>
+  <a href="#top" class="scroll-link top-link" title="Top">
+    <img src="./icons8-up-squared-47143-40.png">
+  </a>
+  
+  <script src="./bouncingball.js" type="module"></script>
+  <script src="./randomquote.js" type="module"></script>
+  <script src="./index.js" type="module"></script>
+  <script src="./app.js" type="module"></script>
   <script>
-    function demoAtBottomListItemFactory(href) {
-      const listItem = document.createElement("li");
-      
-      listItem.classList.add("demo-list-item");
-      
-      if (!href) {
-        listItem.innerHTML =
-          "Interactive demonstration available at the bottom of this page"
-        ;
-      } else {
-        listItem.innerHTML = "Interactive demonstration available at ";
-        
-        const demoListItemAnchor = document.createElement("a");
-        
-        demoListItemAnchor.href = href;
-        demoListItemAnchor.text = "the bottom of this page";
-        
-        listItem.appendChild(demoListItemAnchor);
-      }
-      
-      return listItem;
-    }
-    
-    function insertBeforeElementId(element, existingElementId) {
-      const existingElement = document.getElementById(existingElementId);
-      
-      existingElement.parentNode.insertBefore(element, existingElement);
-    }
-    
-    /*
+    /* moved to index.js
     const container = document.getElementById("container");
     
     function appendToDesc(descId, str) {
@@ -702,55 +693,6 @@
       appendToDesc("bouncing-ball-desc", demoAtBottomStr);
     }
     */
-    
-    if (document.getElementById("quote")) {
-      insertBeforeElementId(
-        demoAtBottomListItemFactory("#quote"),
-        "random-quotes-source-code-list-item"
-      );
-    }
-    
-    if (document.getElementById("ball")) {
-      insertBeforeElementId(
-        demoAtBottomListItemFactory("#ball"),
-        "bouncing-ball-source-code-list-item"
-      );
-    }
-    
-    const lastVisit = JSON.parse(localStorage.getItem('lastVisit'));
-    
-    let totalVisits = +JSON.parse(localStorage.getItem('totalVisits'));
-    
-    totalVisits++;
-    
-    if (lastVisit) {
-      /*
-      const headline = document.getElementById('headline');
-      const str = headline.textContent;
-      
-      headline.textContent = `${str.slice(0, 7)} back ${str.slice(8)}`;
-      */
-      
-      console.log('Welcome back!');
-      console.log(`Last visit: ${new Date(lastVisit).toString()}`);
-    } else {
-      console.log('Welcome!');
-      localStorage.setItem('firstVisit', JSON.stringify(new Date()));
-    }
-    
-    const firstVisit = JSON.parse(localStorage.getItem('firstVisit'));
-    
-    console.log(
-      `Visits since ${new Date(firstVisit).toString()}: ${totalVisits}`
-    );
-    
-    if (totalVisits === 1) {
-      localStorage.setItem('lastVisit', JSON.stringify(firstVisit));
-    } else {
-      localStorage.setItem('lastVisit', JSON.stringify(new Date()));
-    }
-    
-    localStorage.setItem('totalVisits', JSON.stringify(totalVisits));
     
     document.getElementById("portfolio").style.opacity = 1;
   </script>
