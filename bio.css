@@ -71,3 +71,9 @@
 .aboutContent {
   margin-left: 40px;
 }
+
+@media (max-width:799px) {
+  .aboutContent {
+    margin-left: 20px;
+  }
+}
