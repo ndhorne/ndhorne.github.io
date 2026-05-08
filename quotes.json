@@ -427,6 +427,27 @@
     "note": null
   },
   {
+    "quote": "Sometimes the problem is to discover what the problem is.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Gordon",
+        "middle": null,
+        "last": "Glegg",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "The Design of Design",
+      "date": {
+        "year": "1969",
+        "month": null,
+        "day": null
+      }
+    },
+    "note": null
+  },
+  {
     "quote": "Great things are not done by impulse, but by a series of small things brought together.",
     "author": {
       "name": {
@@ -438,6 +459,27 @@
       }
     },
     "source": null,
+    "note": null
+  },
+  {
+    "quote": "Progress doesn't come from early risers — progress is made by lazy men looking for easier ways to do things.",
+    "author": {
+      "name": {
+        "prefix": null,
+        "first": "Robert",
+        "middle": "A",
+        "last": "Heinlein",
+        "suffix": null
+      }
+    },
+    "source": {
+      "title": "Time Enough for Love",
+      "date": {
+        "year": "1973",
+        "month": "June",
+        "day": null
+      }
+    },
     "note": null
   },
   {
