@@ -1,8 +1,8 @@
 User-agent: *
 Disallow: /assets/
-Disallow: /*.js$
-Disallow: /*.css$
-Disallow: /*.json$
+#Disallow: /*.js$
+#Disallow: /*.css$
+#Disallow: /*.json$
 #Disallow: /*.xml$
 #Disallow: /*.txt$
 Disallow: /*.md$
