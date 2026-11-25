@@ -1,0 +1,155 @@
+body {
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 37px;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+ul {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+li {
+  list-style-type: none;
+  list-style-position: outside;
+}
+
+fieldset {
+  border-radius: 10px;
+}
+
+legend {
+  font-size: 16px;
+}
+
+input[type=radio], input[type=checkbox] {
+  accent-color: green;
+}
+
+.password-options-list {
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+.quantity-input {
+  display: inline-block;
+  width: 28px;
+}
+
+#casing-legend, #word-bank-legend {
+  font-size: 14px;
+}
+
+#casing-fieldset, #word-bank-fieldset {
+  font-size: 14px;
+  margin-top: 12px;
+}
+
+#advanced-options-details {
+  font-size: 16px;
+  margin-top: 8px;
+  border-radius: 10px;
+  background-color: whitesmoke;
+  padding: 14px;
+}
+
+#main {
+  max-width: 370px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+}
+
+#options-fieldset {
+  margin-bottom: 5px;
+}
+
+#numeric-arguments-list label {
+  display: inline-block;
+  width: 272px;
+}
+
+#numeric-arguments-list input {
+  width: 50px;
+}
+
+#custom-separator-input {
+  display: inline-block;
+  width: 10px;
+}
+
+#exclusions-options {
+  margin-left: 4px;
+}
+
+#exclusions-options label {
+  display: inline-block;
+  width: 135px;
+}
+
+#exclusions-options input {
+  display: inline-block;
+  width: 155px;
+}
+
+#output-pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2px;
+  width: 100%;
+  height: 174px;
+  border: 1px solid #8f8f9d;
+  overflow: auto;
+}
+
+#output-buttons-div {
+  position: relative;
+}
+
+#output-buttons-left {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+}
+
+#output-buttons-right {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+}
+
+#status-div {
+  position: fixed;
+  width: 100%;
+  max-width: 430px;
+  height: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  border: 1px solid black;
+  border-radius: 6px;
+  bottom: -300px;
+  transition-duration: 0.4s;
+  background-color: white;
+  overflow: scroll;
+}
+
+#status-message {
+  margin-top: 5px;
+  margin-left: 10px;
+  font-size: 14px;
+}
